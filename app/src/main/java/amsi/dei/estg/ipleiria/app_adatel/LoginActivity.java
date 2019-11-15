@@ -9,6 +9,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //retira a status bar
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
     }
 }
