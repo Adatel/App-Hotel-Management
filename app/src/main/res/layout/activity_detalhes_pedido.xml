@@ -31,8 +31,38 @@
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 
-    <Space
+    <TextView
+        android:id="@+id/tv_texto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/PedidoCliente"
+        android:text="Caso esteja incompleto diga porquê"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/descricao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/PedidoCliente" />
+        android:layout_below="@id/tv_texto"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btnAceitar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descricao"
+        android:text="Aceitar" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnAceitar"
+        android:text="Voltar" />
+
 </RelativeLayout>
