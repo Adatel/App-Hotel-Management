@@ -63,7 +63,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@android:color/holo_blue_light"
+        app:backgroundTint="@android:color/holo_blue_light"
         android:text="@string/login"
         android:textColor="#FFFDFD"
         android:textStyle="bold" />
@@ -85,7 +85,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center|right"
-            android:text="Se não tem conta"
+            android:paddingEnd="10dp"
+            android:text="@string/login_pergunta"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
@@ -94,10 +95,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Registe-se!"
+            android:text="@string/login_registar"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="onClick"
+            android:clickable="true"/>
     </LinearLayout>
 
 
