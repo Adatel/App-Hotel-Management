@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fundo2"
     android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.NoActionBar"
     tools:context=".LoginActivity">
 
     <Space
