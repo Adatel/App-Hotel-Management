@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.app_adatel.Login_e_Registar;
+package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.content.Intent;
 import android.os.Bundle;

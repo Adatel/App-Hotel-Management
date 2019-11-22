@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:paddingEnd="10dp"
-            android:text="@string/login_pergunta"
+            android:text="ola"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/login_registar"
+            android:text="ola"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"

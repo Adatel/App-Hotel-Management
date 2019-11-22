@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.app_adatel.Login_e_Registar;
+package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import amsi.dei.estg.ipleiria.app_adatel.R;
+import amsi.dei.estg.ipleiria.app_adatel.vistas.LoginActivity;
 
 public class RegistarActivity extends AppCompatActivity {
 

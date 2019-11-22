@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/fundo2"
     android:orientation="vertical"
-    tools:context=".Login_e_Registar.RegistarActivity">
+    tools:context=".vistas.RegistarActivity">
 
     <ScrollView
         android:layout_width="match_parent"
