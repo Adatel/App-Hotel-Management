@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fundo_azul"
-    android:orientation="vertical">
+    android:background="@drawable/fundo_azul">
 
     <TextView
         android:id="@+id/pedido"
@@ -29,6 +29,8 @@
         android:layout_below="@id/pedido"
         android:text="Pedido Cliente"
         android:textColor="@android:color/background_light"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
         android:textSize="24sp" />
 
     <TextView
@@ -46,23 +48,46 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_texto"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:inputType="textPersonName|textMultiLine"
+        android:lines="20"
+        android:minLines="5"
         android:textColor="@android:color/background_light"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
         android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btnEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descricao"
+        android:text="Enviar" />
+
+    <Space
+        android:id="@+id/espaco"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/btnEnviar" />
 
     <Button
         android:id="@+id/btnAceitar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descricao"
+        android:layout_below="@id/espaco"
         android:text="Aceitar" />
+
+    <Space
+        android:id="@+id/espaco2"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/btnAceitar" />
 
     <Button
         android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btnAceitar"
+        android:layout_below="@id/espaco2"
+        android:layout_alignRight="@id/espaco2"
         android:text="Voltar" />
 
 </RelativeLayout>

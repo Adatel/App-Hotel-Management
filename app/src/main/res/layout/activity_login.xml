@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:paddingEnd="10dp"
-            android:text="ola"
+            android:text="@string/login_pergunta"
             android:textColor="#FFFFFF"
             android:textSize="16dp" />
 
@@ -94,12 +94,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ola"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:text="@string/login_registar"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:onClick="onClick"
-            android:clickable="true"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
 
