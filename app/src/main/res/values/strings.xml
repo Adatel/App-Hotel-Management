@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App-Adatel</string>
+    <string name="app_name">Adatel</string>
     <string name="Login_password">Password</string>
     <string name="Login_e_mail">E-mail</string>
     <string name="login">Login</string>
