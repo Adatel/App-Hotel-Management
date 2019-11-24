@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Adatel</string>
+
     <string name="Login_password">Password</string>
     <string name="Login_e_mail">E-mail</string>
     <string name="login">Login</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    =======
+    <string name="email_invalido">Email inválido!</string>
+    <string name="password_invalida">Password Inválida!</string>
     <string name="login_pergunta">Se não tem conta</string>
     <string name="login_registar">Registe-se!</string>
-    >>>>>>> Stashed changes
+
+    <string name="reservas">Reservas</string>
+    <string name="criar_reserva">Criar Reserva</string>
+    <string name="estado_de_reservas">Estado de Reservas</string>
+
+    <string name="servicos">Serviço de Quartos</string>
+    <string name="servico_de_quartos">Serviço de Quartos</string>
+    <string name="classificacao">Classificação</string>
+
+    <string name="contactos">Contactos</string>
+    <string name="email">Email</string>
+    <string name="telemovel">Telemovel</string>
+
+
+    <string name="str_navigation_drawer_open">Abrir</string>
+    <string name="str_navigation_drawer_close">Fechar</string>
 </resources>

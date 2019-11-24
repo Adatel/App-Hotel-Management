@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/reservas"
+        android:checkableBehavior="single" >
+        <menu>
+            <item
+                android:id="@+id/nav_criarReserva"
+                android:title="@string/criar_reserva" />
+            <item
+                android:id="@+id/nav_estadoReservas"
+                android:title="@string/estado_de_reservas" />
+        </menu>
+    </item>
+
+    <item android:title="@string/servicos" >
+        <menu>
+            <item
+                android:id="@+id/nav_servicoQuartos"
+                android:title="@string/servico_de_quartos" />
+            <item
+                android:id="@+id/nav_classificacao"
+                android:title="@string/classificacao" />
+        </menu>
+    </item>
+
+    <item android:title="@string/contactos" >
+        <menu >
+            <item
+                android:id="@+id/nav_email"
+                android:title="@string/email">
+            </item>
+            <item
+                android:id="@+id/nav_telemovel"
+                android:title="@string/telemovel">
+            </item>
+        </menu>
+    </item>
+</menu>
