@@ -8,10 +8,12 @@
         <menu>
             <item
                 android:id="@+id/nav_criarReserva"
-                android:title="@string/criar_reserva" />
+                android:title="@string/criar_reserva"
+                android:icon="@drawable/ic_criar_reserva"/>
             <item
                 android:id="@+id/nav_estadoReservas"
-                android:title="@string/estado_de_reservas" />
+                android:title="@string/estado_de_reservas"
+                android:icon="@drawable/ic_estado_reserva"/>
         </menu>
     </item>
 
@@ -19,10 +21,12 @@
         <menu>
             <item
                 android:id="@+id/nav_servicoQuartos"
-                android:title="@string/servico_de_quartos" />
+                android:title="@string/servico_de_quartos"
+                android:icon="@drawable/ic_servicos"/>
             <item
                 android:id="@+id/nav_classificacao"
-                android:title="@string/classificacao" />
+                android:title="@string/classificacao"
+                android:icon="@drawable/ic_classificacao"/>
         </menu>
     </item>
 
@@ -30,11 +34,13 @@
         <menu >
             <item
                 android:id="@+id/nav_email"
-                android:title="@string/email">
+                android:title="@string/email"
+                android:icon="@drawable/ic_email">
             </item>
             <item
                 android:id="@+id/nav_telemovel"
-                android:title="@string/telemovel">
+                android:title="@string/telemovel"
+                android:icon="@drawable/ic_phone">
             </item>
         </menu>
     </item>
