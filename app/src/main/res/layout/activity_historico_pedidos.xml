@@ -46,4 +46,70 @@
         android:text="Nome do Cliente"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/nomeCliente" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space2"
+        android:text="Quarto: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvQuarto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space2"
+        android:layout_toEndOf="@id/textView3"
+        android:text="Numero Quarto"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/space3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/tvQuarto" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space3"
+        android:text="Pedido: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView4"
+        android:text="Pedido do Cliente"
+        android:textColor="@android:color/background_light"
+        android:inputType="textMultiLine"
+        android:lines="20"
+        android:minLines="5"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/tvPedido" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco1"
+        android:layout_alignRight="@id/espaco1"
+        android:text="Voltar" />
 </RelativeLayout>

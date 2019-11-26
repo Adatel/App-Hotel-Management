@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo_azul">
+
+    <TextView
+        android:id="@+id/textView0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cliente: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/nomeCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/textView0"
+        android:text="nome"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco1"
+        android:text="Número Quarto: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/idQuarto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco1"
+        android:layout_toEndOf="@id/textView"
+        android:text="id"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco2"
+        android:text="Datas: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/dataEntrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco2"
+        android:layout_toEndOf="@id/textView2"
+        android:text="Entrada"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco2"
+        android:layout_toEndOf="@id/dataEntrada"
+        android:text=" | "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/dataSaida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco2"
+        android:layout_toEndOf="@id/textView3"
+        android:text="Saida"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/dataEntrada" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco3"
+        android:text="Número Pessoas: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/numeroPessoas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco3"
+        android:layout_toEndOf="@id/textView4"
+        android:text="nº pessoas"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView4" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco4"
+        android:text="TextView" />
+</RelativeLayout>
