@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Pedido_fragment extends Fragment {
+public class PedidosReservasFragment extends Fragment {
 
 
-    public Pedido_fragment() {
+    public PedidosReservasFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class Pedido_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.lista_pedidos_fragment, container, false);
+        return inflater.inflate(R.layout.lista_pedidos_reservas_fragment, container, false);
     }
 
 }
