@@ -24,4 +24,7 @@
 
     <string name="str_navigation_drawer_open">Abrir</string>
     <string name="str_navigation_drawer_close">Fechar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
