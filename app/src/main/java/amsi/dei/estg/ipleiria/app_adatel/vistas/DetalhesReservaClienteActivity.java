@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.app_adatel.R;
-import amsi.dei.estg.ipleiria.app_adatel.SingletonGestaoHotel;
+import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
 import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 
 public class DetalhesReservaClienteActivity extends AppCompatActivity {
