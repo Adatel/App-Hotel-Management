@@ -1,11 +1,7 @@
-package amsi.dei.estg.ipleiria.app_adatel;
-
-import android.content.Context;
+package amsi.dei.estg.ipleiria.app_adatel.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 
 public class SingletonGestaoHotel implements Serializable {
 
