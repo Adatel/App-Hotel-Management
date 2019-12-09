@@ -10,18 +10,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
-
-import amsi.dei.estg.ipleiria.app_adatel.vistas.ClassificacaoFragment;
-import amsi.dei.estg.ipleiria.app_adatel.vistas.CriarReservaFragment;
-import amsi.dei.estg.ipleiria.app_adatel.vistas.PedidosReservasFragment;
-import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -97,7 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this, "EMAIL", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_telemovel:
-                Toast.makeText(this, "TELEMOVEL", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "new", Toast.LENGTH_SHORT).show();
+                if(isPermissionGranted()){
+                    call_action();
+                }
                 break;
             default:
                 System.out.println("-->Nav Default");
@@ -110,5 +113,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    public void call_action(){
+        try{
+            String phnum = "913724082";
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:" + phnum));
+            startActivity(callIntent);
+        }catch(Exception  e){
+            System.out.println("--> Erro Call: " + e.toString());
+        }
+    }
+
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case 1: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    call_action();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
