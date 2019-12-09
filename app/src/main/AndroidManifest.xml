@@ -19,6 +19,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".vistas.DetalhesReservaClienteActivity"/>
         <activity android:name=".vistas.RegistarActivity" />
         <activity android:name=".vistas.LoginActivity">
             <intent-filter>
