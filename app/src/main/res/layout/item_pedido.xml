@@ -33,7 +33,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/nomeCliente"
+        android:id="@+id/tv_nomeCliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/idPedido"
@@ -52,10 +52,10 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/idQuarto"
+        android:id="@+id/tv_idQuarto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nomeCliente"
+        android:layout_below="@id/tv_nomeCliente"
         android:layout_toEndOf="@id/quarto"
         android:text="Nº Quarto"
         android:textColor="@android:color/background_light"

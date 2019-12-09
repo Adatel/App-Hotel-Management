@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/fundo_azul">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/textView0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cliente: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/nomeCliente"
+        android:id="@+id/tv_nomeCliente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/textView0"
         android:text="nome"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <Space
@@ -33,17 +32,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco1"
         android:text="Número Quarto: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/idQuarto"
+        android:id="@+id/tv_idQuarto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco1"
         android:layout_toEndOf="@id/textView"
         android:text="id"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <Space
@@ -58,17 +57,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco2"
         android:text="Datas: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/dataEntrada"
+        android:id="@+id/tv_dataEntrada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco2"
         android:layout_toEndOf="@id/textView2"
         android:text="Entrada"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
@@ -76,26 +75,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco2"
-        android:layout_toEndOf="@id/dataEntrada"
+        android:layout_toEndOf="@id/tv_dataEntrada"
         android:text=" | "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/dataSaida"
+        android:id="@+id/tv_dataSaida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco2"
         android:layout_toEndOf="@id/textView3"
         android:text="Saida"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <Space
         android:id="@+id/espaco3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_below="@id/dataEntrada" />
+        android:layout_below="@id/tv_dataEntrada" />
 
     <TextView
         android:id="@+id/textView4"
@@ -103,17 +102,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco3"
         android:text="Número Pessoas: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/numeroPessoas"
+        android:id="@+id/tv_numeroPessoas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco3"
         android:layout_toEndOf="@id/textView4"
         android:text="nº pessoas"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <Space
@@ -128,24 +127,30 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco4"
         android:text="Estado Reserva: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/estadoReserva"
+        android:id="@+id/tv_estadoReserva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco4"
         android:layout_toEndOf="@id/textView5"
         android:text="estado"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/background_dark"
         android:textSize="24sp" />
+
+    <Space
+        android:id="@+id/espaco5"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/tv_estadoReserva" />
 
     <Button
         android:id="@+id/btnVoltar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/estadoReserva"
+        android:layout_below="@id/espaco5"
         android:layout_alignRight="@id/espaco4"
         android:text="Voltar" />
 </RelativeLayout>
