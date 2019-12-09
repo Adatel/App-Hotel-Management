@@ -123,9 +123,29 @@
         android:layout_below="@id/textView4" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco4"
-        android:text="TextView" />
+        android:text="Estado Reserva: "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/estadoReserva"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/espaco4"
+        android:layout_toEndOf="@id/textView5"
+        android:text="estado"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/estadoReserva"
+        android:layout_alignRight="@id/espaco4"
+        android:text="Voltar" />
 </RelativeLayout>
