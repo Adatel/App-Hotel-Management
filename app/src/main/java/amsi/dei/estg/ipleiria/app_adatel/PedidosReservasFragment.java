@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.app_adatel.vistas;
+package amsi.dei.estg.ipleiria.app_adatel;
 
 
 import android.os.Bundle;
@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-import amsi.dei.estg.ipleiria.app_adatel.R;
+import java.util.ArrayList;
+
+import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 
 
 /**
@@ -20,6 +22,10 @@ public class PedidosReservasFragment extends Fragment {
     public PedidosReservasFragment() {
         // Required empty public constructor
     }
+
+    private ArrayList<Reserva> listaLivros;
+    // private listView lvlistaReservas;
+    private Reserva idReserva;
 
 
     @Override

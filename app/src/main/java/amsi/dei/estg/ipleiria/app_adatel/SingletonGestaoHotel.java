@@ -26,8 +26,16 @@ public class SingletonGestaoHotel implements Serializable {
     }
 
     public ArrayList<Reserva> getReservas(){
-
         return reservas;
+    }
+
+    public Reserva getReserva(long idReserva){
+        for(Reserva l: reservas){
+            if(l.getId() == idReserva){
+                return l;
+            }
+        }
+        return null;
     }
 
     private void gerarFakeData(){

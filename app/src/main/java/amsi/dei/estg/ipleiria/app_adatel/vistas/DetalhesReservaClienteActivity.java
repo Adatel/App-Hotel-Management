@@ -21,7 +21,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_lista_pedidos_reservas);
+        setContentView(R.layout.fragment_listas);
 
         idQuarto = findViewById(R.id.tv_dtSaida);
         dataEntrada = findViewById(R.id.tv_dataEntrada);
