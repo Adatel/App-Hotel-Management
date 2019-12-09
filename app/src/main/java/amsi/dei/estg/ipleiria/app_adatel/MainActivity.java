@@ -5,15 +5,30 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import amsi.dei.estg.ipleiria.app_adatel.vistas.ClassificacaoFragment;
+import amsi.dei.estg.ipleiria.app_adatel.vistas.CriarReservaFragment;
+import amsi.dei.estg.ipleiria.app_adatel.vistas.PedidosReservasFragment;
+import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -21,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String email;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +51,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer = findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.str_navigation_drawer_open, R.string.str_navigation_drawer_close);
+        toggle.syncState();
         drawer.addDrawerListener(toggle);
 
-        toggle.syncState();
-
         carregarCabecalho();
+
+        // Carrega o Fragmento
+        fragmentManager = getSupportFragmentManager();
+
+        // A activity escuta este Listener
+        navigationView.setNavigationItemSelectedListener(this);
+
     }
 
     private void carregarCabecalho() {
@@ -52,36 +75,103 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView textViewUser = view.findViewById(R.id.tvEmail);
         // Escreve o email na TextView
         textViewUser.setText(email);
-
-
     }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        Fragment fragment = null;
+
         switch (menuItem.getItemId()) {
             case R.id.nav_criarReserva:
-                System.out.println("-->Nav Criar Reserva");
+                fragment = new CriarReservaFragment();
+                setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_estadoReservas:
-                System.out.println("-->Nav Estado de Reservas");
+                fragment = new PedidosReservasFragment();
+                setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_servicoQuartos:
-                System.out.println("-->Nav Serviço de Quartos");
+                fragment = new ServicoQuartosFragment();
+                setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_classificacao:
-                System.out.println("-->Nav Classificação");
+                fragment = new ClassificacaoFragment();
+                setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_email:
-                System.out.println("-->Nav Email");
+                Toast.makeText(this, "EMAIL", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_telemovel:
-                System.out.println("-->Nav Telemovel");
+                //Toast.makeText(this, "new", Toast.LENGTH_SHORT).show();
+                if(isPermissionGranted()){
+                    call_action();
+                }
                 break;
             default:
                 System.out.println("-->Nav Default");
         }
+        // Se o fragmento já tiver algo
+        if (fragment != null) {
+            // Então substitui o que lá está
+            fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
 
+    }
+
+    public void call_action(){
+        try{
+            String phnum = "913724082";
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:" + phnum));
+            startActivity(callIntent);
+        }catch(Exception  e){
+            System.out.println("--> Erro Call: " + e.toString());
+        }
+    }
+
+
+    public boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case 1: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    call_action();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 }
