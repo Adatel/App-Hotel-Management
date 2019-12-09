@@ -6,7 +6,7 @@
     android:background="@drawable/fundo_azul">
 
     <TextView
-        android:id="@+id/pedido"
+        android:id="@+id/data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pedido: "
@@ -14,10 +14,10 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/idPedido"
+        android:id="@+id/nomeCliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/pedido"
+        android:layout_toEndOf="@id/data"
         android:text=" Nº Pedido"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
@@ -26,7 +26,7 @@
         android:id="@+id/pedidoCliente"
         android:layout_width="match_parent"
         android:layout_height="700px"
-        android:layout_below="@id/pedido"
+        android:layout_below="@id/data"
         android:text="Pedido Cliente"
         android:textColor="@android:color/background_light"
         android:scrollbars="vertical"

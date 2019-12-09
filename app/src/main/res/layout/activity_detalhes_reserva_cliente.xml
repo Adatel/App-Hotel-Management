@@ -12,7 +12,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/tv_nomeCliente"
+        android:id="@+id/tv_dtEntrada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/textView0"
@@ -36,7 +36,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/tv_idQuarto"
+        android:id="@+id/tv_dtSaida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco1"

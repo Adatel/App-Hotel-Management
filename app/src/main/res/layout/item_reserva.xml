@@ -10,7 +10,7 @@
         android:id="@+id/data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pedido: "
+        android:text="Data: "
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 
@@ -18,8 +18,9 @@
         android:id="@+id/nomeCliente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/data"
-        android:text="Nº Pedido"
+        android:layout_below="@id/tv_dtSaida"
+        android:layout_toEndOf="@id/cliente"
+        android:text="tv_nomeCliente"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 
@@ -34,11 +35,28 @@
 
     <TextView
         android:id="@+id/tv_dtEntrada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/data"
+        android:text="Entrada"
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/tv_dtEntrada"
+        android:text=" | "
+        android:textColor="@android:color/background_light"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv_dtSaida"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nomeCliente"
-        android:layout_toEndOf="@id/cliente"
-        android:text="Cliente"
+        android:layout_toEndOf="@id/textView6"
+        android:text="Saida"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 
@@ -52,12 +70,12 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/tv_dtSaida"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_idQuarto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_dtEntrada"
+        android:layout_below="@id/nomeCliente"
         android:layout_toEndOf="@id/quarto"
-        android:text="Nº Quarto"
+        android:text="num_quarto"
         android:textColor="@android:color/background_light"
         android:textSize="24sp" />
 

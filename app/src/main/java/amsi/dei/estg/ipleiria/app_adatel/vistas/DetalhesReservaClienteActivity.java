@@ -23,7 +23,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
         setContentView(R.layout.fragment_lista_pedidos_reservas);
 
-        idQuarto = findViewById(R.id.tv_idQuarto);
+        idQuarto = findViewById(R.id.tv_dtSaida);
         dataEntrada = findViewById(R.id.tv_dataEntrada);
         dataSaida = findViewById(R.id.tv_dataSaida);
         numeroPessoas = findViewById(R.id.tv_numeroPessoas);
