@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -174,4 +175,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // permissions this app might request
         }
     }
+
 }
