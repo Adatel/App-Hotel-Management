@@ -32,4 +32,8 @@
     <string name="classificacao_staff">Hospitalidade do staff:</string>
     <string name="classificacao_servicos">Classificação dos Serviços:</string>
     <string name="classificacao_geral">Classificação em Geral:</string>
+    <string name="sobre">Sobre</string>
+    <string name="quem_somos">Quem Somos?</string>
+    <string name="onde_estamos">Onde Estamos?</string>
+    <string name="terminar_sess_o">Terminar Sessão</string>
 </resources>

@@ -30,6 +30,21 @@
         </menu>
     </item>
 
+    <item android:title="@string/sobre" >
+        <menu >
+            <item
+                android:id="@+id/nav_quemSomos"
+                android:title="@string/quem_somos"
+                android:icon="@drawable/ic_quemsomos">
+            </item>
+            <item
+                android:id="@+id/nav_ondeEstamos"
+                android:title="@string/onde_estamos"
+                android:icon="@drawable/ic_localizacao">
+            </item>
+        </menu>
+    </item>
+
     <item android:title="@string/contactos" >
         <menu >
             <item
@@ -44,4 +59,11 @@
             </item>
         </menu>
     </item>
+
+    <item
+        android:id="@+id/nav_terminarSessao"
+        android:title="@string/terminar_sess_o"
+        android:icon="@drawable/ic_terminar_sessao">
+    </item>
+
 </menu>
