@@ -16,6 +16,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     public static final String CHAVE_ID = "idReserva";
 
+    private int idReserva;
     private TextView idQuarto, dataEntrada, dataSaida, numeroPessoas;
     private Reserva reserva;
 
@@ -23,7 +24,9 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.fragment_listas);
+        setContentView(R.layout.activity_detalhes_reserva_cliente);
+
+        idReserva = getIntent().getIntExtra(CHAVE_ID, -1);
 
         idQuarto = findViewById(R.id.tv_idQuarto);
         dataEntrada = findViewById(R.id.tv_dataEntrada);
@@ -35,14 +38,14 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private void  mostrarReserva(){
         ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance().getReservas();
-        reserva = reservas.get(0);
+        reserva = reservas.get(idReserva -1);
 
-        setTitle("Reserva");
+        //setTitle("Reserva");
 
-        idQuarto.setText(reserva.getId());
-        dataEntrada.setText(reserva.getDt_entrada());
-        dataSaida.setText(reserva.getDt_saida());
-        numeroPessoas.setText(reserva.getN_pessoas());
+        idQuarto.setText(reserva.getId() + "");
+        dataEntrada.setText(reserva.getDtEntrada());
+        dataSaida.setText(reserva.getDtSaida());
+        numeroPessoas.setText(reserva.getNumPessoas() + "");
 
     }
 }

@@ -32,67 +32,67 @@ public class Reserva implements Serializable {
         this.id = id;
     }
 
-    public int getN_pessoas() {
+    public int getNumPessoas() {
         return n_pessoas;
     }
 
-    public void setN_pessoas(int n_pessoas) {
+    public void setNumPessoas(int n_pessoas) {
         this.n_pessoas = n_pessoas;
     }
 
-    public int getN_quartos() {
+    public int getNumQuartos() {
         return n_quartos;
     }
 
-    public void setN_quartos(int n_quartos) {
+    public void setNumQuartos(int n_quartos) {
         this.n_quartos = n_quartos;
     }
 
-    public int getQuarto_s() {
+    public int getQuartoSol() {
         return quarto_s;
     }
 
-    public void setQuarto_s(int quarto_s) {
+    public void setQuartoSol(int quarto_s) {
         this.quarto_s = quarto_s;
     }
 
-    public int getQuarto_d() {
+    public int getQuartoD() {
         return quarto_d;
     }
 
-    public void setQuarto_d(int quarto_d) {
+    public void setQuartoD(int quarto_d) {
         this.quarto_d = quarto_d;
     }
 
-    public int getQuarto_f() {
+    public int getQuartoF() {
         return quarto_f;
     }
 
-    public void setQuarto_f(int quarto_f) {
+    public void setQuartoF(int quarto_f) {
         this.quarto_f = quarto_f;
     }
 
-    public int getQuarto_c() {
+    public int getQuartoC() {
         return quarto_c;
     }
 
-    public void setQuarto_c(int quarto_c) {
+    public void setQuartoC(int quarto_c) {
         this.quarto_c = quarto_c;
     }
 
-    public String getDt_entrada() {
+    public String getDtEntrada() {
         return dt_entrada;
     }
 
-    public void setDt_entrada(String dt_entrada) {
+    public void setDtEntrada(String dt_entrada) {
         this.dt_entrada = dt_entrada;
     }
 
-    public String getDt_saida() {
+    public String getDtSaida() {
         return dt_saida;
     }
 
-    public void setDt_saida(String dt_saida) {
+    public void setDtSaida(String dt_saida) {
         this.dt_saida = dt_saida;
     }
 }

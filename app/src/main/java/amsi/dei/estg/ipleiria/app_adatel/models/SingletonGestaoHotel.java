@@ -3,18 +3,17 @@ package amsi.dei.estg.ipleiria.app_adatel.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SingletonGestaoHotel implements Serializable {
+public class SingletonGestaoHotel {
 
+    private ArrayList<Reserva> reservas;
     private static SingletonGestaoHotel INSTANCE = null;
 
-    public static SingletonGestaoHotel getInstance() {
+    public static synchronized SingletonGestaoHotel getInstance() {
         if(INSTANCE == null){
             INSTANCE = new SingletonGestaoHotel();
         }
         return INSTANCE;
     }
-
-    private ArrayList<Reserva> reservas;
 
     private SingletonGestaoHotel() {
         reservas = new ArrayList<>();
@@ -26,9 +25,9 @@ public class SingletonGestaoHotel implements Serializable {
     }
 
     public Reserva getReserva(long idReserva){
-        for(Reserva l: reservas){
-            if(l.getId() == idReserva){
-                return l;
+        for(Reserva r: reservas){
+            if(r.getId() == idReserva){
+                return r;
             }
         }
         return null;

@@ -25,17 +25,17 @@ public class ListaReservaAdaptador extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return reserva.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return reserva.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -66,19 +66,20 @@ public class ListaReservaAdaptador extends BaseAdapter {
         private TextView numPessoas;
         private TextView estado;
 
+        // ID's do layout item_reserva
         public ViewHolderLista(View convertView){
-            numQuarto = convertView.findViewById(R.id.tv_idQuarto);
-            dtEntrada = convertView.findViewById(R.id.tv_dataEntrada);
-            dtSaida = convertView.findViewById(R.id.tv_dataSaida);
-            numPessoas = convertView.findViewById(R.id.tv_numeroPessoas);
+            numQuarto = convertView.findViewById(R.id.tvNumQuarto);
+            dtEntrada = convertView.findViewById(R.id.tvDataEntrada);
+            dtSaida = convertView.findViewById(R.id.tvDataSaida);
+            numPessoas = convertView.findViewById(R.id.tvNumPessoas);
 
         }
 
         public void update(Reserva reserva){
-            numQuarto.setText(reserva.getId());
-            dtEntrada.setText(reserva.getDt_entrada());
-            dtSaida.setText(reserva.getDt_saida());
-            numPessoas.setText(reserva.getN_pessoas());
+            numQuarto.setText("" + reserva.getId());
+            dtEntrada.setText(reserva.getDtEntrada());
+            dtSaida.setText(reserva.getDtSaida());
+            numPessoas.setText("" + reserva.getNumPessoas());
         }
     }
 }
