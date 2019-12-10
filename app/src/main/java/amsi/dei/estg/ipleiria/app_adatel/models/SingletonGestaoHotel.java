@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class SingletonGestaoHotel implements Serializable {
 
+    private ArrayList<Reserva> reservas;
     private static SingletonGestaoHotel INSTANCE = null;
 
     public static SingletonGestaoHotel getInstance() {
@@ -14,7 +15,6 @@ public class SingletonGestaoHotel implements Serializable {
         return INSTANCE;
     }
 
-    private ArrayList<Reserva> reservas;
 
     private SingletonGestaoHotel() {
         reservas = new ArrayList<>();
