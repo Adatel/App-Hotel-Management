@@ -68,7 +68,7 @@ public class ListaReservaAdaptador extends BaseAdapter {
 
         // ID's do layout item_reserva
         public ViewHolderLista(View convertView){
-            numQuarto = convertView.findViewById(R.id.tvNumQuarto);
+            numQuarto = convertView.findViewById(R.id.tvNumQuartos);
             dtEntrada = convertView.findViewById(R.id.tvDataEntrada);
             dtSaida = convertView.findViewById(R.id.tvDataSaida);
             numPessoas = convertView.findViewById(R.id.tvNumPessoas);
@@ -76,7 +76,7 @@ public class ListaReservaAdaptador extends BaseAdapter {
         }
 
         public void update(Reserva reserva){
-            numQuarto.setText("" + reserva.getId());
+            numQuarto.setText("" + reserva.getNumQuartos());
             dtEntrada.setText(reserva.getDtEntrada());
             dtSaida.setText(reserva.getDtSaida());
             numPessoas.setText("" + reserva.getNumPessoas());

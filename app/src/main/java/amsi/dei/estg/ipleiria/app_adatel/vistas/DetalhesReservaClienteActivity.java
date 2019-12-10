@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -17,7 +18,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     public static final String CHAVE_ID = "idReserva";
 
     private int idReserva;
-    private TextView idQuarto, dataEntrada, dataSaida, numeroPessoas;
+    private EditText  dataEntrada, dataSaida, numeroPessoas, numQuartos, quartosSolteiro, quartosDuplo, quartosCasal, quartosFamilia;
     private Reserva reserva;
 
     @Override
@@ -28,10 +29,13 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
         idReserva = getIntent().getIntExtra(CHAVE_ID, -1);
 
-        idQuarto = findViewById(R.id.tv_idQuarto);
-        dataEntrada = findViewById(R.id.tv_dataEntrada);
-        dataSaida = findViewById(R.id.tv_dataSaida);
-        numeroPessoas = findViewById(R.id.tv_numeroPessoas);
+        dataEntrada = findViewById(R.id.etDataEntrada);
+        dataSaida = findViewById(R.id.etDataSaida);
+        numeroPessoas = findViewById(R.id.etNumPessoas);
+        quartosSolteiro = findViewById(R.id.etSolteiro);
+        quartosCasal = findViewById(R.id.etCasal);
+        quartosDuplo = findViewById(R.id.etDuplo);
+        quartosFamilia = findViewById(R.id.etFamilia);
 
         mostrarReserva();
     }
@@ -42,10 +46,13 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
         //setTitle("Reserva");
 
-        idQuarto.setText(reserva.getId() + "");
         dataEntrada.setText(reserva.getDtEntrada());
         dataSaida.setText(reserva.getDtSaida());
         numeroPessoas.setText(reserva.getNumPessoas() + "");
+        quartosSolteiro.setText(reserva.getQuartoSol() + "");
+        quartosDuplo.setText(reserva.getQuartoD() + "");
+        quartosCasal.setText(reserva.getQuartoC() + "");
+        quartosFamilia.setText(reserva.getQuartoF() + "");
 
     }
 }
