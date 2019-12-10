@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -101,14 +102,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_email:
-                Toast.makeText(this, "EMAIL", Toast.LENGTH_SHORT).show();
+                //Melhorar mais tarde
+                Intent intent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:"));
+                //Intent intent = new Intent(Intent.ACTION_SENDTO); force open outlook predefinido
+                intent.setType("message/rfc822");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"adatel.19.20@gmail.com"});
+                startActivity(Intent.createChooser(intent,"Selecione a Aplicação de Email"));
                 break;
+
             case R.id.nav_telemovel:
-                //Toast.makeText(this, "new", Toast.LENGTH_SHORT).show();
                 if(isPermissionGranted()){
                     call_action();
                 }
                 break;
+
             default:
                 System.out.println("-->Nav Default");
         }
@@ -124,11 +131,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void call_action(){
         try{
-            String phnum = "913724082";
+            String telefone = "913724082";
             Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:" + phnum));
+            callIntent.setData(Uri.parse("tel:" + telefone));
             startActivity(callIntent);
         }catch(Exception  e){
+            Toast.makeText(this, "Erro de chamada", Toast.LENGTH_SHORT).show();
             System.out.println("--> Erro Call: " + e.toString());
         }
     }
@@ -153,13 +161,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-
             case 1: {
-
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
@@ -169,9 +174,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 return;
             }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
