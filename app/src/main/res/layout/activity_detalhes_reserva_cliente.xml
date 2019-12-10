@@ -36,7 +36,7 @@
         android:textSize="24sp" />
 
     <TextView
-        android:id="@+id/tv_dtSaida"
+        android:id="@+id/tv_idQuarto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/espaco1"
