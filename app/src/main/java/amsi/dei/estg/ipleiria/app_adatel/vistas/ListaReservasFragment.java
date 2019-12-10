@@ -23,10 +23,10 @@ import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PedidosReservasFragment extends Fragment {
+public class ListaReservasFragment extends Fragment {
 
 
-    public PedidosReservasFragment() {
+    public ListaReservasFragment() {
         // Required empty public constructor
     }
 
@@ -47,9 +47,9 @@ public class PedidosReservasFragment extends Fragment {
         lvlistaReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Reserva tempLivro = (Reserva) parent.getItemAtPosition(position);
-                Toast.makeText(getContext(), "AQUI: " + tempLivro.getId(), Toast.LENGTH_SHORT).show();
-                idReserva = SingletonGestaoHotel.getInstance().getReserva(tempLivro.getId());
+                Reserva tempReserva = (Reserva) parent.getItemAtPosition(position);
+                Toast.makeText(getContext(), "AQUI: " + tempReserva.getId(), Toast.LENGTH_SHORT).show();
+                idReserva = SingletonGestaoHotel.getInstance().getReserva(tempReserva.getId());
 
                 Intent intent = new Intent(getContext(), DetalhesReservaClienteActivity.class);
                 intent.putExtra(DetalhesReservaClienteActivity.CHAVE_ID, idReserva.getId());
