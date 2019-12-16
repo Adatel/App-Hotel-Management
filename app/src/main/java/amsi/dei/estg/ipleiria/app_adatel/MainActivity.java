@@ -12,7 +12,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -33,11 +35,15 @@ import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String CHAVE_EMAIL = "EMAIL";
+    private static final String SECCAO_INFO_USER = "SECCAO_INFO_USER";
     private String email;
     private NavigationView navigationView;
     private DrawerLayout drawer;
 
     private FragmentManager fragmentManager;
+
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +68,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // A activity escuta este Listener
         navigationView.setNavigationItemSelectedListener(this);
 
+        carregamentoFragmentoInicial();
+
     }
 
     private void carregarCabecalho() {
 
+        // Usando sharedPreferences
+        sharedPreferences = getSharedPreferences(SECCAO_INFO_USER, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         // Obtem o email por parametro
         email = getIntent().getStringExtra(CHAVE_EMAIL).toString();
+
+        if(email == null){
+            email = sharedPreferences.getString(SECCAO_INFO_USER, "Não Existe");
+        } else {
+            // Coloca o valor, neste caso o email, na sharedPreferences
+            editor.putString(SECCAO_INFO_USER, email);
+            editor.apply();
+        }
 
         // Atraves do navigation view vai buscar a posição no header
         View view = navigationView.getHeaderView(0);
@@ -78,6 +98,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    private void carregamentoFragmentoInicial(){
+        navigationView.setCheckedItem(R.id.nav_estadoReservas);
+        Fragment fragment = new ListaReservasFragment();
+        fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
+        setTitle(R.string.estado_de_reservas);
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
