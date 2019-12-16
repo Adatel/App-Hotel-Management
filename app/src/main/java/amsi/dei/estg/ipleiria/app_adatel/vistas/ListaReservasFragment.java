@@ -47,8 +47,8 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_listas, container, false);
 
-        listaReservas = SingletonGestaoHotel.getInstance().getReservas();
         lvlistaReservas = rootView.findViewById(R.id.lvLista);
+        listaReservas = SingletonGestaoHotel.getInstance().getReservas();
         lvlistaReservas.setAdapter(new ListaReservaAdaptador(getContext(), listaReservas));
 
         //  <----------- Floating Button ----------->
