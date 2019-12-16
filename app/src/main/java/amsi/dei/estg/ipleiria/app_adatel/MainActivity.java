@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // A activity escuta este Listener
         navigationView.setNavigationItemSelectedListener(this);
 
-        carregamentoFragmentoInicial();
+        //carregamentoFragmentoInicial();
 
     }
 

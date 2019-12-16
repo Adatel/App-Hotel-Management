@@ -36,4 +36,6 @@
     <string name="quem_somos">Quem Somos?</string>
     <string name="onde_estamos">Onde Estamos?</string>
     <string name="terminar_sess_o">Terminar Sessão</string>
+    <string name="procurar_reserva">Procurar Reserva</string>
+    <string name="cancelar_reserva">Cancelar Reserva</string>
 </resources>

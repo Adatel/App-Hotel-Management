@@ -34,6 +34,10 @@ public class SingletonGestaoHotel {
         return null;
     }
 
+    public void adicionarReserva(Reserva reserva){
+        reservas.add(reserva);
+    }
+
     public void removerReserva(int idReserva){
         Reserva auxReserva = getReserva(idReserva);
         reservas.remove(auxReserva);
@@ -47,6 +51,7 @@ public class SingletonGestaoHotel {
         auxReserva.setDtEntrada(reserva.getDtEntrada());
         auxReserva.setDtSaida(reserva.getDtSaida());
         auxReserva.setNumPessoas(reserva.getNumPessoas());
+        //auxReserva.setNumQuartos(reserva.getNumQuartos());
     }
 
     private void gerarFakeData(){
