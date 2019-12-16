@@ -76,7 +76,7 @@ public class ListaReservaAdaptador extends BaseAdapter {
         }
 
         public void update(Reserva reserva){
-            numQuarto.setText("" + reserva.getNumQuartos());
+           // numQuarto.setText("" + reserva.getNumQuartos());
             dtEntrada.setText(reserva.getDtEntrada());
             dtSaida.setText(reserva.getDtSaida());
             numPessoas.setText("" + reserva.getNumPessoas());
