@@ -1,11 +1,14 @@
 package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -20,6 +23,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     private int idReserva;
     private EditText  dataEntrada, dataSaida, numeroPessoas, numQuartos, quartosSolteiro, quartosDuplo, quartosCasal, quartosFamilia;
     private Reserva reserva;
+    private FloatingActionButton btnSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,9 +40,26 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         quartosCasal = findViewById(R.id.etCasal);
         quartosDuplo = findViewById(R.id.etDuplo);
         quartosFamilia = findViewById(R.id.etFamilia);
+        btnSave = findViewById(R.id.btnSave);
 
+        /*
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(idReserva == -1){
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReserva();
+
+                    finish();
+                } else {
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReserva();
+                    finish();
+                }
+            }
+        });
+        */
         mostrarReserva();
     }
+
 
     private void  mostrarReserva(){
         ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance().getReservas();
@@ -55,4 +76,5 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         quartosFamilia.setText(reserva.getQuartoF() + "");
 
     }
+
 }

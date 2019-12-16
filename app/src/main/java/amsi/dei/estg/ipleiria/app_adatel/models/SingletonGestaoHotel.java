@@ -1,6 +1,7 @@
 package amsi.dei.estg.ipleiria.app_adatel.models;
 
-import java.io.Serializable;
+import android.content.Context;
+
 import java.util.ArrayList;
 
 public class SingletonGestaoHotel {
@@ -31,6 +32,26 @@ public class SingletonGestaoHotel {
             }
         }
         return null;
+    }
+/*
+    public void adicionarReserva(){
+        reservas.add(Reserva);
+    }
+*/
+    public void removerReserva(int idReserva){
+        Reserva auxReserva = getReserva(idReserva);
+        reservas.remove(auxReserva);
+    }
+
+    public void editarReserva(Reserva reserva){
+        if(!reservas.contains(reserva)){
+            return;
+        }
+        Reserva auxReserva = getReserva(reserva.getId());
+        auxReserva.setDtEntrada(reserva.getDtEntrada());
+        auxReserva.setDtSaida(reserva.getDtSaida());
+        auxReserva.setNumPessoas(reserva.getNumPessoas());
+        auxReserva.setNumQuartos(reserva.getNumQuartos());
     }
 
     private void gerarFakeData(){
