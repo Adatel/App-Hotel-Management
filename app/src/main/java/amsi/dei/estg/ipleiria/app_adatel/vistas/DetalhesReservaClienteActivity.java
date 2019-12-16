@@ -164,5 +164,4 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                 .show();
     }
 
-
 }
