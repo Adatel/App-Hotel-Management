@@ -1,11 +1,13 @@
 package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,24 +44,15 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         quartosFamilia = findViewById(R.id.etFamilia);
         btnSave = findViewById(R.id.btnSave);
 
-        /*
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(idReserva == -1){
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReserva();
+        if(idReserva == -1){
+            setTitle("Adicionar Reserva");
+        }else{
+            reserva = SingletonGestaoHotel.getInstance().getReserva(idReserva);
+            setTitle("Detalhes: " + reserva.getId());
+            mostrarReserva();
+        }
 
-                    finish();
-                } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReserva();
-                    finish();
-                }
-            }
-        });
-        */
-        mostrarReserva();
     }
-
 
     private void  mostrarReserva(){
         ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance().getReservas();
@@ -77,4 +70,24 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     }
 
+    private void dialogRemover(){
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("Remover")
+                .setMessage("Pretende mesmo remover esta reserva?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SingletonGestaoHotel.getInstance().removerReserva(idReserva);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_delete)
+                .show();
+    }
 }
