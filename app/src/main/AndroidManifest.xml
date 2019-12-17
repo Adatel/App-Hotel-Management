@@ -14,20 +14,21 @@
         android:roundIcon="@mipmap/ic_adatel_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            />
 
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".vistas.DetalhesReservaClienteActivity"
-                  android:parentActivityName=".MainActivity" />
+            android:name=".vistas.DetalhesReservaClienteActivity"
+            android:parentActivityName=".MainActivity"/>
 
         <activity android:name=".vistas.RegistarActivity" />
+
         <activity android:name=".vistas.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +36,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
