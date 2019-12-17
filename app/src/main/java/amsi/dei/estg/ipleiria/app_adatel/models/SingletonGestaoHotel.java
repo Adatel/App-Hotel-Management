@@ -23,7 +23,8 @@ public class SingletonGestaoHotel {
 
     //private String token = "AMSI-TOKEN";
     private String mUrlAPIUSERS = "http://localhost:8081/api/users";
-    private String mUrlAPIReservas = "http://localhost:8081/api/reservas";
+    private String mUrlAPIPROFILES = "http://localhost:8081/api/profiles";
+    private String mUrlAPIRESERVAS = "http://localhost:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
