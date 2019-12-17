@@ -32,7 +32,7 @@ import amsi.dei.estg.ipleiria.app_adatel.vistas.CriarReservaFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ListaReservasFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     public static final String CHAVE_EMAIL = "EMAIL";
     private static final String SECCAO_INFO_USER = "SECCAO_INFO_USER";
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         drawer = findViewById(R.id.drawer_layout);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.str_navigation_drawer_open, R.string.str_navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.str_navigation_drawer_open,    R.string.str_navigation_drawer_close);
         toggle.syncState();
         drawer.addDrawerListener(toggle);
 
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // A activity escuta este Listener
         navigationView.setNavigationItemSelectedListener(this);
 
-        //carregamentoFragmentoInicial();
+        carregamentoFragmentoInicial();
 
     }
 
