@@ -7,7 +7,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,10 +62,10 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(idReserva == -1){
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReserva(adicionarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaBD(adicionarReserva());
                     finish();
                 } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReserva(editarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaBD(editarReserva());
                     finish();
                 }
             }
@@ -76,7 +75,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private Reserva adicionarReserva(){
 
-        Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), Integer.parseInt(quartosSolteiro.getText().toString()), Integer.parseInt(quartosDuplo.getText().toString()), Integer.parseInt(quartosFamilia.getText().toString()), Integer.parseInt(quartosCasal.getText().toString()),  dataEntrada.getText().toString(), dataSaida.getText().toString());
+        Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), Integer.parseInt(quartosSolteiro.getText().toString()), Integer.parseInt(quartosDuplo.getText().toString()), Integer.parseInt(quartosFamilia.getText().toString()), Integer.parseInt(quartosCasal.getText().toString()),  dataEntrada.getText().toString(), dataSaida.getText().toString(), 1);
         return auxiliar;
     }
 
@@ -121,7 +120,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private void  mostrarReserva(int idReserva){
 
-        ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservas();
+        ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservasBD();
         reserva = reservas.get(idReserva -1);
 
         //setTitle("Reserva");
@@ -149,7 +148,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReserva(reservaSelecionada.getId());
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaBD(reservaSelecionada.getId());
                         finish();
                     }
                 })

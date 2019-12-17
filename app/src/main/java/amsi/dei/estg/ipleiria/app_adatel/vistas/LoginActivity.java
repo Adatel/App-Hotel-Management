@@ -8,14 +8,14 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import amsi.dei.estg.ipleiria.app_adatel.MainActivity;
 import amsi.dei.estg.ipleiria.app_adatel.R;
 import amsi.dei.estg.ipleiria.app_adatel.models.HotelBDHelper;
 import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
-import amsi.dei.estg.ipleiria.app_adatel.ultis.UserJsonParser;
+import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
 public class LoginActivity extends AppCompatActivity {
 

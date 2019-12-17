@@ -3,12 +3,8 @@ package amsi.dei.estg.ipleiria.app_adatel.models;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -20,7 +16,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String TABLE_PROFILE = "Profile";
     private static final String TABLE_RESERVA = "Reserva";
 
-    ///Campos da table User
+    ///Campos da Tabela User
     private static final String ID = "id";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
@@ -76,7 +72,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         db.execSQL(createProfileTable);
 
         String createReservaTable = "CREATE TABLE " + TABLE_RESERVA
-                + "(" + ID_RESERVA + "INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
+                + "(" + ID_RESERVA + " INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
                 + NUM_PESSOAS + " INTEGER NOT NULL, "
                 + QUARTO_SOLTEIRO + " INTEGER NOT NULL, "
                 + QUARTO_DUPLO + " INTEGER NOT NULL, "
@@ -92,14 +88,17 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESERVA);
         this.onCreate(db);
     }
 
 
     //***************************** METODOS CRUD**********************************//
 
-    public ArrayList<User> getAllUsers(){
-        ArrayList<User> TempUsers = new ArrayList<>();
+    // <------------------- USER ------------------->
+
+    public ArrayList<User> getAllUsersBD(){
+        ArrayList<User> tempUsers = new ArrayList<>();
 
         Cursor cursor = this.database.query(TABLE_USER, new String[]{
                 ID,
@@ -111,14 +110,46 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         if(cursor.moveToNext()){
             do{
                 User auxUser = new User(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getString(3));
-                TempUsers.add(auxUser);
+                tempUsers.add(auxUser);
             }while (cursor.moveToNext());
         }
-        return TempUsers;
+        return tempUsers;
     }
 
-    public  ArrayList<Profile> getAllProfiles(){
-        ArrayList<Profile> TempProfile = new ArrayList<>();
+    public void adicionarUserBD(User user){
+
+        ContentValues values = new ContentValues();
+        values.put(ID, user.getId());
+        values.put(USERNAME, user.getUsername());
+        values.put(PASSWORD, user.getPassword());
+        values.put(EMAIL, user.getEmail());
+
+        this.database.insert(TABLE_USER, null, values);
+    }
+
+    public boolean guardarUserBD(User user){
+        ContentValues values = new ContentValues();
+        values.put(USERNAME, user.getUsername());
+        values.put(PASSWORD, user.getPassword());
+        values.put(EMAIL, user.getEmail());
+
+        return this.database.update(TABLE_USER,values,"id = ?", new String[]{"" + user.getId()}) > 0;
+    }
+
+    public boolean removerUserBD(int id){
+        return (this.database.delete(TABLE_USER, "id = ?", new String[]{"" + id}) == 1);
+    }
+
+    public void removerAllUsers(){
+        this.database.delete(TABLE_USER, null,null);
+    }
+
+
+    // <------------------- PROFILE ------------------->
+
+
+    public  ArrayList<Profile> getAllProfilesBD(){
+        ArrayList<Profile> tempProfile = new ArrayList<>();
 
         Cursor cursor = this.database.query(TABLE_PROFILE, new String[]{
                 NOME,
@@ -137,24 +168,13 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                         cursor.getInt(6), cursor.getInt(7));
             }while (cursor.moveToNext());
         }
-        return TempProfile;
+        return tempProfile;
     }
 
+    public void adicionarProfileBD(Profile profile){
 
-
-    public void adicionarUserBD(User user){
         ContentValues values = new ContentValues();
-        values.put(ID, user.getId());
-        values.put(USERNAME, user.getUsername());
-        values.put(PASSWORD, user.getPassword());
-        values.put(EMAIL, user.getEmail());
 
-        this.database.insert(TABLE_USER, null, values);
-    }
-
-    public Profile adicionarProfileBD(Profile profile){
-        ///Maneira Antiga corrigir depois
-        ContentValues values = new ContentValues();
         values.put(NOME, profile.getNome());
         values.put(NIF, profile.getNif());
         values.put(TELEMOVEL, profile.getTelefone());
@@ -163,25 +183,11 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         values.put(IS_FUNCIONARIO, profile.getIs_funcionario());
         values.put(ID_USER, profile.getId_user());
 
-        long id_user = this.database.insert(TABLE_PROFILE, null , values);
-
-        if(id_user > -1){
-            profile.setId_user((int)id_user);
-            return profile;
-        }
-        return null;
-    }
-
-    public boolean guardarUserBD(User user){
-        ContentValues values = new ContentValues();
-        values.put(USERNAME, user.getUsername());
-        values.put(PASSWORD, user.getPassword());
-        values.put(EMAIL, user.getEmail());
-
-        return this.database.update(TABLE_USER,values,"id = ?", new String[]{"" + user.getId()}) > 0;
+        this.database.insert(TABLE_PROFILE, null , values);
     }
 
     public boolean guardarProfileBD(Profile profile){
+
         ContentValues values = new ContentValues();
         values.put(NOME, profile.getNome());
         values.put(NIF, profile.getNif());
@@ -190,24 +196,80 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         values.put(IS_CLIENTE, profile.getIs_cliente());
         values.put(IS_FUNCIONARIO, profile.getIs_funcionario());
 
-        return this.database.update(TABLE_PROFILE, values, "id_user = ?", new String[]{"" + profile.getId_user()}) > 0;
-    }
-
-    public boolean removerUserBD(int id){
-        return (this.database.delete(TABLE_USER, "id = ?", new String[]{"" + id}) == 1);
+        return this.database.update(TABLE_PROFILE, values, "id = ?", new String[]{"" + profile.getId_user()}) > 0;
     }
 
     public boolean removerProfileBD(int id_user){
-        return  (this.database.delete(TABLE_PROFILE, "id_user = ?", new String[]{"" + id_user}) == 1);
-    }
-
-    public void removerAllUsers(){
-        this.database.delete(TABLE_USER, null,null);
+        return  (this.database.delete(TABLE_PROFILE, "id = ?", new String[]{"" + id_user}) == 1);
     }
 
     public void removerALLProfiles(){
         this.database.delete(TABLE_PROFILE, null, null);
     }
 
+
+    // <------------------- RESERVA ------------------->
+
+    public  ArrayList<Reserva> getAllReservasBD(){
+        ArrayList<Reserva> tempReserva = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_RESERVA, new String[]{
+                ID_RESERVA,
+                NUM_PESSOAS,
+                QUARTO_SOLTEIRO,
+                QUARTO_DUPLO,
+                QUARTO_FAMILIA,
+                QUARTO_CASAL,
+                DATA_ENTRADA,
+                DATA_SAIDA,
+                ID_CLIENTE},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Reserva auxReserva = new Reserva(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
+                        cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),
+                        cursor.getString(6), cursor.getString(7), cursor.getInt(8));
+            }while (cursor.moveToNext());
+        }
+        return tempReserva;
+    }
+
+    public void adicionarReservaBD(Reserva reserva){
+
+        ContentValues values = new ContentValues();
+        values.put(NUM_PESSOAS, reserva.getNumPessoas());
+        values.put(QUARTO_SOLTEIRO, reserva.getQuartoSol());
+        values.put(QUARTO_DUPLO, reserva.getQuartoD());
+        values.put(QUARTO_FAMILIA, reserva.getQuartoF());
+        values.put(QUARTO_CASAL, reserva.getQuartoC());
+        values.put(DATA_ENTRADA, reserva.getDtEntrada());
+        values.put(DATA_SAIDA, reserva.getDtSaida());
+        values.put(ID_CLIENTE, reserva.getIdCliente());
+
+        long id_reserva = this.database.insert(TABLE_RESERVA, null , values);
+    }
+
+    public boolean guardarReservaBD(Reserva reserva){
+
+        ContentValues values = new ContentValues();
+        values.put(NUM_PESSOAS, reserva.getNumPessoas());
+        values.put(QUARTO_SOLTEIRO, reserva.getQuartoSol());
+        values.put(QUARTO_DUPLO, reserva.getQuartoD());
+        values.put(QUARTO_FAMILIA, reserva.getQuartoF());
+        values.put(QUARTO_CASAL, reserva.getQuartoC());
+        values.put(DATA_ENTRADA, reserva.getDtEntrada());
+        values.put(DATA_SAIDA, reserva.getDtSaida());
+        values.put(ID_CLIENTE, reserva.getIdCliente());
+
+        return this.database.update(TABLE_RESERVA, values, "id = ?", new String[]{"" + reserva.getId()}) > 0;
+    }
+
+    public boolean removerReservaBD(int id_reserva){
+        return  (this.database.delete(TABLE_RESERVA, "id = ?", new String[]{"" + id_reserva}) == 1);
+    }
+
+    public void removerALLReservasDB(){
+        this.database.delete(TABLE_RESERVA, null, null);
+    }
 
 }

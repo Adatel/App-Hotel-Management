@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.app_adatel.ultis;
+package amsi.dei.estg.ipleiria.app_adatel.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -13,13 +13,16 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.app_adatel.models.User;
 
 public class UserJsonParser {
-    //da return de um array de users eu Acho
+
+    //da return de um array de users vindo da API
     public static ArrayList<User> parserJsonUsers(JSONArray response, Context context){
+
         System.out.println("--> Parser Lista Users " + response);
         ArrayList<User> tempListaUsers = new ArrayList<User>();
 
         try{
             for(int i = 0; i < response.length(); i++){
+                
                 JSONObject user = (JSONObject) response.get(i);
 
                 int idUser = user.getInt("id");

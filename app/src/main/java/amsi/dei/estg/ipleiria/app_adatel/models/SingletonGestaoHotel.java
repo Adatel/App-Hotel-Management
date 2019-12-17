@@ -15,19 +15,19 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UserListener;
-import amsi.dei.estg.ipleiria.app_adatel.ultis.UserJsonParser;
+import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
 public class SingletonGestaoHotel {
 
     private  static RequestQueue volleyQueue = null;
 
-    private String token = "AMSI-TOKEN";
+    //private String token = "AMSI-TOKEN";
     private String mUrlAPIUSERS = "http://localhost:8081/api/users";
+    private String mUrlAPIReservas = "http://localhost:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
     private ArrayList<Reserva> reservas;
-
     private ArrayList<Profile> profiles;
 
     private static SingletonGestaoHotel INSTANCE = null;
@@ -53,11 +53,17 @@ public class SingletonGestaoHotel {
         hotelBDHelper = new HotelBDHelper(context);
     }
 
-    public ArrayList<Reserva> getReservas(){
+
+    // <--------------  Métodos para garantir que os dados da BD estão atualizados com os dados vindos da API -------------->
+
+
+    // <----------------------------------- RESERVAS ----------------------------------->
+
+    public ArrayList<Reserva> getReservasBD(){
         return reservas;
     }
 
-    public Reserva getReserva(long idReserva){
+    public Reserva getReservaBD(long idReserva){
         for(Reserva r: reservas){
             if(r.getId() == idReserva){
                 return r;
@@ -66,27 +72,30 @@ public class SingletonGestaoHotel {
         return null;
     }
 
-    public void adicionarReserva(Reserva reserva){
+    public void adicionarReservaBD(Reserva reserva){
         reservas.add(reserva);
     }
 
-    public void removerReserva(int idReserva){
-        Reserva auxReserva = getReserva(idReserva);
+    public void removerReservaBD(int idReserva){
+        Reserva auxReserva = getReservaBD(idReserva);
         reservas.remove(auxReserva);
     }
 
-    public void editarReserva(Reserva reserva){
+    public void editarReservaBD(Reserva reserva){
         if(!reservas.contains(reserva)){
             return;
         }
-        Reserva auxReserva = getReserva(reserva.getId());
+        Reserva auxReserva = getReservaBD(reserva.getId());
         auxReserva.setDtEntrada(reserva.getDtEntrada());
         auxReserva.setDtSaida(reserva.getDtSaida());
         auxReserva.setNumPessoas(reserva.getNumPessoas());
         //auxReserva.setNumQuartos(reserva.getNumQuartos());
     }
 
-    public User getUser(int id){
+
+    // <----------------------------------- USERS ----------------------------------->
+
+    public User getUserBD(int id){
         for (User u: users){
             if(u.getId() == id){
                 return u;
@@ -95,23 +104,9 @@ public class SingletonGestaoHotel {
         return null;
     }
 
-    public Profile getProfile(int id_user){
-        for (Profile p: profiles){
-            if(p.getId_user() == id_user){
-                return p;
-            }
-        }
-        return null;
-    }
-
     ///Adicionei
     public ArrayList<User> getUsersBD(){
-        return users = hotelBDHelper.getAllUsers();
-    }
-
-    public ArrayList<Profile> getProfilesBD(){
-        profiles = hotelBDHelper.getAllProfiles();
-        return profiles;
+        return users = hotelBDHelper.getAllUsersBD();
     }
 
     public void adicionarUserBD(User user){
@@ -122,15 +117,8 @@ public class SingletonGestaoHotel {
         hotelBDHelper.removerAllUsers();
     }
 
-    public void adicionarProfileBD(Profile profile){
-        Profile auxProfile = hotelBDHelper.adicionarProfileBD(profile);
-        if(auxProfile!=null){
-            profiles.add(auxProfile);
-        }
-    }
-
     public void removerUserBD(int id){
-        User auxUser = getUser(id);
+        User auxUser = getUserBD(id);
 
         if(auxUser != null){
             if(hotelBDHelper.removerUserBD(auxUser.getId())){
@@ -140,23 +128,12 @@ public class SingletonGestaoHotel {
         }
     }
 
-    public void removerProfileBD(int id_user){
-        Profile auxProfile = getProfile(id_user);
-
-        if(auxProfile != null){
-            if(hotelBDHelper.removerProfileBD(auxProfile.getId_user())){
-                profiles.remove(auxProfile);
-                System.out.println("--> Profile removido");
-            }
-        }
-    }
-
     public void guardarUserBD(User user){
         if(!users.contains(user)){
             return;
         }
 
-        User auxUser = getUser(user.getId());
+        User auxUser = getUserBD(user.getId());
         auxUser.setUsername(user.getUsername());
         auxUser.setEmail(user.getEmail());
         auxUser.setPassword(user.getPassword());
@@ -166,11 +143,67 @@ public class SingletonGestaoHotel {
         }
     }
 
+
+    // <----------------------------------- PROFILE ----------------------------------->
+
+    public Profile getProfileBD(int id_user){
+        for (Profile p: profiles){
+            if(p.getId_user() == id_user){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Profile> getProfilesBD(){
+        profiles = hotelBDHelper.getAllProfilesBD();
+        return profiles;
+    }
+
+    public void adicionarProfileBD(Profile profile){
+        hotelBDHelper.adicionarProfileBD(profile);
+    }
+
+    public void removerProfileBD(int id_user){
+        Profile auxProfile = getProfileBD(id_user);
+
+        if(auxProfile != null){
+            if(hotelBDHelper.removerProfileBD(auxProfile.getId_user())){
+                profiles.remove(auxProfile);
+                System.out.println("--> Profile removido");
+            }
+        }
+    }
+
+    public void guardarProfileBD(Profile profile){
+        if(!profiles.contains(profile)){
+            return;
+        }
+
+        Profile auxProfile = getProfileBD(profile.getId_user());
+        auxProfile.setNome(profile.getNome());
+        auxProfile.setNif(profile.getNif());
+        auxProfile.setTelefone(profile.getTelefone());
+        auxProfile.setIs_admin(profile.getIs_admin());
+        auxProfile.setIs_cliente(profile.getIs_cliente());
+        auxProfile.setIs_funcionario(profile.getIs_funcionario());
+
+        if(hotelBDHelper.guardarProfileBD(auxProfile)){
+            System.out.println("--> Profile Guardado");
+        }
+    }
+
+
+
+    // <----------------------------- Métodos para atualizarem a API ----------------------------->
+
+    // <----------------------------------- USERS ----------------------------------->
+
     public  void getAllUsersAPI(final Context context, boolean isConected){
         Toast.makeText(context, "Is Connected", Toast.LENGTH_SHORT).show();
 
         if(!isConected){
-            users = hotelBDHelper.getAllUsers();
+            users = hotelBDHelper.getAllUsersBD();
 
             if(userListener != null){
                userListener.onRefreshListaUser(users);
@@ -197,25 +230,6 @@ public class SingletonGestaoHotel {
                 });
                 volleyQueue.add(req);
             }
-
-        }
-    }
-
-    public void guardarProfileBD(Profile profile){
-        if(!profiles.contains(profile)){
-            return;
-        }
-
-        Profile auxProfile = getProfile(profile.getId_user());
-        auxProfile.setNome(profile.getNome());
-        auxProfile.setNif(profile.getNif());
-        auxProfile.setTelefone(profile.getTelefone());
-        auxProfile.setIs_admin(profile.getIs_admin());
-        auxProfile.setIs_cliente(profile.getIs_cliente());
-        auxProfile.setIs_funcionario(profile.getIs_funcionario());
-
-        if(hotelBDHelper.guardarProfileBD(auxProfile)){
-            System.out.println("--> Profile Guardado");
         }
     }
 
