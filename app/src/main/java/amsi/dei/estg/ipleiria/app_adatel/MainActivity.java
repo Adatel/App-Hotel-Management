@@ -141,7 +141,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     call_action();
                 }
                 break;
-
+            case R.id.nav_terminarSessao:
+                sharedPreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
+                editor = sharedPreferences.edit();
+                        editor.remove("LOGIN");
+                        editor.commit();
+                        finish();
             default:
                 System.out.println("-->Nav Default");
         }

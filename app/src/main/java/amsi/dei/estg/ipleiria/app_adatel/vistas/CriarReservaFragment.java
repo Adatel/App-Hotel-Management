@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import amsi.dei.estg.ipleiria.app_adatel.R;
 
 /**
@@ -16,6 +18,7 @@ import amsi.dei.estg.ipleiria.app_adatel.R;
  */
 public class CriarReservaFragment extends Fragment {
 
+    public FloatingActionButton fab;
 
     public CriarReservaFragment() {
         // Required empty public constructor

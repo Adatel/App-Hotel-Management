@@ -17,11 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".MainActivity"
             android:launchMode="singleTop"
-            />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".vistas.DetalhesReservaClienteActivity"
