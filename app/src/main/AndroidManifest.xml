@@ -14,8 +14,8 @@
         android:roundIcon="@mipmap/ic_adatel_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"
@@ -23,9 +23,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity
-            android:name=".vistas.DetalhesReservaClienteActivity"
-            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".vistas.DetalhesReservaClienteActivity"
+                  android:parentActivityName=".MainActivity" />
 
         <activity android:name=".vistas.RegistarActivity" />
 

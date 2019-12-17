@@ -32,6 +32,15 @@
     <string name="classificacao_staff">Hospitalidade do staff:</string>
     <string name="classificacao_servicos">Classificação dos Serviços:</string>
     <string name="classificacao_geral">Classificação em Geral:</string>
+    <string name="registar_voltar">Voltar</string>
+    <string name="registar">Registar</string>
+    <string name="registar_introduza_a_password">Introduza a Password:</string>
+    <string name="registar_email">Introduza o seu Email:</string>
+    <string name="registar_utilizador">Introduza o seu Nome de Utilizador:</string>
+    <string name="registar_morada">Introduza a sua Morada:</string>
+    <string name="registar_telefone">Introduza o seu Numero de Telefone:</string>
+    <string name="registar_niff">Introduza o seu Nif:</string>
+    <string name="registar_nome">Introduza o seu Nome:</string>
     <string name="sobre">Sobre</string>
     <string name="quem_somos">Quem Somos?</string>
     <string name="onde_estamos">Onde Estamos?</string>

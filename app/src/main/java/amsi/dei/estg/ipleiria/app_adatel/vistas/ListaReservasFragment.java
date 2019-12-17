@@ -48,7 +48,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         View rootView = inflater.inflate(R.layout.fragment_listas, container, false);
 
         lvlistaReservas = rootView.findViewById(R.id.lvLista);
-        listaReservas = SingletonGestaoHotel.getInstance().getReservas();
+        listaReservas = SingletonGestaoHotel.getInstance(getContext()).getReservas();
         lvlistaReservas.setAdapter(new ListaReservaAdaptador(getContext(), listaReservas));
 
         //  <----------- Floating Button ----------->
@@ -72,7 +72,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Reserva tempReserva = (Reserva) parent.getItemAtPosition(position);
                 Toast.makeText(getContext(), "AQUI: " + tempReserva.getId(), Toast.LENGTH_SHORT).show();
-                idReserva = SingletonGestaoHotel.getInstance().getReserva(tempReserva.getId());
+                idReserva = SingletonGestaoHotel.getInstance(getContext()).getReserva(tempReserva.getId());
 
                 Intent intent = new Intent(getContext(), DetalhesReservaClienteActivity.class);
                 intent.putExtra(DetalhesReservaClienteActivity.CHAVE_ID, idReserva.getId());
@@ -104,7 +104,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
 
                 ArrayList<Reserva> tempListaLivros = new ArrayList<>();
 
-                for (Reserva tempReserva : SingletonGestaoHotel.getInstance().getReservas()) {
+                for (Reserva tempReserva : SingletonGestaoHotel.getInstance(getContext()).getReservas()) {
                     if(tempReserva.getDtEntrada().toLowerCase().contains(newText.toLowerCase())){
                         tempListaLivros.add(tempReserva);
                     }
@@ -135,7 +135,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
             searchView.onActionViewCollapsed();
         }
         super.onResume();
-        SingletonGestaoHotel.getInstance().getReservas();
+        SingletonGestaoHotel.getInstance(getContext()).getReservas();
     }
 
     @Override
@@ -144,7 +144,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         System.out.println("--> onRefreshListaReservas: " + listaReservas);
 /*
         ListaReservaAdaptador = new ListaReservaAdaptador(getContext(), listaReservas);
-        lvlistaReservas.setAdapter(listaReservaAdaptador);
+        lvlistaReservas.setAdapter(listaReservaAdaptador); 123@gmail.com
         ListaReservaAdaptador.refresh(listaReservas); */
     }
 

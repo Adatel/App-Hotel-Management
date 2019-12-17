@@ -2,16 +2,20 @@ package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import amsi.dei.estg.ipleiria.app_adatel.MainActivity;
 import amsi.dei.estg.ipleiria.app_adatel.R;
+import amsi.dei.estg.ipleiria.app_adatel.models.HotelBDHelper;
+import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
+import amsi.dei.estg.ipleiria.app_adatel.ultis.UserJsonParser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -22,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
     TextView registar;
+
+    HotelBDHelper hotelBDHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        Intent intent = new Intent(this, RegistarActivity.class);
-        startActivity(intent);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+        SingletonGestaoHotel.getInstance(getApplicationContext()).getAllUsersAPI(getApplicationContext(), UserJsonParser.isConnectionEthernet(getApplicationContext()));
+        startActivity(browserIntent);
     }
 
     public void onClickLogin(View view) {

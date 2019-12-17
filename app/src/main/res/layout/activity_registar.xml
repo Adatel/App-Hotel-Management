@@ -24,7 +24,7 @@
             <ImageView
                 android:id="@+id/imgLogo"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:layout_height="200dp"
                 app:srcCompat="@drawable/logotipo_circle_clear" />
 
             <LinearLayout
@@ -35,8 +35,7 @@
 
                 <Space
                     android:layout_width="25dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0" />
+                    android:layout_height="match_parent" />
 
 
                 <LinearLayout
@@ -46,27 +45,11 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/editTextEmail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0"
-                        android:ems="10"
-                        android:hint="Introduza o seu Email:"
-                        android:inputType="textEmailAddress"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#FFFFFF" />
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="15dp"
-                        android:layout_weight="0" />
-
-                    <EditText
                         android:id="@+id/editTextNome"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_weight="0"
-                        android:hint="Introduza o seu Nome:"
+                        android:hint="@string/registar_nome"
                         android:inputType="textPersonName"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#FFFFFF" />
@@ -77,12 +60,13 @@
                         android:layout_weight="0" />
 
                     <EditText
-                        android:id="@+id/editTextPassword"
+                        android:id="@+id/editTextNif"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:hint="Introduza a Password:"
-                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:hint="@string/registar_niff"
+                        android:inputType="number"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#FFFFFF" />
 
@@ -97,20 +81,89 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
                         android:ems="10"
-                        android:hint="Introduza o seu numero de telefone:"
+                        android:hint="@string/registar_telefone"
                         android:inputType="phone"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#FFFFFF" />
 
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_weight="0" />
+
+                    <EditText
+                        android:id="@+id/editTextMorada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:hint="@string/registar_morada"
+                        android:inputType="textPersonName"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"/>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_weight="0" />
+
+                    <EditText
+                        android:id="@+id/editTextUtilizador"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:hint="@string/registar_utilizador"
+                        android:inputType="textPersonName"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"/>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_weight="0" />
+
+                    <EditText
+                        android:id="@+id/editTextEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:ems="10"
+                        android:hint="@string/registar_email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_weight="0" />
+
+                    <EditText
+                        android:id="@+id/editTextPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_weight="0"
+                        android:hint="@string/registar_introduza_a_password"
+                        android:inputType="textPersonName"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_weight="0" />
+
 
                     <Button
-                        android:id="@+id/buttonLogin"
+                        android:id="@+id/buttonRegistar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|right"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
-                        android:text="Registar"
+                        android:onClick="onClickRegistar"
+                        android:text="@string/registar"
                         android:textColor="#FFFDFD"
                         android:textStyle="bold"
                         app:backgroundTint="@android:color/holo_blue_light" />
@@ -129,7 +182,7 @@
                         android:layout_marginEnd="16dp"
                         android:clickable="true"
                         android:onClick="onClickVoltar"
-                        android:text="Voltar"
+                        android:text="@string/registar_voltar"
                         android:textColor="#FFFDFD"
                         android:textStyle="bold"
                         app:backgroundTint="@android:color/holo_blue_light" />

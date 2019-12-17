@@ -63,10 +63,10 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(idReserva == -1){
-                    SingletonGestaoHotel.getInstance().adicionarReserva(adicionarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReserva(adicionarReserva());
                     finish();
                 } else {
-                    SingletonGestaoHotel.getInstance().editarReserva(editarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReserva(editarReserva());
                     finish();
                 }
             }
@@ -121,7 +121,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private void  mostrarReserva(int idReserva){
 
-        ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance().getReservas();
+        ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservas();
         reserva = reservas.get(idReserva -1);
 
         //setTitle("Reserva");
@@ -149,7 +149,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestaoHotel.getInstance().removerReserva(reservaSelecionada.getId());
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReserva(reservaSelecionada.getId());
                         finish();
                     }
                 })
