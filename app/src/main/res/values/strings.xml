@@ -47,4 +47,13 @@
     <string name="terminar_sess_o">Terminar Sessão</string>
     <string name="procurar_reserva">Procurar Reserva</string>
     <string name="cancelar_reserva">Cancelar Reserva</string>
+    <string name="criar_reserva_dtaEntrada">Data de Entrada:</string>
+    <string name="criar_reserva_dtaSaida">Data de Saída:</string>
+    <string name="criar_reserva_nPessoas">Num Pessoas:</string>
+    <string name="quartos">Quartos</string>
+    <string name="solteiro">Solteiro</string>
+    <string name="duplo">Duplo</string>
+    <string name="casal">Casal</string>
+    <string name="familia">Família</string>
+    <string name="enviar">Enviar</string>
 </resources>
