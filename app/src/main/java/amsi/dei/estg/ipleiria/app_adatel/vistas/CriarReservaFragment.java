@@ -54,7 +54,7 @@ public class CriarReservaFragment extends Fragment{
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                        // alterar a ordem da data dd/mm/yy
-                        etDtaEntrada.setText(day + "/" + month + "/" + year);
+                        etDtaEntrada.setText(day + "/" + (month+1) + "/" + year);
                     }
                 }, day,mes,year);
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
@@ -69,7 +69,7 @@ public class CriarReservaFragment extends Fragment{
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         // alterar a ordem da data dd/mm/yy
-                        etDtaSaida.setText(day + "/" + month + "/" + year);
+                        etDtaSaida.setText(day + "/" + (month+1)  + "/" + year);
                     }
                 }, day,mes,year);
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());

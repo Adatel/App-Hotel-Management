@@ -5,7 +5,6 @@
     android:id="@+id/LinearClassificacao"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C1F5F6F7"
     android:orientation="vertical">
 
     <ScrollView
@@ -125,8 +124,7 @@
                     android:id="@+id/btClassificacao"
                     android:layout_width="275dp"
                     android:layout_height="match_parent"
-                    android:text="@string/enviar"
-                    />
+                    android:text="@string/enviar" />
 
             </LinearLayout>
 
