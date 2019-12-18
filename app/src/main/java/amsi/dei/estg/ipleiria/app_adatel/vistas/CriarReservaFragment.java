@@ -1,12 +1,13 @@
 package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
 
 import amsi.dei.estg.ipleiria.app_adatel.R;
 
@@ -15,6 +16,7 @@ import amsi.dei.estg.ipleiria.app_adatel.R;
  */
 public class CriarReservaFragment extends Fragment {
 
+    private EditText entrada;
 
     public CriarReservaFragment() {
         // Required empty public constructor
@@ -27,6 +29,7 @@ public class CriarReservaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_criar_reserva, container, false);
 
     }
+
 }
 /*
 entrada = rootView.findViewById(R.id.etDataEntrada);
