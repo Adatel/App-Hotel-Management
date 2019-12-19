@@ -1,11 +1,15 @@
 package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -16,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import amsi.dei.estg.ipleiria.app_adatel.R;
 import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
@@ -29,6 +34,11 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     private EditText  dataEntrada, dataSaida, numeroPessoas, quartosSolteiro, quartosDuplo, quartosCasal, quartosFamilia;
     private Reserva reserva;
     private FloatingActionButton fab;
+
+    //Calendario
+    private Calendar calendar;
+    private DatePickerDialog datePickerDialog;
+    private int day,mes,year;
 
     private Reserva reservaSelecionada;
 
@@ -46,6 +56,50 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         quartosDuplo = findViewById(R.id.etDuplo);
         quartosFamilia = findViewById(R.id.etFamilia);
         fab = findViewById(R.id.fab);
+
+
+        /// <----------------------------Calendario--------------------------------->
+        ////God all mighty https://www.youtube.com/watch?v=-mJmScTAWyQ
+        ///Tem que ter a EditText android:focusable="false" para resultar
+
+        calendar = Calendar.getInstance();
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        mes = calendar.get(Calendar.MONTH);
+        year = calendar.get(Calendar.YEAR);
+
+        dataEntrada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog = new DatePickerDialog(DetalhesReservaClienteActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        // alterar a ordem da data dd/mm/yy
+                        dataEntrada.setText(day + "/" + (month+1)  + "/" + year);
+                    }
+                }, day,mes,year);
+                //Impede que o utilizador escolha uma data anterior à atual
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
+
+        dataSaida.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                datePickerDialog = new DatePickerDialog(DetalhesReservaClienteActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        // alterar a ordem da data dd/mm/yy
+                        dataSaida.setText(day + "/" + (month+1)  + "/" + year);
+                    }
+                }, day,mes,year);
+                //Impede que o utilizador escolha uma data anterior à atual
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+            }
+        });
+
+        // <----------------------------------Fab------------------------------------->
 
         // Recebe o id do livro como parâmentro e vai buscar o livro ao SingletonGestorLivros pelo id
         idReserva = getIntent().getIntExtra(CHAVE_ID,-1);

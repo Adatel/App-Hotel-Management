@@ -14,17 +14,16 @@
         android:roundIcon="@mipmap/ic_adatel_circle"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning"
-        android:usesCleartextTraffic="true">
-
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".vistas.DetalhesReservaClienteActivity"
-                  android:parentActivityName=".MainActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".vistas.DetalhesReservaClienteActivity"
+            android:parentActivityName=".MainActivity" />
 
         <activity android:name=".vistas.LoginActivity">
             <intent-filter>
