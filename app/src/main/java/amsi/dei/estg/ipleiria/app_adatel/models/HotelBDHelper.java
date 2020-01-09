@@ -35,13 +35,14 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     ///Campos da Tabela Reserva
     private static final String ID_RESERVA = "id";
     private static final String NUM_PESSOAS = "num_pessoas";
+    private static final String NUM_QUARTOS = "num_quartos";
     private static final String QUARTO_SOLTEIRO = "quarto_solteiro";
     private static final String QUARTO_DUPLO = "quarto_duplo";
     private static final String QUARTO_FAMILIA = "quarto_familia";
     private static final String QUARTO_CASAL = "quarto_casal";
     private static final String DATA_ENTRADA = "data_entrada";
     private static final String DATA_SAIDA = "data_saida";
-    private static final String ID_CLIENTE = "ic_cliente";
+    private static final String ID_CLIENTE = "id_cliente";
 
 
     private SQLiteDatabase database;
@@ -74,6 +75,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         String createReservaTable = "CREATE TABLE " + TABLE_RESERVA
                 + "(" + ID_RESERVA + " INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
                 + NUM_PESSOAS + " INTEGER NOT NULL, "
+                + NUM_QUARTOS + " INTEGER NOT NULL, "
                 + QUARTO_SOLTEIRO + " INTEGER NOT NULL, "
                 + QUARTO_DUPLO + " INTEGER NOT NULL, "
                 + QUARTO_FAMILIA + " INTEGER NOT NULL, "
@@ -148,7 +150,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     // <------------------- PROFILE ------------------->
 
 
-    public  ArrayList<Profile> getAllProfilesBD(){
+    public ArrayList<Profile> getAllProfilesBD(){
         ArrayList<Profile> tempProfile = new ArrayList<>();
 
         Cursor cursor = this.database.query(TABLE_PROFILE, new String[]{
@@ -203,19 +205,20 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         return  (this.database.delete(TABLE_PROFILE, "id = ?", new String[]{"" + id_user}) == 1);
     }
 
-    public void removerALLProfiles(){
+    public void removerALLProfilesDB(){
         this.database.delete(TABLE_PROFILE, null, null);
     }
 
 
     // <------------------- RESERVA ------------------->
 
-    public  ArrayList<Reserva> getAllReservasBD(){
+    public ArrayList<Reserva> getAllReservasBD(){
         ArrayList<Reserva> tempReserva = new ArrayList<>();
 
         Cursor cursor = this.database.query(TABLE_RESERVA, new String[]{
                 ID_RESERVA,
                 NUM_PESSOAS,
+                NUM_QUARTOS,
                 QUARTO_SOLTEIRO,
                 QUARTO_DUPLO,
                 QUARTO_FAMILIA,
@@ -227,8 +230,8 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         if(cursor.moveToNext()){
             do{
                 Reserva auxReserva = new Reserva(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
-                        cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),
-                        cursor.getString(6), cursor.getString(7), cursor.getInt(8));
+                        cursor.getInt(3),cursor.getInt(4),cursor.getInt(5), cursor.getInt(6),
+                        cursor.getString(7), cursor.getString(8), cursor.getInt(9));
             }while (cursor.moveToNext());
         }
         return tempReserva;
@@ -238,6 +241,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(NUM_PESSOAS, reserva.getNumPessoas());
+        values.put(NUM_QUARTOS, reserva.getNumQuartos());
         values.put(QUARTO_SOLTEIRO, reserva.getQuartoSol());
         values.put(QUARTO_DUPLO, reserva.getQuartoD());
         values.put(QUARTO_FAMILIA, reserva.getQuartoF());
@@ -253,6 +257,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(NUM_PESSOAS, reserva.getNumPessoas());
+        values.put(NUM_QUARTOS, reserva.getNumQuartos());
         values.put(QUARTO_SOLTEIRO, reserva.getQuartoSol());
         values.put(QUARTO_DUPLO, reserva.getQuartoD());
         values.put(QUARTO_FAMILIA, reserva.getQuartoF());

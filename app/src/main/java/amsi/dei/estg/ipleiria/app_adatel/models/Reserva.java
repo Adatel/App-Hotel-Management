@@ -5,13 +5,14 @@ import java.io.Serializable;
 public class Reserva implements Serializable {
 
     // Atributos
-    private int id, n_pessoas, quarto_s, quarto_d, quarto_f, quarto_c, id_cliente;
+    private int id, n_pessoas, num_quartos, quarto_s, quarto_d, quarto_f, quarto_c, id_cliente;
     private String dt_entrada, dt_saida;
 
-    public Reserva(int idReserva, int num_pessoas, int quarto_solteiro, int quarto_duplo, int quarto_familia, int quarto_casal, String data_entrada, String data_saida, int id_cliente){
+    public Reserva(int idReserva, int num_pessoas, int num_quartos, int quarto_solteiro, int quarto_duplo, int quarto_familia, int quarto_casal, String data_entrada, String data_saida, int id_cliente){
 
         this.id = idReserva;
         this.n_pessoas = num_pessoas;
+        this.num_quartos = num_quartos;
         this.quarto_s = quarto_solteiro;
         this.quarto_d = quarto_duplo;
         this.quarto_f = quarto_familia;
@@ -94,4 +95,14 @@ public class Reserva implements Serializable {
     public void setIdCliente(int id_cliente) {
         this.id_cliente = id_cliente;
     }
+
+    public int getNumQuartos() {
+        return num_quartos;
+    }
+
+    public void setNumQuartos(int num_quartos) {
+        this.num_quartos = num_quartos;
+    }
+
+
 }

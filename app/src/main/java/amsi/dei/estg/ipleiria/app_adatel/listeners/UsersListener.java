@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import amsi.dei.estg.ipleiria.app_adatel.models.User;
 
-public interface UserListener {
+public interface UsersListener {
+
     void onRefreshListaUser(ArrayList<User> listaLivros);
     void onUpdateListaUserBD(User user , int operacao);
 }

@@ -8,23 +8,29 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import amsi.dei.estg.ipleiria.app_adatel.listeners.UserListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
+import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
-public class SingletonGestaoHotel {
+public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener {
 
     private  static RequestQueue volleyQueue = null;
 
     //private String token = "AMSI-TOKEN";
-    private String mUrlAPIUSERS = "http://localhost:8081/api/users";
-    private String mUrlAPIPROFILES = "http://localhost:8081/api/profiles";
-    private String mUrlAPIRESERVAS = "http://localhost:8081/api/reservas";
+    private String mUrlAPIUSERS = "http://10.200.18.207:8081/api/users";
+    private String mUrlAPIPROFILES = "http://10.200.18.207:8081/api/profiles";
+    private String mUrlAPIRESERVAS = "http://10.200.18.207:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
@@ -34,7 +40,9 @@ public class SingletonGestaoHotel {
     private static SingletonGestaoHotel INSTANCE = null;
     private HotelBDHelper hotelBDHelper = null;
 
-    private UserListener userListener;
+    private UsersListener userListener;
+    private ReservasListener reservasListener;
+
 
     public static synchronized SingletonGestaoHotel getInstance(Context context) {
         if(INSTANCE == null){
@@ -48,50 +56,13 @@ public class SingletonGestaoHotel {
         ///Adicionei
         users = new ArrayList<>();
         profiles = new ArrayList<>();
-
         reservas = new ArrayList<>();
-        //gerarFakeData();
+
         hotelBDHelper = new HotelBDHelper(context);
     }
 
 
     // <--------------  Métodos para garantir que os dados da BD estão atualizados com os dados vindos da API -------------->
-
-
-    // <----------------------------------- RESERVAS ----------------------------------->
-
-    public ArrayList<Reserva> getReservasBD(){
-        return reservas;
-    }
-
-    public Reserva getReservaBD(long idReserva){
-        for(Reserva r: reservas){
-            if(r.getId() == idReserva){
-                return r;
-            }
-        }
-        return null;
-    }
-
-    public void adicionarReservaBD(Reserva reserva){
-        reservas.add(reserva);
-    }
-
-    public void removerReservaBD(int idReserva){
-        Reserva auxReserva = getReservaBD(idReserva);
-        reservas.remove(auxReserva);
-    }
-
-    public void editarReservaBD(Reserva reserva){
-        if(!reservas.contains(reserva)){
-            return;
-        }
-        Reserva auxReserva = getReservaBD(reserva.getId());
-        auxReserva.setDtEntrada(reserva.getDtEntrada());
-        auxReserva.setDtSaida(reserva.getDtSaida());
-        auxReserva.setNumPessoas(reserva.getNumPessoas());
-        //auxReserva.setNumQuartos(reserva.getNumQuartos());
-    }
 
 
     // <----------------------------------- USERS ----------------------------------->
@@ -165,6 +136,11 @@ public class SingletonGestaoHotel {
         hotelBDHelper.adicionarProfileBD(profile);
     }
 
+    public void adicionarProfilesBD(ArrayList<Profile> profiles){
+        hotelBDHelper.removerALLProfilesDB();
+    }
+
+
     public void removerProfileBD(int id_user){
         Profile auxProfile = getProfileBD(id_user);
 
@@ -193,6 +169,47 @@ public class SingletonGestaoHotel {
             System.out.println("--> Profile Guardado");
         }
     }
+
+
+    // <----------------------------------- RESERVAS ----------------------------------->
+
+    public ArrayList<Reserva> getReservasBD(){
+        return reservas;
+    }
+
+    public Reserva getReservaBD(long idReserva){
+        for(Reserva r: reservas){
+            if(r.getId() == idReserva){
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarReservaBD(Reserva reserva){
+        reservas.add(reserva);
+    }
+
+    public void adicionarReservasBD(ArrayList<Reserva> reservas){
+        hotelBDHelper.removerALLReservasDB();
+    }
+
+    public void removerReservaBD(int idReserva){
+        Reserva auxReserva = getReservaBD(idReserva);
+        reservas.remove(auxReserva);
+    }
+
+    public void guardarReservaBD(Reserva reserva){
+        if(!reservas.contains(reserva)){
+            return;
+        }
+        Reserva auxReserva = getReservaBD(reserva.getId());
+        auxReserva.setDtEntrada(reserva.getDtEntrada());
+        auxReserva.setDtSaida(reserva.getDtSaida());
+        auxReserva.setNumPessoas(reserva.getNumPessoas());
+        //auxReserva.setNumQuartos(reserva.getNumQuartos());
+    }
+
 
 
 
@@ -233,6 +250,213 @@ public class SingletonGestaoHotel {
             }
         }
     }
+
+
+    // <----------------------------------- PROFILES ----------------------------------->
+
+
+
+    // <----------------------------------- RESERVAS ----------------------------------->
+
+    // Vai buscar as reservas todas à API
+    public void getAllReservasAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            reservas = hotelBDHelper.getAllReservasBD();
+
+            if(reservasListener != null){
+                reservasListener.onRefreshListaReservas(reservas);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIRESERVAS, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    reservas = ReservaJsonParser.parserJsonLReservas(response, context);
+                    System.out.println("--> RESPOSTA: " + reservas);
+                    adicionarReservasBD(reservas);
+
+                    if(reservasListener != null){
+                        reservasListener.onRefreshListaReservas(reservas);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
+                }
+            });
+
+            volleyQueue.add(req);
+        }
+    }
+
+    // Adicionar 1 só livro à API
+    public void adicionarReservaAPI(final Reserva reserva, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIRESERVAS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA ADD POST: " + response);
+
+                if(reservasListener != null){
+                    reservasListener.onUpdateListaReservasBD(ReservaJsonParser.parserJsonReservas(response, context), 1);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("--> ERRO: adicionarReservasAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("num_pessoas", reserva.getNumPessoas() + "");
+                //params.put("num_quartos", reserva.getNumQuartos() + "");        // Os Nomes
+                params.put("quarto_solteiro", reserva.getQuartoSol() + "");     // têm de
+                params.put("quarto_duplo", reserva.getQuartoD() + "");          // corresponder
+                params.put("quarto_familia", reserva.getQuartoF() + "");        // aos da
+                params.put("quarto_casal", reserva.getQuartoC() + "");          // API
+                params.put("data_entrada", reserva.getDtEntrada());
+                params.put("data_saida", reserva.getDtSaida());
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    // Remove a reserva da API
+    public void removerReservaAPI(final Reserva reserva){
+
+        final StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIRESERVAS + '/' + reserva.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA REMOVER: " + response);
+
+                if(reservasListener != null){
+                    reservasListener.onUpdateListaReservasBD(reserva,3);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: removerReservaAPI: " + error.getMessage());
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    // Atualiza a reserva na API
+    public void editarReservaAPI(final Reserva reserva, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIRESERVAS + '/' + reserva.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> editarReservaAPI: " + response);
+
+                if(reservasListener != null){
+                    reservasListener.onUpdateListaReservasBD(ReservaJsonParser.parserJsonReservas(response, context), 2);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: editarReservaAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("num_pessoas", reserva.getNumPessoas() + "");
+               // params.put("num_quartos", reserva.getNumQuartos() + "");         // Os Nomes
+                params.put("quarto_solteiro", reserva.getQuartoSol() + "");      // têm de
+                params.put("quarto_duplo", reserva.getQuartoD() + "");           // corresponder
+                params.put("quarto_familia", reserva.getQuartoF() + "");         // aos da
+                params.put("quarto_casal", reserva.getQuartoC() + "");           // API
+                params.put("data_entras", reserva.getDtEntrada());
+                params.put("data_saida", reserva.getDtSaida());
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+
+    public void setReservasListener(ReservasListener reservasListener){
+
+        this.reservasListener = reservasListener;
+    }
+
+
+
+
+    // <------------------------------------------- Métodos OnRefresh e OnUpdate ------------------------------------------->
+
+    // <--------------------------------------- USERS --------------------------------------->
+
+    @Override
+    public void onRefreshListaUser(ArrayList<User> listaLivros) {
+
+    }
+
+    @Override
+    public void onUpdateListaUserBD(User user, int operacao) {
+
+    }
+
+
+    // <--------------------------------------- PROFILES --------------------------------------->
+
+    @Override
+    public void onRefreshListaProfiles(ArrayList<Profile> listaProfiles) {
+
+    }
+
+    @Override
+    public void onUpdateListaProfilesBD(Profile livro, int operacao) {
+
+    }
+
+
+    // <--------------------------------------- RESERVAS --------------------------------------->
+
+    @Override
+    public void onRefreshListaReservas(ArrayList<Reserva> listaReservas) {
+
+    }
+
+    @Override
+    public void onUpdateListaReservasBD(Reserva reserva, int operacao) {
+
+        System.out.println("--> Entrou update lista reservasBD");
+
+        switch (operacao){
+            case 1: adicionarReservaBD(reserva);
+                break;
+            case 2: guardarReservaBD(reserva);
+                break;
+            case 3: removerReservaBD(reserva.getId());
+                break;
+
+        }
+    }
+
+
+
+    // <----------------------------------------------------------------------------------------------------->
 
     private void gerarFakeData(){
         /*

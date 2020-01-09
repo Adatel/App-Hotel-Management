@@ -26,6 +26,7 @@ import amsi.dei.estg.ipleiria.app_adatel.adaptador.ListaReservaAdaptador;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
 import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
+import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 
 
 /**
@@ -48,8 +49,8 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         View rootView = inflater.inflate(R.layout.fragment_listas, container, false);
 
         lvlistaReservas = rootView.findViewById(R.id.lvLista);
-        listaReservas = SingletonGestaoHotel.getInstance(getContext()).getReservasBD();
-        lvlistaReservas.setAdapter(new ListaReservaAdaptador(getContext(), listaReservas));
+        //listaReservas = SingletonGestaoHotel.getInstance(getContext()).getReservasBD();
+        //lvlistaReservas.setAdapter(new ListaReservaAdaptador(getContext(), listaReservas));
 
         //  <----------- Floating Button ----------->
 
@@ -70,15 +71,22 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         lvlistaReservas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 Reserva tempReserva = (Reserva) parent.getItemAtPosition(position);
-                Toast.makeText(getContext(), "AQUI: " + tempReserva.getId(), Toast.LENGTH_SHORT).show();
-                idReserva = SingletonGestaoHotel.getInstance(getContext()).getReservaBD(tempReserva.getId());
+                //Toast.makeText(getContext(), "AQUI: " + tempReserva.getId(), Toast.LENGTH_SHORT).show();
+                //idReserva = SingletonGestaoHotel.getInstance(getContext()).getReservaBD(tempReserva.getId());
 
                 Intent intent = new Intent(getContext(), DetalhesReservaClienteActivity.class);
-                intent.putExtra(DetalhesReservaClienteActivity.CHAVE_ID, idReserva.getId());
+                intent.putExtra(DetalhesReservaClienteActivity.CHAVE_ID, tempReserva.getId());
                 startActivity(intent);
             }
         });
+
+
+        // Fragment à escuta do Listener
+        SingletonGestaoHotel.getInstance(getContext()).setReservasListener(this);
+        SingletonGestaoHotel.getInstance(getContext()).getAllReservasAPI(getContext(), ReservaJsonParser.isConnectionInternet(getContext()));
+
         return rootView;
     }
 

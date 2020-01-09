@@ -119,7 +119,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                     SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaBD(adicionarReserva());
                     finish();
                 } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaBD(editarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).guardarReservaBD(editarReserva());
                     finish();
                 }
             }
@@ -129,7 +129,14 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private Reserva adicionarReserva(){
 
-        Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), Integer.parseInt(quartosSolteiro.getText().toString()), Integer.parseInt(quartosDuplo.getText().toString()), Integer.parseInt(quartosFamilia.getText().toString()), Integer.parseInt(quartosCasal.getText().toString()),  dataEntrada.getText().toString(), dataSaida.getText().toString(), 1);
+        int quartoS = Integer.parseInt(quartosSolteiro.getText().toString());
+        int quartoD = Integer.parseInt(quartosDuplo.getText().toString());
+        int quartoF = Integer.parseInt(quartosFamilia.getText().toString());
+        int quartoC = Integer.parseInt(quartosCasal.getText().toString());
+
+        int numeroQuartos = quartoS + quartoD + quartoF + quartoC;
+
+        Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), numeroQuartos, quartoS, quartoD, quartoF, quartoC,  dataEntrada.getText().toString(), dataSaida.getText().toString(), 1);
         return auxiliar;
     }
 

@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
         String login = sharedPreferences.getString("LOGIN", null);
-        System.out.println("--> SAFAS" + login);
+        System.out.println("--> " + login);
 
         if(login != null) {
             // Arranca para a MainActivity

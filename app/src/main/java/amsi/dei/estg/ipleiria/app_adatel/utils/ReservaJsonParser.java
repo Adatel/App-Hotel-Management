@@ -27,8 +27,9 @@ public class ReservaJsonParser {
 
                 JSONObject reserva = (JSONObject)response.get(i);
 
-                int idReserva = reserva.getInt("id");                                  // Nomes
-                int num_pessoas = reserva.getInt("num_pessoas");                       // iguais aos
+                int idReserva = reserva.getInt("id");
+                int num_pessoas = reserva.getInt("num_pessoas");                       // Nomes
+                int num_quartos = reserva.getInt("num_quartos");                       // iguais aos
                 int quartoSolteiro = reserva.getInt("quarto_solteiro");                // que estão
                 int quartoDuplo = reserva.getInt("quarto_duplo");                      // na API
                 int quartoFamilia = reserva.getInt("quarto_familia");
@@ -37,7 +38,7 @@ public class ReservaJsonParser {
                 String dataSaida = reserva.getString("data_saida");
                 int idCliente = reserva.getInt("id_cliente");
 
-                Reserva auxReserva = new Reserva(idReserva, num_pessoas, quartoSolteiro, quartoDuplo, quartoFamilia, quartoCasal, dataEntrada, dataSaida, idCliente);
+                Reserva auxReserva = new Reserva(idReserva, num_pessoas, num_quartos, quartoSolteiro, quartoDuplo, quartoFamilia, quartoCasal, dataEntrada, dataSaida, idCliente);
 
                 tempListaReservas.add(auxReserva);
             }
@@ -52,7 +53,7 @@ public class ReservaJsonParser {
 
 
     // Devolve uma Reserva vinda da API
-    public static Reserva parserJsonLivros(String response, Context context){
+    public static Reserva parserJsonReservas(String response, Context context){
 
         System.out.println("--> PARSER ADICIONAR: " + response);
         Reserva auxReserva = null;
@@ -60,8 +61,9 @@ public class ReservaJsonParser {
         try {
             JSONObject reserva = new JSONObject(response);
 
-            int idReserva = reserva.getInt("id");                                  // Nomes
-            int num_pessoas = reserva.getInt("num_pessoas");                       // iguais aos
+            int idReserva = reserva.getInt("id");
+            int num_pessoas = reserva.getInt("num_pessoas");                       // Nomes
+            int num_quartos = reserva.getInt("num_quartos");                       // iguais aos
             int quartoSolteiro = reserva.getInt("quarto_solteiro");                // que estão
             int quartoDuplo = reserva.getInt("quarto_duplo");                      // na API
             int quartoFamilia = reserva.getInt("quarto_familia");
@@ -70,7 +72,7 @@ public class ReservaJsonParser {
             String dataSaida = reserva.getString("data_saida");
             int idCliente = reserva.getInt("id_cliente");
 
-            auxReserva = new Reserva(idReserva, num_pessoas, quartoSolteiro, quartoDuplo, quartoFamilia, quartoCasal, dataEntrada, dataSaida, idCliente);
+            auxReserva = new Reserva(idReserva, num_pessoas, num_quartos, quartoSolteiro, quartoDuplo, quartoFamilia, quartoCasal, dataEntrada, dataSaida, idCliente);
 
         }
         catch (JSONException e)
