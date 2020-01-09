@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,6 +58,22 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         quartosFamilia = findViewById(R.id.etFamilia);
         fab = findViewById(R.id.fab);
 
+        // Recebe o id da reserva como parâmentro e vai buscar a reserva ao SingletonGestaoHotel pelo id
+        idReserva = getIntent().getIntExtra(CHAVE_ID,-1);
+
+
+        System.out.println("--> " + dataSaida);
+
+        if(idReserva == -1){
+            setTitle("Adicionar Reserva");
+            System.out.println("adicionar");
+            fab.setImageResource(R.drawable.ic_adicionar);
+        } else {
+            System.out.println("Reserva: " + idReserva);
+            mostrarReserva(idReserva);
+            //System.out.println("Reserva: " + idReserva);
+            fab.setImageResource(R.drawable.ic_alterar);
+        }
 
         /// <----------------------------Calendario--------------------------------->
         ////God all mighty https://www.youtube.com/watch?v=-mJmScTAWyQ
@@ -100,17 +117,6 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         });
 
         // <----------------------------------Fab------------------------------------->
-
-        // Recebe o id do livro como parâmentro e vai buscar o livro ao SingletonGestorLivros pelo id
-        idReserva = getIntent().getIntExtra(CHAVE_ID,-1);
-
-        if(idReserva == -1){
-            setTitle("Criar Reserva");
-            fab.setImageResource(R.drawable.ic_adicionar);
-        } else {
-            mostrarReserva(idReserva);
-            fab.setImageResource(R.drawable.ic_alterar);
-        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,17 +187,16 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private void  mostrarReserva(int idReserva){
 
-        ArrayList<Reserva> reservas = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservasBD();
-        reserva = reservas.get(idReserva -1);
-
+        reservaSelecionada = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservaBD(idReserva);
+        System.out.println("--> ReservaSelecionada: " + reservaSelecionada);
         //setTitle("Reserva");
-        dataEntrada.setText(reserva.getDtEntrada());
-        dataSaida.setText(reserva.getDtSaida());
-        numeroPessoas.setText(reserva.getNumPessoas() + "");
-        quartosSolteiro.setText(reserva.getQuartoSol() + "");
-        quartosDuplo.setText(reserva.getQuartoD() + "");
-        quartosCasal.setText(reserva.getQuartoC() + "");
-        quartosFamilia.setText(reserva.getQuartoF() + "");
+        dataEntrada.setText(reservaSelecionada.getDtEntrada());
+        dataSaida.setText(reservaSelecionada.getDtSaida());
+        numeroPessoas.setText(reservaSelecionada.getNumPessoas()+"");
+        quartosSolteiro.setText(reservaSelecionada.getQuartoSol()+"");
+        quartosDuplo.setText(reservaSelecionada.getQuartoD()+"");
+        quartosCasal.setText(reservaSelecionada.getQuartoC()+"");
+        quartosFamilia.setText(reservaSelecionada.getQuartoF()+"");
     }
 
 

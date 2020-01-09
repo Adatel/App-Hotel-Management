@@ -27,10 +27,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     private  static RequestQueue volleyQueue = null;
 
-    //private String token = "AMSI-TOKEN";
-    private String mUrlAPIUSERS = "http://10.200.18.207:8081/api/users";
-    private String mUrlAPIPROFILES = "http://10.200.18.207:8081/api/profiles";
-    private String mUrlAPIRESERVAS = "http://10.200.18.207:8081/api/reservas";
+    private String token = "25rypW1GEGiIIH0vsoysuGTn_BiFaaNX";
+    private String mUrlAPIUSERS = "http://10.200.26.78:8081/api/users";
+    private String mUrlAPIPROFILES = "http://10.200.26.78:8081/api/profiles";
+    private String mUrlAPIRESERVAS = "http://10.200.26.78:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
@@ -276,7 +276,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 public void onResponse(JSONArray response) {
 
                     reservas = ReservaJsonParser.parserJsonLReservas(response, context);
-                    System.out.println("--> RESPOSTA: " + reservas);
+                    //System.out.println("--> RESPOSTA: " + reservas);
                     adicionarReservasBD(reservas);
 
                     if(reservasListener != null){
@@ -287,7 +287,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
+                    //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
                 }
             });
 

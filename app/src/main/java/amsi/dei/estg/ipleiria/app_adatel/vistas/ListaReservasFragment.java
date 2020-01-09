@@ -38,7 +38,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
     private ListView lvlistaReservas;
     private SearchView searchView;
     private Reserva idReserva;
-
+    private ListaReservaAdaptador listaReservaAdaptador;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -149,11 +149,11 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
     @Override
     public void onRefreshListaReservas(ArrayList<Reserva> listaReservas) {
 
-        System.out.println("--> onRefreshListaReservas: " + listaReservas);
-/*
-        ListaReservaAdaptador = new ListaReservaAdaptador(getContext(), listaReservas);
-        lvlistaReservas.setAdapter(listaReservaAdaptador); 123@gmail.com
-        ListaReservaAdaptador.refresh(listaReservas); */
+        //System.out.println("--> onRefreshListaReservas: " + listaReservas);
+
+        listaReservaAdaptador = new ListaReservaAdaptador(getContext(), listaReservas);
+        lvlistaReservas.setAdapter(listaReservaAdaptador); //123@gmail.com
+        //listaReservaAdaptador.refresh(listaReservas);
     }
 
     @Override
