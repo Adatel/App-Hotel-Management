@@ -128,6 +128,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 break;
 
+            case R.id.nav_quemSomos:
+                fragment = new InfoFragment();
+                setTitle(menuItem.getTitle());
+                break;
+
             case R.id.nav_ondeEstamos:
                 String uri = "http://maps.google.com/maps?q=loc:" + 39.734823  + "," + -8.821746;
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));

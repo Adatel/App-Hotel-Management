@@ -20,10 +20,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Space
-                    android:layout_width="15dp"
-                    android:layout_height="match_parent" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -34,25 +30,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp" />
 
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        app:srcCompat="@drawable/logotipo_circle" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvQuarto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0"
-                            android:text="Escolha uma opção:"
-                            android:textSize="18sp" />
-
-                        <Spinner
-                            android:id="@+id/spQuarto"
+                            android:id="@+id/tvCurso"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="0" />
-
+                            android:gravity="center"
+                            android:text="Curso Técnico Superior Profissional de Programação de Sistemas de Informação"
+                            android:textColor="@android:color/background_dark"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <Space
@@ -65,21 +66,18 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvCategoria"
+                            android:id="@+id/tvAluno1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Escolha uma opção:"
+                            android:gravity="center"
+                            android:text="2180684 - Afonso Araújo"
+                            android:textColor="@android:color/background_dark"
                             android:textSize="18sp" />
-
-                        <Spinner
-                            android:id="@+id/spCategoria"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="25dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -87,21 +85,18 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvProduto"
+                            android:id="@+id/tvAluno2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Escolha uma opção:"
+                            android:gravity="center"
+                            android:text="2180643 - Alex Pereira"
+                            android:textColor="@android:color/background_dark"
                             android:textSize="18sp" />
-
-                        <Spinner
-                            android:id="@+id/spProduto"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
                     </LinearLayout>
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="25dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -109,18 +104,13 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/tvQuantidade"
+                            android:id="@+id/tvAluno3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Quantidade:"
+                            android:gravity="center"
+                            android:text="2191054 - Diana Gomes"
+                            android:textColor="@android:color/background_dark"
                             android:textSize="18sp" />
-
-                        <EditText
-                            android:id="@+id/etQuantidade"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:ems="10"
-                            android:inputType="textPersonName" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -128,12 +118,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_adicionar" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

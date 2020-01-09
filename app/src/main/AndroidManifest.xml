@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".vistas.DetalhesServicoQuartosActivity"></activity>
+        <activity android:name=".vistas.DetalhesServicoQuartosActivity" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
