@@ -1,4 +1,4 @@
-package amsi.dei.estg.ipleiria.app_adatel;
+package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import amsi.dei.estg.ipleiria.app_adatel.R;
 
 
 /**
