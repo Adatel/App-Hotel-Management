@@ -91,7 +91,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         // alterar a ordem da data dd/mm/yy
-                        dataEntrada.setText(day + "/" + (month+1)  + "/" + year);
+                        dataEntrada.setText(year + "-" + (month+1)  + "-" + day);
                     }
                 }, day,mes,year);
                 //Impede que o utilizador escolha uma data anterior à atual
@@ -107,7 +107,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         // alterar a ordem da data dd/mm/yy
-                        dataSaida.setText(day + "/" + (month+1)  + "/" + year);
+                        dataSaida.setText(year + "-" + (month+1)  + "-" + day);
                     }
                 }, day,mes,year);
                 //Impede que o utilizador escolha uma data anterior à atual

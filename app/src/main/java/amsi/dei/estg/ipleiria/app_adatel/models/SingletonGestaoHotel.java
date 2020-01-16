@@ -8,10 +8,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,9 +30,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private  static RequestQueue volleyQueue = null;
 
     private String token = "25rypW1GEGiIIH0vsoysuGTn_BiFaaNX";
-    private String mUrlAPIUSERS = "http://10.200.26.78:8081/api/users";
-    private String mUrlAPIPROFILES = "http://10.200.26.78:8081/api/profiles";
-    private String mUrlAPIRESERVAS = "http://10.200.26.78:8081/api/reservas";
+    private String mUrlAPIUSERS = "http://10.200.13.39:8081/api/users";
+    private String mUrlAPIPROFILES = "http://10.200.13.39:8081/api/profiles";
+    private String mUrlAPIRESERVAS = "http://10.200.13.39:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
@@ -257,6 +259,30 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
 
     // <----------------------------------- RESERVAS ----------------------------------->
+
+    /*
+    public void getReservaAPI(final Reserva reserva, boolean isConnected){
+
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+           // reservas = hotelBDHelper.getAllReservasBD();
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            final StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIRESERVAS + "/" + reserva.getId(), null, new Response.Listener<StringRequest>() {
+                @Override
+                public void onResponse(StringRequest response) {
+
+                }
+
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getReservaAPI: " + error.getMessage());
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }*/
 
     // Vai buscar as reservas todas à API
     public void getAllReservasAPI(final Context context, boolean isConnected){
