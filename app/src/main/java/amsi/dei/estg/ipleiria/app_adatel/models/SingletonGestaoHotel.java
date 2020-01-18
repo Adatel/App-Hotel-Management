@@ -29,10 +29,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     private  static RequestQueue volleyQueue = null;
 
-    private String token = "25rypW1GEGiIIH0vsoysuGTn_BiFaaNX";
-    private String mUrlAPIUSERS = "http://10.200.13.39:8081/api/users";
-    private String mUrlAPIPROFILES = "http://10.200.13.39:8081/api/profiles";
-    private String mUrlAPIRESERVAS = "http://10.200.13.39:8081/api/reservas";
+    private int idCliente = 25;
+    private String mUrlAPIUSERS = "http://192.168.1.67:8081/api/users";
+    private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
+    private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
 
     ///Adicionei
     private ArrayList<User> users;
@@ -297,7 +297,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             }
         } else {
             //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIRESERVAS, null, new Response.Listener<JSONArray>() {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIUSERS + "/" + idCliente + "/reservas", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
 
@@ -345,13 +345,14 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
                 Map<String, String> params = new HashMap<>();
                 params.put("num_pessoas", reserva.getNumPessoas() + "");
-                //params.put("num_quartos", reserva.getNumQuartos() + "");        // Os Nomes
+                params.put("num_quartos", reserva.getNumQuartos() + "");        // Os Nomes
                 params.put("quarto_solteiro", reserva.getQuartoSol() + "");     // têm de
                 params.put("quarto_duplo", reserva.getQuartoD() + "");          // corresponder
                 params.put("quarto_familia", reserva.getQuartoF() + "");        // aos da
                 params.put("quarto_casal", reserva.getQuartoC() + "");          // API
                 params.put("data_entrada", reserva.getDtEntrada());
                 params.put("data_saida", reserva.getDtSaida());
+                params.put("id_cliente", idCliente + "");
 
                 return params;
             }
@@ -406,13 +407,14 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
                 Map<String, String> params = new HashMap<>();
                 params.put("num_pessoas", reserva.getNumPessoas() + "");
-               // params.put("num_quartos", reserva.getNumQuartos() + "");         // Os Nomes
+                params.put("num_quartos", reserva.getNumQuartos() + "");         // Os Nomes
                 params.put("quarto_solteiro", reserva.getQuartoSol() + "");      // têm de
                 params.put("quarto_duplo", reserva.getQuartoD() + "");           // corresponder
                 params.put("quarto_familia", reserva.getQuartoF() + "");         // aos da
                 params.put("quarto_casal", reserva.getQuartoC() + "");           // API
-                params.put("data_entras", reserva.getDtEntrada());
+                params.put("data_entrada", reserva.getDtEntrada());
                 params.put("data_saida", reserva.getDtSaida());
+                params.put("id_cliente", idCliente + "");
 
                 return params;
             }

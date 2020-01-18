@@ -122,10 +122,10 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(idReserva == -1){
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaBD(adicionarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaAPI(adicionarReserva(), getApplicationContext());
                     finish();
                 } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).guardarReservaBD(editarReserva());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaAPI(editarReserva(), getApplicationContext());
                     finish();
                 }
             }
@@ -148,11 +148,12 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
     private Reserva editarReserva(){
 
+        Toast.makeText(this, "" + Integer.parseInt(quartosSolteiro.getText().toString()), Toast.LENGTH_SHORT).show();
         reservaSelecionada.setNumPessoas(Integer.parseInt(numeroPessoas.getText().toString()));
         reservaSelecionada.setQuartoSol(Integer.parseInt(quartosSolteiro.getText().toString()));
         reservaSelecionada.setQuartoD(Integer.parseInt(quartosDuplo.getText().toString()));
         reservaSelecionada.setQuartoF(Integer.parseInt(quartosFamilia.getText().toString()));
-        reservaSelecionada.setQuartoF(Integer.parseInt(quartosCasal.getText().toString()));
+        reservaSelecionada.setQuartoC(Integer.parseInt(quartosCasal.getText().toString()));
         reservaSelecionada.setDtEntrada(dataEntrada.getText().toString());
         reservaSelecionada.setDtSaida(dataSaida.getText().toString());
 
@@ -214,7 +215,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaBD(reservaSelecionada.getId());
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaAPI(reservaSelecionada);
                         finish();
                     }
                 })
