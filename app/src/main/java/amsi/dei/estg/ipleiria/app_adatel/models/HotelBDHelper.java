@@ -15,6 +15,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "User";
     private static final String TABLE_PROFILE = "Profile";
     private static final String TABLE_RESERVA = "Reserva";
+    private static final String TABLE_PEDIDO = "Pedido";
 
     ///Campos da Tabela User
     private static final String ID = "id";
@@ -44,6 +45,12 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String DATA_SAIDA = "data_saida";
     private static final String ID_CLIENTE = "id_cliente";
 
+    ///Campos da Tabela Pedidos
+    private static final String ID_PEDIDO = "id";
+    private static final String CUSTO = "custo";
+    private static final String ID_RESERVAQUARTO = "id_reservaquarto";
+    private static final String ID_FUNCIONARIO = "id_funcionario";
+    private static final String DATA_HORA = "data_hora";
 
     private SQLiteDatabase database;
 
@@ -84,6 +91,8 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                 + DATA_SAIDA + " INTEGER NOT NULL, "
                 + ID_CLIENTE + " INTEGER);";
         db.execSQL(createReservaTable);
+
+
     }
 
     @Override
@@ -275,6 +284,25 @@ public class HotelBDHelper extends SQLiteOpenHelper {
 
     public void removerALLReservasDB(){
         this.database.delete(TABLE_RESERVA, null, null);
+    }
+
+    public ArrayList<Pedido> getAllPedidosBD(){
+        ArrayList<Pedido> tempPedido = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_PEDIDO, new String[]{
+                ID_PEDIDO,
+                CUSTO,
+                ID_RESERVAQUARTO,
+                ID_FUNCIONARIO,
+                DATA_HORA},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Pedido auxPedido = new Pedido(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
+                        cursor.getInt(3),cursor.getString(4));
+            }while (cursor.moveToNext());
+        }
+        return tempPedido;
     }
 
 }

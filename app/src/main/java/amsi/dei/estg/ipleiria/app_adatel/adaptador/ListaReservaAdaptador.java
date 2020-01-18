@@ -59,7 +59,8 @@ public class ListaReservaAdaptador extends BaseAdapter {
     }
 
     private class ViewHolderLista{
-        private TextView nomeCliente;
+
+        private TextView idReserva;
         private TextView numQuarto;
         private TextView dtEntrada;
         private TextView dtSaida;
@@ -68,6 +69,8 @@ public class ListaReservaAdaptador extends BaseAdapter {
 
         // ID's do layout item_reserva
         public ViewHolderLista(View convertView){
+
+            idReserva = convertView.findViewById(R.id.tvIdReserva);
             numQuarto = convertView.findViewById(R.id.tvNumQuartos);
             dtEntrada = convertView.findViewById(R.id.tvDataEntrada);
             dtSaida = convertView.findViewById(R.id.tvDataSaida);
@@ -76,10 +79,11 @@ public class ListaReservaAdaptador extends BaseAdapter {
         }
 
         public void update(Reserva reserva){
-           // numQuarto.setText("" + reserva.getNumQuartos());
+            idReserva.setText(" nº: " + reserva.getId());
             dtEntrada.setText(reserva.getDtEntrada());
             dtSaida.setText(reserva.getDtSaida());
             numPessoas.setText("" + reserva.getNumPessoas());
+            numQuarto.setText("" + reserva.getNumQuartos());
         }
     }
 }

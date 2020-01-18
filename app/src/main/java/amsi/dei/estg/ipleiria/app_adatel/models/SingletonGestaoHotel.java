@@ -19,13 +19,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import amsi.dei.estg.ipleiria.app_adatel.listeners.PedidoListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
+import amsi.dei.estg.ipleiria.app_adatel.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
-public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener {
+public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidoListener{
 
     private  static RequestQueue volleyQueue = null;
 
@@ -33,17 +35,20 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private String mUrlAPIUSERS = "http://10.200.13.39:8081/api/users";
     private String mUrlAPIPROFILES = "http://10.200.13.39:8081/api/profiles";
     private String mUrlAPIRESERVAS = "http://10.200.13.39:8081/api/reservas";
+    private String mUrlAPIPEDIDOS = "https://10.200.13.39:8081/api/pedidos";
 
     ///Adicionei
     private ArrayList<User> users;
     private ArrayList<Reserva> reservas;
     private ArrayList<Profile> profiles;
+    private ArrayList<Pedido> pedidos;
 
     private static SingletonGestaoHotel INSTANCE = null;
     private HotelBDHelper hotelBDHelper = null;
 
     private UsersListener userListener;
     private ReservasListener reservasListener;
+    private PedidoListener pedidoListener;
 
 
     public static synchronized SingletonGestaoHotel getInstance(Context context) {
@@ -59,6 +64,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         users = new ArrayList<>();
         profiles = new ArrayList<>();
         reservas = new ArrayList<>();
+        pedidos = new ArrayList<>();
 
         hotelBDHelper = new HotelBDHelper(context);
     }
@@ -321,6 +327,42 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         }
     }
 
+    // Vai buscar todos os Pedidos à API
+    public void getAllPedidosAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            pedidos = hotelBDHelper.getAllPedidosBD();
+
+            if(pedidoListener != null){
+                pedidoListener.onRefreshListaPedidos(pedidos);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIRESERVAS, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    pedidos = PedidoJsonParser.parserJsonLPedidos(response, context);
+                    //adicionarPedidosBD(pedidos);
+
+                    if(pedidoListener != null){
+                        pedidoListener.onRefreshListaPedidos(pedidos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
+                }
+            });
+
+            volleyQueue.add(req);
+        }
+    }
+
     // Adicionar 1 só livro à API
     public void adicionarReservaAPI(final Reserva reserva, final Context context){
 
@@ -492,4 +534,14 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             reservas.add(new Reserva(4, 3, 2, 1, 1,0, 0, "20/01/2020", "24/01/2020"));
          */
     }
+
+    public void onRefreshListaPedidos(ArrayList<Pedido> listaPedidos) {
+
+    }
+
+    @Override
+    public void onUpdateListaPedidosBD(Pedido pedido, int operacao) {
+
+    }
+
 }

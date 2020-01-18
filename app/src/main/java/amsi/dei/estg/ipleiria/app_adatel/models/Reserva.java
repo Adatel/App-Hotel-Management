@@ -97,7 +97,7 @@ public class Reserva implements Serializable {
     }
 
     public int getNumQuartos() {
-        return num_quartos;
+        return num_quartos = quarto_s + quarto_c + quarto_d + quarto_f;
     }
 
     public void setNumQuartos(int num_quartos) {
