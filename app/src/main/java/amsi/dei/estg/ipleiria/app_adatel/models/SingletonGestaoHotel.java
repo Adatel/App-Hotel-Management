@@ -8,18 +8,16 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import amsi.dei.estg.ipleiria.app_adatel.listeners.PedidoListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
@@ -27,7 +25,7 @@ import amsi.dei.estg.ipleiria.app_adatel.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
-public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidoListener{
+public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener {
 
     private  static RequestQueue volleyQueue = null;
 
@@ -48,7 +46,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     private UsersListener userListener;
     private ReservasListener reservasListener;
-    private PedidoListener pedidoListener;
+    private PedidosListener pedidosListener;
 
 
     public static synchronized SingletonGestaoHotel getInstance(Context context) {
@@ -417,8 +415,8 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
             pedidos = hotelBDHelper.getAllPedidosBD();
 
-            if(pedidoListener != null){
-                pedidoListener.onRefreshListaPedidos(pedidos);
+            if(pedidosListener != null){
+                pedidosListener.onRefreshListaPedidos(pedidos);
             }
         } else {
             //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
@@ -429,8 +427,8 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                     pedidos = PedidoJsonParser.parserJsonLPedidos(response, context);
                     //adicionarPedidosBD(pedidos);
 
-                    if(pedidoListener != null){
-                        pedidoListener.onRefreshListaPedidos(pedidos);
+                    if(pedidosListener != null){
+                        pedidosListener.onRefreshListaPedidos(pedidos);
                     }
 
                 }

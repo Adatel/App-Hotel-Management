@@ -7,5 +7,5 @@ import amsi.dei.estg.ipleiria.app_adatel.models.Profile;
 public interface ProfilesListener {
 
     void onRefreshListaProfiles(ArrayList<Profile> listaProfiles);
-    void onUpdateListaProfilesBD(Profile livro, int operacao);
+    void onUpdateListaProfilesBD(Profile profile, int operacao);
 }

@@ -15,7 +15,6 @@ import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 
 public class ReservaJsonParser {
 
-
     // Devolve um Array de Reservas vindo da API
     public static ArrayList<Reserva> parserJsonLReservas(JSONArray response, Context context){
 

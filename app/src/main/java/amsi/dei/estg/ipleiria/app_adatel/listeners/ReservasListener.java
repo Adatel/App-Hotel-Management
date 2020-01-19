@@ -7,5 +7,5 @@ import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
 public interface ReservasListener {
 
     void onRefreshListaReservas(ArrayList<Reserva> listaReservas);
-    void onUpdateListaReservasBD(Reserva livro, int operacao);
+    void onUpdateListaReservasBD(Reserva reserva, int operacao);
 }
