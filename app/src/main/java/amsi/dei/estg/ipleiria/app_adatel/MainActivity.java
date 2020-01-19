@@ -28,7 +28,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ClassificacaoFragment;
-import amsi.dei.estg.ipleiria.app_adatel.vistas.CriarReservaFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.InfoFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ListaReservasFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
@@ -121,10 +120,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
 
         switch (menuItem.getItemId()) {
-            case R.id.nav_criarReserva:
-                fragment = new CriarReservaFragment();
-                setTitle(menuItem.getTitle());
-                break;
             case R.id.nav_estadoReservas:
                 Bundle bundle = new Bundle();
                 bundle.putString("IDCLIENTE", idCliente);

@@ -36,10 +36,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private  static RequestQueue volleyQueue = null;
 
     private String idCliente = null;
-    private String mUrlAPIUSERS = " http://192.168.0.11:8081/api/users";
+    private String mUrlAPIUSERS = " http://192.168.1.67:8081/api/users";
     private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
-    private String mUrlAPIPEDIDOS = "https://10.200.13.39:8081/api/pedidos";
-    private String mUrlAPIRESERVAS = "http://192.168.0.11:8081/api/reservas";
+    private String mUrlAPIPEDIDOS = "https://192.168.1.67:8081/api/pedidos";
+    private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
 
 
     ///Adicionei

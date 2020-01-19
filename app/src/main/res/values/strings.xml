@@ -9,7 +9,7 @@
     <string name="login_pergunta">Se não tem conta</string>
     <string name="login_registar">Registe-se!</string>
 
-    <string name="reservas">Reservas</string>
+    <string name="area_cliente">Área do Cliente</string>
     <string name="criar_reserva">Criar Reserva</string>
     <string name="estado_de_reservas">As suas Reservas</string>
 
@@ -41,7 +41,7 @@
     <string name="registar_telefone">Introduza o seu Numero de Telefone:</string>
     <string name="registar_niff">Introduza o seu Nif:</string>
     <string name="registar_nome">Introduza o seu Nome:</string>
-    <string name="sobre">Sobre</string>
+    <string name="sobre">Sobre o Hotel</string>
     <string name="quem_somos">Quem Somos?</string>
     <string name="onde_estamos">Onde Estamos?</string>
     <string name="terminar_sess_o">Terminar Sessão</string>

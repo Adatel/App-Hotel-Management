@@ -3,22 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <item android:title="@string/reservas"
+    <item android:title="@string/area_cliente"
         android:checkableBehavior="single" >
         <menu>
-            <item
-                android:id="@+id/nav_criarReserva"
-                android:title="@string/criar_reserva"
-                android:icon="@drawable/ic_criar_reserva"/>
             <item
                 android:id="@+id/nav_estadoReservas"
                 android:title="@string/estado_de_reservas"
                 android:icon="@drawable/ic_estado_reserva"/>
-        </menu>
-    </item>
-
-    <item android:title="@string/servicos" >
-        <menu>
             <item
                 android:id="@+id/nav_servicoQuartos"
                 android:title="@string/servico_de_quartos"
