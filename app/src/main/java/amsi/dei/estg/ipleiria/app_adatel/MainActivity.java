@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
+import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.ClassificacaoFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.CriarReservaFragment;
 import amsi.dei.estg.ipleiria.app_adatel.vistas.InfoFragment;
@@ -35,8 +36,10 @@ import amsi.dei.estg.ipleiria.app_adatel.vistas.ServicoQuartosFragment;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     public static final String CHAVE_EMAIL = "EMAIL";
+    public static final String CHAVE_ID = "IDCLIENTE";
     private static final String SECCAO_INFO_USER = "SECCAO_INFO_USER";
     private String email;
+    private String idCliente;
     private NavigationView navigationView;
     private DrawerLayout drawer;
 
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +86,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Obtem o email por parametro
         email = getIntent().getStringExtra(CHAVE_EMAIL).toString();
 
+        // Obtem o email por parametro
+        idCliente = getIntent().getStringExtra(CHAVE_ID);
+
+        //System.out.println("--> Main ID: " + idCliente);
+
         if(email == null){
             email = sharedPreferences.getString(SECCAO_INFO_USER, "Não Existe");
         } else {
@@ -100,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void carregamentoFragmentoInicial(){
         navigationView.setCheckedItem(R.id.nav_estadoReservas);
-        Fragment fragment = new ListaReservasFragment();
+        Fragment fragment = new InfoFragment();
         fragmentManager.beginTransaction().replace(R.id.contentFragment, fragment).commit();
-        setTitle(R.string.estado_de_reservas);
+        setTitle("Quem Somos?");
     }
 
     @Override
@@ -116,7 +126,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_estadoReservas:
+                Bundle bundle = new Bundle();
+                bundle.putString("IDCLIENTE", idCliente);
                 fragment = new ListaReservasFragment();
+                fragment.setArguments(bundle);
                 setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_servicoQuartos:
@@ -155,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.nav_terminarSessao:
+                SingletonGestaoHotel.getInstance(context).idClienteNull();
                 sharedPreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
                 editor = sharedPreferences.edit();
                         editor.remove("LOGIN");

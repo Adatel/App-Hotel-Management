@@ -1,8 +1,11 @@
 package amsi.dei.estg.ipleiria.app_adatel.models;
 
 import android.content.Context;
+import android.text.Editable;
+import android.util.Base64;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,7 +15,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,11 +35,12 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     private  static RequestQueue volleyQueue = null;
 
-    private int idCliente = 25;
-    private String mUrlAPIUSERS = "http://192.168.1.67:8081/api/users";
+    private String idCliente = null;
+    private String mUrlAPIUSERS = " http://192.168.0.11:8081/api/users";
     private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
-    private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
-    private String mUrlAPIPEDIDOS = "https://192.168.1.67:8081/api/pedidos";
+    private String mUrlAPIPEDIDOS = "https://10.200.13.39:8081/api/pedidos";
+    private String mUrlAPIRESERVAS = "http://192.168.0.11:8081/api/reservas";
+
 
     ///Adicionei
     private ArrayList<User> users;
@@ -47,6 +54,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private UsersListener userListener;
     private ReservasListener reservasListener;
     private PedidosListener pedidosListener;
+
+    //Verificacao
+    private String user;
+    private String pass;
 
 
     public static synchronized SingletonGestaoHotel getInstance(Context context) {
@@ -121,6 +132,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         }
     }
 
+    public void idClienteNull(){
+        idCliente = null;
+    }
 
     // <----------------------------------- PROFILE ----------------------------------->
 
@@ -222,40 +236,69 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     // <----------------------------- Métodos para atualizarem a API ----------------------------->
 
     // <----------------------------------- USERS ----------------------------------->
-
-    public  void getAllUsersAPI(final Context context, boolean isConected){
+    public String getUsersAPI(final Context context, boolean isConected, final String username, final String password){
         Toast.makeText(context, "Is Connected", Toast.LENGTH_SHORT).show();
 
         if(!isConected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
             users = hotelBDHelper.getAllUsersBD();
 
             if(userListener != null){
-               userListener.onRefreshListaUser(users);
+                userListener.onRefreshListaUser(users);
             }
-            else {
-                JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIUSERS, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        //recebe todos os users como um objeto
-                        users = UserJsonParser.parserJsonUsers(response, context);
-                        System.out.println("--> Response Users: " + users);
+        }else {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, mUrlAPIUSERS,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            System.out.println("-->" + response);
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(response);
+                                idCliente = jsonObject.getString("id");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-                        adicionarUsersBD(users);
+                            System.out.println("--> id: " + idCliente);
 
-                        if(userListener != null){
-                            userListener.onRefreshListaUser(users);
+                            System.out.println("--> OK");
                         }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> Error: Invalido - " + error.getMessage());
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    user = username;
+                    pass = password;
+
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("--> Erro: GetAllUsersApi: " + error.getMessage());
-                    }
-                });
-                volleyQueue.add(req);
-            }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+            };
+            volleyQueue.add(stringRequest);
         }
+        return idCliente;
     }
+    // <----------------------------------- PROFILES ----------------------------------->
+
 
 
     // <----------------------------------- RESERVAS ----------------------------------->
@@ -273,6 +316,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             }
         } else {
             //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+           // System.out.println("--> Reserva id Cliente: " + idCliente);
             JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIUSERS + "/" + idCliente + "/reservas", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
@@ -289,12 +333,34 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
+                    System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
 
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+
+            };
             volleyQueue.add(req);
         }
+
     }
 
     // Adicionar 1 só livro à API

@@ -23,13 +23,13 @@
         android:layout_height="50dp" />
 
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="@string/Login_e_mail"
+        android:hint="@string/Login_User"
         android:inputType="textEmailAddress"
         android:textColor="#F0E7E7"
         android:textColorHint="#F8FCFCFC"
@@ -53,7 +53,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
 
     <Button
         android:id="@+id/buttonRegistar"
