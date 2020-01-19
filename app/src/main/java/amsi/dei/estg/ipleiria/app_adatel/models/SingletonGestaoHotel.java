@@ -35,7 +35,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private String mUrlAPIUSERS = "http://192.168.1.67:8081/api/users";
     private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
     private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
-    private String mUrlAPIPEDIDOS = "https://10.200.13.39:8081/api/pedidos";
+    private String mUrlAPIPEDIDOS = "https://192.168.1.67:8081/api/pedidos";
 
     ///Adicionei
     private ArrayList<User> users;
@@ -260,35 +260,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
 
-    // <----------------------------------- PROFILES ----------------------------------->
-
-
-
     // <----------------------------------- RESERVAS ----------------------------------->
-
-    /*
-    public void getReservaAPI(final Reserva reserva, boolean isConnected){
-
-        if(!isConnected){
-            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
-           // reservas = hotelBDHelper.getAllReservasBD();
-        } else {
-            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
-            final StringRequest req = new StringRequest(Request.Method.GET, mUrlAPIRESERVAS + "/" + reserva.getId(), null, new Response.Listener<StringRequest>() {
-                @Override
-                public void onResponse(StringRequest response) {
-
-                }
-
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println("--> ERRO: getReservaAPI: " + error.getMessage());
-                }
-            });
-            volleyQueue.add(req);
-        }
-    }*/
 
     // Vai buscar as reservas todas à API
     public void getAllReservasAPI(final Context context, boolean isConnected){
@@ -313,42 +285,6 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
                     if(reservasListener != null){
                         reservasListener.onRefreshListaReservas(reservas);
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
-                }
-            });
-
-            volleyQueue.add(req);
-        }
-    }
-
-    // Vai buscar todos os Pedidos à API
-    public void getAllPedidosAPI(final Context context, boolean isConnected){
-
-        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
-        if(!isConnected){
-            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
-            pedidos = hotelBDHelper.getAllPedidosBD();
-
-            if(pedidoListener != null){
-                pedidoListener.onRefreshListaPedidos(pedidos);
-            }
-        } else {
-            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
-            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIRESERVAS, null, new Response.Listener<JSONArray>() {
-                @Override
-                public void onResponse(JSONArray response) {
-
-                    pedidos = PedidoJsonParser.parserJsonLPedidos(response, context);
-                    //adicionarPedidosBD(pedidos);
-
-                    if(pedidoListener != null){
-                        pedidoListener.onRefreshListaPedidos(pedidos);
                     }
 
                 }
@@ -471,6 +407,43 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
 
+    // <--------------------------------------- PEDIDOS --------------------------------------->
+
+    // Vai buscar todos os Pedidos à API
+    public void getAllPedidosAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            pedidos = hotelBDHelper.getAllPedidosBD();
+
+            if(pedidoListener != null){
+                pedidoListener.onRefreshListaPedidos(pedidos);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPIRESERVAS, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    pedidos = PedidoJsonParser.parserJsonLPedidos(response, context);
+                    //adicionarPedidosBD(pedidos);
+
+                    if(pedidoListener != null){
+                        pedidoListener.onRefreshListaPedidos(pedidos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
+                }
+            });
+
+            volleyQueue.add(req);
+        }
+    }
 
 
     // <------------------------------------------- Métodos OnRefresh e OnUpdate ------------------------------------------->
@@ -525,6 +498,20 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
 
+    // <--------------------------------------- PEDIDOS --------------------------------------->
+
+    @Override
+    public void onRefreshListaPedidos(ArrayList<Pedido> listaPedidos) {
+
+    }
+
+    @Override
+    public void onUpdateListaPedidosBD(Pedido pedido, int operacao) {
+
+    }
+
+
+
 
     // <----------------------------------------------------------------------------------------------------->
 
@@ -535,15 +522,6 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             reservas.add(new Reserva(3, 6, 3, 0, 0,2, 1, "8/01/2020", "14/01/2020"));
             reservas.add(new Reserva(4, 3, 2, 1, 1,0, 0, "20/01/2020", "24/01/2020"));
          */
-    }
-
-    public void onRefreshListaPedidos(ArrayList<Pedido> listaPedidos) {
-
-    }
-
-    @Override
-    public void onUpdateListaPedidosBD(Pedido pedido, int operacao) {
-
     }
 
 }
