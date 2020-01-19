@@ -69,6 +69,10 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
             System.out.println("adicionar");
             fab.setImageResource(R.drawable.ic_adicionar);
         } else {
+            quartosDuplo.setEnabled(false);
+            quartosFamilia.setEnabled(false);
+            quartosCasal.setEnabled(false);
+            quartosSolteiro.setEnabled(false);
             System.out.println("Reserva: " + idReserva);
             mostrarReserva(idReserva);
             //System.out.println("Reserva: " + idReserva);

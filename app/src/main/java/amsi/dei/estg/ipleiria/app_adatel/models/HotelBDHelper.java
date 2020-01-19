@@ -15,7 +15,13 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String TABLE_USER = "User";
     private static final String TABLE_PROFILE = "Profile";
     private static final String TABLE_RESERVA = "Reserva";
+    private static final String TABLE_RESERVAQUARTO = "Reservaquarto";
+    private static final String TABLE_QUARTO = "Quarto";
+    private static final String TABLE_TIPOQUARTO = "Tipoquarto";
+    private static final String TABLE_PRODUTO = "Produto";
+    private static final String TABLE_TIPOPRODUTO = "Tipoproduto";
     private static final String TABLE_PEDIDO = "Pedido";
+    private static final String TABLE_LINHAPRODUTO = "Linhaproduto";
 
     ///Campos da Tabela User
     private static final String ID = "id";
@@ -45,12 +51,44 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String DATA_SAIDA = "data_saida";
     private static final String ID_CLIENTE = "id_cliente";
 
+    ///Campos da Tabela Reservaquarto
+    private static final String ID_RESERVAQUARTO = "id";
+    private static final String ID_RESERVAA = "id_reserva";
+    private static final String ID_QUARTO = "id_quarto";
+
+    ///Campos da tabela Tipo Quarto
+    private static final String ID_TIPOQUARTO = "id";
+    private static final String DESIGNACAO = "designacao";
+    private static final String PRECO_NOITE = "preco_noite";
+
+    ///Campos da Tabela Quarto
+    private static final String NUM_QUARTO = "num_quarto";
+    private static final String ID_TIPO = "id_tipo";
+    private static final String ESTADO = "estado";
+
     ///Campos da Tabela Pedidos
     private static final String ID_PEDIDO = "id";
     private static final String CUSTO = "custo";
-    private static final String ID_RESERVAQUARTO = "id_reservaquarto";
-    private static final String ID_FUNCIONARIO = "id_funcionario";
+    private static final String ID_RESERVAQUARTOO = "id_reservaquarto";
     private static final String DATA_HORA = "data_hora";
+
+    ///Campos da Tabela Tipo Produto
+    private static final String ID_TIPOPRODUTO = "id";
+    private static final String DESCRICAO_TIPO = "descricao_tipo";
+
+    ///Campos da Tabela Produtos
+    private static final String ID_PRODUTO = "id";
+    private static final String DESIGNACAO_PRODUTO = "designacao";
+    private static final String PRECO_UNITARIO = "preco_unitario";
+    private static final String ID_TIPOPRODUTOO = "id_tipo";
+
+    ///Campos de Tabela Linha_Produtos
+    private static final String ID_LINHAPRODUTO = "id";
+    private static final String QUANTIDADE = "quantidade";
+    private static final String ID_PRODUTOO = "id_produto";
+    private static final String ID_PEDIDOO = "id_pedido";
+
+
 
     private SQLiteDatabase database;
 
@@ -62,7 +100,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createUserTable = "CREATE TABLE " + TABLE_USER
-                + "(" + ID + " INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
+                + "(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + USERNAME + " TEXT NOT NULL, "
                 + PASSWORD + " TEXT NOT NULL, "
                 + EMAIL + " TEXT NOT NULL);";
@@ -70,7 +108,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
 
         String createProfileTable = "CREATE TABLE " + TABLE_PROFILE
                 + "(" + NOME + " TEXT NOT NULL, "
-                + NIF + " INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
+                + NIF + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TELEMOVEL + " INTEGER, "
                 + MORADA + " TEXT NOT NULL, "
                 + IS_ADMIN + " INTEGER, "
@@ -80,7 +118,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         db.execSQL(createProfileTable);
 
         String createReservaTable = "CREATE TABLE " + TABLE_RESERVA
-                + "(" + ID_RESERVA + " INTEGER PRIMARY KEY ,AUTOINCREMENTE, "
+                + "(" + ID_RESERVA + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + NUM_PESSOAS + " INTEGER NOT NULL, "
                 + NUM_QUARTOS + " INTEGER NOT NULL, "
                 + QUARTO_SOLTEIRO + " INTEGER NOT NULL, "
@@ -92,14 +130,64 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                 + ID_CLIENTE + " INTEGER);";
         db.execSQL(createReservaTable);
 
+        String createTipoquartoTable = "CREATE TABLE " + TABLE_TIPOQUARTO
+                + "(" + ID_TIPOQUARTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DESIGNACAO + " TEXT NOT NULL, "
+                + PRECO_NOITE + " INTEGER NOT NULL);";
+        db.execSQL(createTipoquartoTable);
+
+        String createQuartoTable = "CREATE TABLE " + TABLE_QUARTO
+                + "(" + NUM_QUARTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_TIPO + " INTEGER NOT NULL, "
+                + ESTADO + " INTEGER);";
+        db.execSQL(createQuartoTable);
+
+        String createReservaquartoTable = "CREATE TABLE " + TABLE_RESERVAQUARTO
+                + "(" + ID_RESERVAQUARTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_RESERVAA + " INTEGER NOT NULL, "
+                + ID_QUARTO + " INTEGER NOT NULL);";
+        db.execSQL(createReservaquartoTable);
+
+        String createPedidoTable = "CREATE TABLE " + TABLE_PEDIDO
+                + "(" + ID_PEDIDO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + CUSTO + " INTEGER NOT NULL, "
+                + DATA_HORA + " TEXT NOT NULL, "
+                + ID_RESERVAQUARTOO + " INTEGER NOT NULL);";
+        db.execSQL(createPedidoTable);
+
+        String createTipoprodutoTable = "CREATE TABLE " + TABLE_TIPOPRODUTO
+                + "(" + ID_TIPOPRODUTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DESCRICAO_TIPO + " TEXT NOT NULL);";
+        db.execSQL(createTipoprodutoTable);
+
+        String createProdutoTable = "CREATE TABLE " + TABLE_PRODUTO
+                + "(" + ID_PRODUTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + DESIGNACAO_PRODUTO + " TEXT NOT NULL, "
+                + PRECO_UNITARIO + " INTEGER NOT NULL, "
+                + ID_TIPOPRODUTOO + " INTEGER NOT NULL);";
+        db.execSQL(createProdutoTable);
+
+        String createLinhaprodutoTable = "CREATE TABLE " + TABLE_LINHAPRODUTO
+                + "(" + ID_LINHAPRODUTO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + QUANTIDADE + " INTEGER NOT NULL, "
+                + ID_PRODUTOO + " INTEGER NOT NULL, "
+                + ID_PEDIDOO + " INTEGER NOT NULL);";
+        db.execSQL(createLinhaprodutoTable);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINHAPRODUTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPOPRODUTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PEDIDO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESERVAQUARTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUARTO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPOQUARTO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RESERVA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         this.onCreate(db);
     }
 
@@ -293,7 +381,6 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                 ID_PEDIDO,
                 CUSTO,
                 ID_RESERVAQUARTO,
-                ID_FUNCIONARIO,
                 DATA_HORA},null,null,null,null,null);
 
         if(cursor.moveToNext()){
