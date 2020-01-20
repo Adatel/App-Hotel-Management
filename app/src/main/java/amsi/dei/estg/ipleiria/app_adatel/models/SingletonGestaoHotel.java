@@ -807,6 +807,102 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         }
     }
 
+    public void adicionarPedidoAPI(final Pedido pedido, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIPEDIDOS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA ADD POST: " + response);
+
+                if(pedidosListener != null){
+                    pedidosListener.onUpdateListaPedidosBD(PedidoJsonParser.parserJsonPedidos(response, context), 1);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("--> ERRO: adicionarPedidosAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("custo", pedido.getCusto() + "");
+                params.put("data_hora", pedido.getDt_hora());
+                params.put("id_reservaquarto", pedido.getId_reservaquarto() + "");
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    // Remove a reserva da API
+    public void removerPedidoAPI(final Pedido pedido){
+
+        final StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIPEDIDOS + '/' + pedido.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA REMOVER: " + response);
+
+                if(pedidosListener != null){
+                    pedidosListener.onUpdateListaPedidosBD(pedido,3);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: removerPedidoAPI: " + error.getMessage());
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    // Atualiza a reserva na API
+    public void editarPedidoAPI(final Pedido pedido, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIPEDIDOS + '/' + pedido.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> editarPedidoAPI: " + response);
+
+                if(pedidosListener != null){
+                    pedidosListener.onUpdateListaPedidosBD(PedidoJsonParser.parserJsonPedidos(response, context), 2);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: editarPedidoAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("custo", pedido.getCusto() + "");
+                params.put("data_hora", pedido.getDt_hora());
+                params.put("id_reservaquarto", pedido.getId_reservaquarto() + "");
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+
+
+    public void setPedidosListener(PedidosListener pedidosListener){
+
+        this.pedidosListener = pedidosListener;
+    }
+
+
     // <--------------------------------------- PRODUTOS --------------------------------------->
 
     public void getAllProdutosAPI(final Context context, boolean isConnected){
