@@ -26,12 +26,11 @@ public class PedidoJsonParser {
                 JSONObject pedido = (JSONObject)response.get(i);
 
                 int idPedido = pedido.getInt("id");
-                int custo = pedido.getInt("custo");                       // Nomes
-                int id_reservaquarto = pedido.getInt("id_reservaquarto");                       // iguais aos
-                int id_funcionario = pedido.getInt("id_funcionario");                // que estão
-                String dta_hora = pedido.getString("data_hora");                      // na API
+                int custo = pedido.getInt("custo");
+                int id_reservaquarto = pedido.getInt("id_reservaquarto");
+                String dta_hora = pedido.getString("data_hora");
 
-                Pedido auxPedido = new Pedido(idPedido, custo, id_reservaquarto, id_funcionario, dta_hora);
+                Pedido auxPedido = new Pedido(idPedido, custo, id_reservaquarto, dta_hora);
 
                 tempListaPedidos.add(auxPedido);
             }
@@ -55,12 +54,11 @@ public class PedidoJsonParser {
             JSONObject pedido = new JSONObject(response);
 
             int idPedido = pedido.getInt("id");
-            int custo = pedido.getInt("custo");                       // Nomes
-            int id_reservaquarto = pedido.getInt("id_reservaquarto");                       // iguais aos
-            int id_funcionario = pedido.getInt("id_funcionario");                // que estão
-            String dta_hora = pedido.getString("data_hora");                      // na API
+            int custo = pedido.getInt("custo");
+            int id_reservaquarto = pedido.getInt("id_reservaquarto");
+            String dta_hora = pedido.getString("data_hora");
 
-            auxPedido = new Pedido(idPedido, custo, id_reservaquarto, id_funcionario, dta_hora);
+            auxPedido = new Pedido(idPedido, custo, id_reservaquarto, dta_hora);
         }
         catch (JSONException e)
         {

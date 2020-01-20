@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 ReservaJsonParser.isConnectionInternet(context), user, password);
 
 
-        System.out.println("--> Recevido: " + recebido);
+        System.out.println("--> Recebido: " + recebido);
 
         if(!(recebido == null)){
             Intent intent = new Intent(this, MainActivity.class);

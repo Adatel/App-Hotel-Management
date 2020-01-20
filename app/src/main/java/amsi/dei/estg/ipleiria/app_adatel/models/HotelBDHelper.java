@@ -218,7 +218,6 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     public void adicionarUserBD(User user){
 
         ContentValues values = new ContentValues();
-        values.put(ID, user.getId());
         values.put(USERNAME, user.getUsername());
         values.put(PASSWORD, user.getPassword());
         values.put(EMAIL, user.getEmail());
@@ -347,7 +346,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         values.put(DATA_SAIDA, reserva.getDtSaida());
         values.put(ID_CLIENTE, reserva.getIdCliente());
 
-        long id_reserva = this.database.insert(TABLE_RESERVA, null , values);
+        this.database.insert(TABLE_RESERVA, null , values);
     }
 
     public boolean guardarReservaBD(Reserva reserva){
@@ -374,22 +373,323 @@ public class HotelBDHelper extends SQLiteOpenHelper {
         this.database.delete(TABLE_RESERVA, null, null);
     }
 
+
+    // <------------------- TIPO QUARTO ------------------->
+
+    public ArrayList<Tipoquarto> getAllTipoquartoBD(){
+        ArrayList<Tipoquarto> tempTipoquarto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_TIPOQUARTO, new String[]{
+                ID_TIPOQUARTO,
+                PRECO_NOITE,
+                DESIGNACAO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Tipoquarto auxTipoquarto = new Tipoquarto(cursor.getInt(0),cursor.getInt(1), cursor.getString(2));
+            }while (cursor.moveToNext());
+        }
+        return tempTipoquarto;
+    }
+
+    public void adicionarTipoquartoBD(Tipoquarto tipoquarto){
+
+        ContentValues values = new ContentValues();
+        values.put(PRECO_NOITE, tipoquarto.getPreco_noite());
+        values.put(DESIGNACAO, tipoquarto.getDesignacao());
+
+        this.database.insert(TABLE_TIPOQUARTO, null , values);
+    }
+
+    public boolean guardarTipoquartoBD(Tipoquarto tipoquarto){
+
+        ContentValues values = new ContentValues();
+        values.put(PRECO_NOITE, tipoquarto.getPreco_noite());
+        values.put(DESIGNACAO, tipoquarto.getDesignacao());
+
+        return this.database.update(TABLE_TIPOQUARTO, values, "id = ?", new String[]{"" + tipoquarto.getId()}) > 0;
+    }
+
+    public boolean removerTipoquartoBD(int id_tipoquarto){
+        return  (this.database.delete(TABLE_TIPOQUARTO, "id = ?", new String[]{"" + id_tipoquarto}) == 1);
+    }
+
+    public void removerALLTipoquartosDB(){
+        this.database.delete(TABLE_TIPOQUARTO, null, null);
+    }
+
+
+    // <------------------- QUARTO ------------------->
+
+    public ArrayList<Quarto> getAllQuartoBD(){
+        ArrayList<Quarto> tempQuarto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_QUARTO, new String[]{
+                NUM_QUARTO,
+                ID_TIPOQUARTO,
+                ESTADO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Quarto auxQuarto = new Quarto(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2));
+            }while (cursor.moveToNext());
+        }
+        return tempQuarto;
+    }
+
+    public void adicionarQuartoBD(Quarto quarto){
+
+        ContentValues values = new ContentValues();
+        values.put(ID_TIPO, quarto.getId_tipo());
+        values.put(ESTADO, quarto.getEstado());
+
+        this.database.insert(TABLE_QUARTO, null , values);
+    }
+
+    public boolean guardarquartoBD(Quarto quarto){
+
+        ContentValues values = new ContentValues();
+        values.put(ID_TIPO, quarto.getId_tipo());
+        values.put(ESTADO, quarto.getEstado());
+
+        return this.database.update(TABLE_QUARTO, values, "id = ?", new String[]{"" + quarto.getNum_quarto()}) > 0;
+    }
+
+    public boolean removerQuartoBD(int id_quarto){
+        return  (this.database.delete(TABLE_QUARTO, "id = ?", new String[]{"" + id_quarto}) == 1);
+    }
+
+    public void removerALLQuartosDB(){
+        this.database.delete(TABLE_QUARTO, null, null);
+    }
+
+
+    // <------------------- RESERVA QUARTO ------------------->
+
+    public ArrayList<Reservaquarto> getAllReservaquartoBD(){
+        ArrayList<Reservaquarto> tempReservaquarto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_RESERVAQUARTO, new String[]{
+                ID_RESERVAQUARTO,
+                ID_RESERVAA,
+                ID_QUARTO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Reservaquarto auxReservaquarto = new Reservaquarto(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2));
+            }while (cursor.moveToNext());
+        }
+        return tempReservaquarto;
+    }
+
+    public void adicionarReservaquartoBD(Reservaquarto reservaquarto){
+
+        ContentValues values = new ContentValues();
+        values.put(ID_RESERVAA, reservaquarto.getIdReserva());
+        values.put(ID_QUARTO, reservaquarto.getIdQuarto());
+
+        this.database.insert(TABLE_RESERVAQUARTO, null , values);
+    }
+
+    public boolean guardarReservaQuartoBD(Reservaquarto reservaquarto){
+
+        ContentValues values = new ContentValues();
+        values.put(ID_RESERVAA, reservaquarto.getIdReserva());
+        values.put(ID_QUARTO, reservaquarto.getIdQuarto());
+
+        return this.database.update(TABLE_RESERVAQUARTO, values, "id = ?", new String[]{"" + reservaquarto.getId()}) > 0;
+    }
+
+    public boolean removerReservaquartoBD(int id_reservaquarto){
+        return  (this.database.delete(TABLE_RESERVAQUARTO, "id = ?", new String[]{"" + id_reservaquarto}) == 1);
+    }
+
+    public void removerALLReservaquartosDB(){
+        this.database.delete(TABLE_RESERVAQUARTO, null, null);
+    }
+
+    // <------------------------------------ PEDIDOS ------------------------------------>
     public ArrayList<Pedido> getAllPedidosBD(){
         ArrayList<Pedido> tempPedido = new ArrayList<>();
 
         Cursor cursor = this.database.query(TABLE_PEDIDO, new String[]{
                 ID_PEDIDO,
                 CUSTO,
-                ID_RESERVAQUARTO,
+                ID_RESERVAQUARTOO,
                 DATA_HORA},null,null,null,null,null);
 
         if(cursor.moveToNext()){
             do{
                 Pedido auxPedido = new Pedido(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
-                        cursor.getInt(3),cursor.getString(4));
+                        cursor.getString(3));
             }while (cursor.moveToNext());
         }
         return tempPedido;
     }
 
+    public void adicionarPedidoBD(Pedido pedido){
+
+        ContentValues values = new ContentValues();
+        values.put(CUSTO, pedido.getCusto());
+        values.put(ID_RESERVAQUARTOO, pedido.getId_reservaquarto());
+        values.put(DATA_HORA, pedido.getDt_hora());
+
+        this.database.insert(TABLE_PEDIDO, null , values);
+    }
+
+    public boolean guardarPedidoBD(Pedido pedido){
+
+        ContentValues values = new ContentValues();
+        values.put(CUSTO, pedido.getCusto());
+        values.put(ID_RESERVAQUARTOO, pedido.getId_reservaquarto());
+        values.put(DATA_HORA, pedido.getDt_hora());
+
+        return this.database.update(TABLE_PEDIDO, values, "id = ?", new String[]{"" + pedido.getId()}) > 0;
+    }
+
+    public boolean removerPedidoBD(int id_pedido){
+        return  (this.database.delete(TABLE_PEDIDO, "id = ?", new String[]{"" + id_pedido}) == 1);
+    }
+
+    public void removerALLRPedidosDB(){
+        this.database.delete(TABLE_PEDIDO, null, null);
+    }
+
+    // <------------------------------------ TIPO PRODUTO ------------------------------------>
+    public ArrayList<TipoProduto> getAllTipoprodutoBD(){
+        ArrayList<TipoProduto> tempTipoproduto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_TIPOPRODUTO, new String[]{
+                ID_TIPOPRODUTO,
+                DESCRICAO_TIPO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                TipoProduto auxTipoproduto = new TipoProduto(cursor.getInt(0),cursor.getString(1));
+            }while (cursor.moveToNext());
+        }
+        return tempTipoproduto;
+    }
+
+    public void adicionarTipoprodutoBD(TipoProduto tipoProduto){
+
+        ContentValues values = new ContentValues();
+        values.put(DESCRICAO_TIPO, tipoProduto.getDescricao());
+
+        this.database.insert(TABLE_TIPOPRODUTO, null , values);
+    }
+
+    public boolean guardarTipoProdutoBD(TipoProduto tipoProduto){
+
+        ContentValues values = new ContentValues();
+        values.put(DESCRICAO_TIPO, tipoProduto.getDescricao());
+
+        return this.database.update(TABLE_TIPOPRODUTO, values, "id = ?", new String[]{"" + tipoProduto.getId()}) > 0;
+    }
+
+    public boolean removerTipoprodutoBD(int id_tipoproduto){
+        return  (this.database.delete(TABLE_TIPOPRODUTO, "id = ?", new String[]{"" + id_tipoproduto}) == 1);
+    }
+
+    public void removerALLTipoprodutoDB(){
+        this.database.delete(TABLE_TIPOPRODUTO, null, null);
+    }
+
+
+    // <------------------- PRODUTO ------------------->
+
+    public ArrayList<Produto> getAllProdutosBD(){
+        ArrayList<Produto> tempProduto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_PRODUTO, new String[]{
+                ID_PRODUTO,
+                PRECO_UNITARIO,
+                ID_TIPOPRODUTOO,
+                DESIGNACAO_PRODUTO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Produto auxRProduto = new Produto(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
+                        cursor.getString(3));
+            }while (cursor.moveToNext());
+        }
+        return tempProduto;
+    }
+
+    public void adicionarProdutoBD(Produto produto){
+
+        ContentValues values = new ContentValues();
+        values.put(PRECO_UNITARIO, produto.getPreco_unitario());
+        values.put(ID_TIPOPRODUTOO, produto.getId_tipoproduto());
+        values.put(DESIGNACAO_PRODUTO, produto.getDesignacao());
+
+        this.database.insert(TABLE_PRODUTO, null , values);
+    }
+
+    public boolean guardarProdutoBD(Produto produto){
+
+        ContentValues values = new ContentValues();
+        values.put(PRECO_UNITARIO, produto.getPreco_unitario());
+        values.put(ID_TIPOPRODUTOO, produto.getId_tipoproduto());
+        values.put(DESIGNACAO_PRODUTO, produto.getDesignacao());
+
+        return this.database.update(TABLE_PRODUTO, values, "id = ?", new String[]{"" + produto.getId()}) > 0;
+    }
+
+    public boolean removerProdutoBD(int id_produto){
+        return  (this.database.delete(TABLE_PRODUTO, "id = ?", new String[]{"" + id_produto}) == 1);
+    }
+
+    public void removerALLProdutosDB(){
+        this.database.delete(TABLE_PRODUTO, null, null);
+    }
+
+
+    // <------------------- LINHA PRODUTO ------------------->
+
+    public ArrayList<Linhaproduto> getAllLinhaprodutosBD(){
+        ArrayList<Linhaproduto> tempLinhaproduto = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_LINHAPRODUTO, new String[]{
+                ID_LINHAPRODUTO,
+                QUANTIDADE,
+                ID_PRODUTOO,
+                ID_PEDIDOO,},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Linhaproduto auxLinhaproduto = new Linhaproduto(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
+                        cursor.getInt(3));
+            }while (cursor.moveToNext());
+        }
+        return tempLinhaproduto;
+    }
+
+    public void adicionarLinhaprodutoBD(Linhaproduto linhaproduto){
+
+        ContentValues values = new ContentValues();
+        values.put(QUANTIDADE, linhaproduto.getQuantidade());
+        values.put(ID_PRODUTOO, linhaproduto.getId_produto());
+        values.put(ID_PEDIDOO, linhaproduto.getId_pedido());
+
+        this.database.insert(TABLE_LINHAPRODUTO, null , values);
+    }
+
+    public boolean guardarLinhaprodutoBD(Linhaproduto linhaproduto){
+
+        ContentValues values = new ContentValues();
+        values.put(QUANTIDADE, linhaproduto.getQuantidade());
+        values.put(ID_PRODUTOO, linhaproduto.getId_produto());
+        values.put(ID_PEDIDOO, linhaproduto.getId_pedido());
+
+        return this.database.update(TABLE_LINHAPRODUTO, values, "id = ?", new String[]{"" + linhaproduto.getId()}) > 0;
+    }
+
+    public boolean removerLinhaprodutoBD(int id_linhaproduto){
+        return  (this.database.delete(TABLE_LINHAPRODUTO, "id = ?", new String[]{"" + id_linhaproduto}) == 1);
+    }
+
+    public void removerALLLinhaprodutosDB(){
+        this.database.delete(TABLE_LINHAPRODUTO, null, null);
+    }
 }
