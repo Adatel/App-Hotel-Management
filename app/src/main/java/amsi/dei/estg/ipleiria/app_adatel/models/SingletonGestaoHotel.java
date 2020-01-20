@@ -27,13 +27,19 @@ import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ProdutosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.QuartosListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.TipoQuartosListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.LinhaProdutosListener;
+import amsi.dei.estg.ipleiria.app_adatel.listeners.TipoProdutosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
+import amsi.dei.estg.ipleiria.app_adatel.utils.LinhaprodutoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ProdutoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.QuartoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
+import amsi.dei.estg.ipleiria.app_adatel.utils.TipoprodutoJsonParser;
+import amsi.dei.estg.ipleiria.app_adatel.utils.TipoquartoJsonParser;
 
-public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener, ProdutosListener, QuartosListener {
+public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener, ProdutosListener, QuartosListener, TipoProdutosListener, LinhaProdutosListener, TipoQuartosListener {
 
     private static RequestQueue volleyQueue = null;
 
@@ -73,6 +79,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private PedidosListener pedidosListener;
     private ProdutosListener produtosListener;
     private QuartosListener quartosListener;
+    private TipoQuartosListener tipoQuartosListener;
+    private TipoProdutosListener tipoProdutosListener;
+    private LinhaProdutosListener linhaProdutosListener;
+
 
     //Verificacao
     private String user;
@@ -882,7 +892,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 @Override
                 public void onResponse(JSONArray response) {
 
-                   // quartos = QuartoJsonParser.parserJsonQuarto(response, context);
+                   quartos = QuartoJsonParser.parserJsonQuartos(response, context);
                     //System.out.println("--> RESPOSTA: " + reservas);
                     adicionarQuartosBD(quartos);
 
@@ -928,6 +938,205 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
         this.quartosListener = quartosListener;
     }
+
+    // <--------------------------------------- TIPO QUARTOS --------------------------------------->
+
+    public void getAllTipoQuartosAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            tipoQuartos = hotelBDHelper.getAllTipoquartoBD();
+
+            if(tipoQuartosListener != null){
+                tipoQuartosListener.onRefreshListaTipoquartos(tipoQuartos);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            // System.out.println("--> Reserva id Cliente: " + idCliente);
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPITIPOQUARTO, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    tipoQuartos = TipoquartoJsonParser.parserJsonTipoquartos(response, context);
+                    //System.out.println("--> RESPOSTA: " + reservas);
+                    adicionarTipoQuartosBD(tipoQuartos);
+
+                    if(tipoQuartosListener != null){
+                        tipoQuartosListener.onRefreshListaTipoquartos(tipoQuartos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getAllTipoQuartosAPI: " + error.getMessage());
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+
+            };
+            volleyQueue.add(req);
+        }
+
+    }
+
+    public void setTipoQuartosListener(TipoQuartosListener tipoQuartosListener){
+
+        this.tipoQuartosListener = tipoQuartosListener;
+    }
+
+    // <--------------------------------------- TIPO PRODUTOS --------------------------------------->
+
+    public void getAllTipoProdutosAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            tipoProdutos = hotelBDHelper.getAllTipoprodutoBD();
+
+            if(tipoProdutosListener != null){
+                tipoProdutosListener.onRefreshListaTipoProdutos(tipoProdutos);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            // System.out.println("--> Reserva id Cliente: " + idCliente);
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPITIPOPRODUTO, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    tipoProdutos = TipoprodutoJsonParser.parserJsonTipoprodutos(response, context);
+                    //System.out.println("--> RESPOSTA: " + reservas);
+                    adicionarTipoProdutosBD(tipoProdutos);
+
+                    if(tipoProdutosListener != null){
+                        tipoProdutosListener.onRefreshListaTipoProdutos(tipoProdutos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getAllTipoProdutosAPI: " + error.getMessage());
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+
+            };
+            volleyQueue.add(req);
+        }
+
+    }
+
+    public void setTipoProdutosListener(TipoProdutosListener tipoProdutosListener){
+
+        this.tipoProdutosListener = tipoProdutosListener;
+    }
+
+    // <--------------------------------------- LINHA PRODUTOS --------------------------------------->
+
+    public void getAllLinhaProdutosAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            linhaprodutos = hotelBDHelper.getAllLinhaprodutosBD();
+
+            if(linhaProdutosListener != null){
+                linhaProdutosListener.onRefreshListaLinhaProdutos(linhaprodutos);
+            }
+        } else {
+            //Toast.makeText(context, "Connected", Toast.LENGTH_SHORT).show();
+            // System.out.println("--> Reserva id Cliente: " + idCliente);
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPILINHAPRODUTO, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    linhaprodutos = LinhaprodutoJsonParser.parserJsonLinhaproduto(response, context);
+                    //System.out.println("--> RESPOSTA: " + reservas);
+                    adicionarLinhaprodutosBD(linhaprodutos);
+
+                    if(linhaProdutosListener != null){
+                        linhaProdutosListener.onRefreshListaLinhaProdutos(linhaprodutos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getAllLinhaProdutosAPI: " + error.getMessage());
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+
+            };
+            volleyQueue.add(req);
+        }
+
+    }
+
+    public void setLinhaProdutosListener(LinhaProdutosListener linhaProdutosListener){
+
+        this.linhaProdutosListener = linhaProdutosListener;
+    }
+
 
     // <------------------------------------------- Métodos OnRefresh e OnUpdate ------------------------------------------->
 
@@ -1025,6 +1234,36 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     @Override
     public void onUpdateListaQuartosBD(Quarto quarto, int operacao) {
+
+    }
+
+    @Override
+    public void onRefreshListaLinhaProdutos(ArrayList<Linhaproduto> listaLinhaproduto) {
+
+    }
+
+    @Override
+    public void onUpdateListaLinhaProdutosBD(Linhaproduto linhaproduto, int operacao) {
+
+    }
+
+    @Override
+    public void onRefreshListaTipoProdutos(ArrayList<TipoProduto> listaTipoProduto) {
+
+    }
+
+    @Override
+    public void onUpdateListaTipoProdutosBD(TipoProduto tipoProduto, int operacao) {
+
+    }
+
+    @Override
+    public void onRefreshListaTipoquartos(ArrayList<Tipoquarto> lista) {
+
+    }
+
+    @Override
+    public void onUpdateListaTipoquartosBD(Tipoquarto tipoqTipoQuartouarto, int operacao) {
 
     }
 }
