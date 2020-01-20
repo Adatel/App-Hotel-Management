@@ -3,9 +3,9 @@ package amsi.dei.estg.ipleiria.app_adatel.models;
 public class Classificacao {
 
     private int id, id_cliente;
-    private float quarto, comida, staff, servicos, geral;
+    private double quarto, comida, staff, servicos, geral;
 
-    public Classificacao(int id, float quarto, float comida, float staff, float servicos, float geral, int id_cliente){
+    public Classificacao(int id, double quarto, double comida, double staff, double servicos, double geral, int id_cliente){
 
         this.id = id;
         this.quarto = quarto;
@@ -32,43 +32,43 @@ public class Classificacao {
         this.id_cliente = id_cliente;
     }
 
-    public float getQuarto() {
+    public double getQuarto() {
         return quarto;
     }
 
-    public void setQuarto(float quarto) {
+    public void setQuarto(double quarto) {
         this.quarto = quarto;
     }
 
-    public float getComida() {
+    public double getComida() {
         return comida;
     }
 
-    public void setComida(float comida) {
+    public void setComida(double comida) {
         this.comida = comida;
     }
 
-    public float getStaff() {
+    public double getStaff() {
         return staff;
     }
 
-    public void setStaff(float staff) {
+    public void setStaff(double staff) {
         this.staff = staff;
     }
 
-    public float getServicos() {
+    public double getServicos() {
         return servicos;
     }
 
-    public void setServicos(float servicos) {
+    public void setServicos(double servicos) {
         this.servicos = servicos;
     }
 
-    public float getGeral() {
+    public double getGeral() {
         return geral;
     }
 
-    public void setGeral(float geral) {
+    public void setGeral(double geral) {
         this.geral = geral;
     }
 }
