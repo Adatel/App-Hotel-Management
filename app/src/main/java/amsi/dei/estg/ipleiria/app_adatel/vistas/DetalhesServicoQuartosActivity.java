@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import amsi.dei.estg.ipleiria.app_adatel.R;
 
@@ -70,30 +71,6 @@ public class DetalhesServicoQuartosActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        if(idServico != -1) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_detalhes_reserva, menu);
-            return super.onCreateOptionsMenu(menu);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        int id = item.getItemId();
-
-        if(id == R.id.itemRemover){
-            Toast.makeText(this, "Remover", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }

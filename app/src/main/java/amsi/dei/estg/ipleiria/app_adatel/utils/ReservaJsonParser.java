@@ -18,7 +18,7 @@ public class ReservaJsonParser {
     // Devolve um Array de Reservas vindo da API
     public static ArrayList<Reserva> parserJsonReservas(JSONArray response, Context context){
 
-        System.out.println("--> Reserva: " + response);
+        System.out.println("--> ReservaJsonParser: " + response);
         ArrayList<Reserva> tempListaReservas = new ArrayList<Reserva>();
 
         try {

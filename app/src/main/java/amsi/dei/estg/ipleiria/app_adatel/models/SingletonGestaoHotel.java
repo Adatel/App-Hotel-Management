@@ -40,6 +40,7 @@ import amsi.dei.estg.ipleiria.app_adatel.utils.QuartoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.TipoprodutoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.TipoquartoJsonParser;
+import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
 public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener, ProdutosListener, QuartosListener, TipoProdutosListener, LinhaProdutosListener, TipoQuartosListener, ClassificacoesListener {
 
@@ -72,8 +73,6 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private ArrayList<Linhaproduto> linhaprodutos;
     private ArrayList<Reservaquarto> reservaquartos;
     private ArrayList<Classificacao> classificacaos;
-
-
 
     private static SingletonGestaoHotel INSTANCE = null;
     private HotelBDHelper hotelBDHelper = null;
@@ -667,7 +666,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 public void onResponse(JSONArray response) {
 
                     reservas = ReservaJsonParser.parserJsonReservas(response, context);
-                    //System.out.println("--> RESPOSTA: " + reservas);
+                    //System.out.println("--> RESPOSTA: " + response);
                     adicionarReservasBD(reservas);
 
                     if(reservasListener != null){
@@ -1009,8 +1008,6 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                     System.out.println("--> ERRO: getAllProdutosAPI: " + error.getMessage());
                 }
             });
-
-
             volleyQueue.add(req);
         }
 
