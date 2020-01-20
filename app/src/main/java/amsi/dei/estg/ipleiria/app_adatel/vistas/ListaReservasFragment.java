@@ -73,7 +73,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Reserva tempReserva = (Reserva) parent.getItemAtPosition(position);
-                //Toast.makeText(getContext(), "AQUI: " + tempReserva.getId(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "AQUI: " + tempReserva.getNumQuartos(), Toast.LENGTH_SHORT).show();
                 //idReserva = SingletonGestaoHotel.getInstance(getContext()).getReservaBD(tempReserva.getId());
 
                 Intent intent = new Intent(getContext(), DetalhesReservaClienteActivity.class);
@@ -152,7 +152,7 @@ public class ListaReservasFragment extends Fragment implements ReservasListener 
         //System.out.println("--> onRefreshListaReservas: " + listaReservas);
 
         listaReservaAdaptador = new ListaReservaAdaptador(getContext(), listaReservas);
-        lvlistaReservas.setAdapter(listaReservaAdaptador); //123@gmail.com
+        lvlistaReservas.setAdapter(listaReservaAdaptador);
         //listaReservaAdaptador.refresh(listaReservas);
     }
 

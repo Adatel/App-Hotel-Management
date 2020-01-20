@@ -62,18 +62,18 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         idReserva = getIntent().getIntExtra(CHAVE_ID,-1);
 
 
-        System.out.println("--> " + dataSaida);
+        //System.out.println("--> " + dataSaida);
 
         if(idReserva == -1){
             setTitle("Adicionar Reserva");
-            System.out.println("adicionar");
+            System.out.println("--> adicionar");
             fab.setImageResource(R.drawable.ic_adicionar);
         } else {
             quartosDuplo.setEnabled(false);
             quartosFamilia.setEnabled(false);
             quartosCasal.setEnabled(false);
             quartosSolteiro.setEnabled(false);
-            System.out.println("Reserva: " + idReserva);
+            //System.out.println("--> Reserva: detalhes  " + idReserva);
             mostrarReserva(idReserva);
             //System.out.println("Reserva: " + idReserva);
             fab.setImageResource(R.drawable.ic_alterar);
@@ -145,6 +145,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         int quartoC = Integer.parseInt(quartosCasal.getText().toString());
 
         int numeroQuartos = quartoS + quartoD + quartoF + quartoC;
+        //System.out.println("--> num Quartos: " + numeroQuartos);
 
         Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), numeroQuartos, quartoS, quartoD, quartoF, quartoC,  dataEntrada.getText().toString(), dataSaida.getText().toString(), 1);
         return auxiliar;
@@ -162,6 +163,21 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         reservaSelecionada.setDtSaida(dataSaida.getText().toString());
 
         return reservaSelecionada;
+    }
+
+
+    private void  mostrarReserva(int idReserva){
+
+        reservaSelecionada = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservaBD(idReserva);
+        System.out.println("--> ReservaSelecionada: " + reservaSelecionada);
+        //setTitle("Reserva");
+        dataEntrada.setText(reservaSelecionada.getDtEntrada());
+        dataSaida.setText(reservaSelecionada.getDtSaida());
+        numeroPessoas.setText(reservaSelecionada.getNumPessoas()+"");
+        quartosSolteiro.setText(reservaSelecionada.getQuartoSol()+"");
+        quartosDuplo.setText(reservaSelecionada.getQuartoD()+"");
+        quartosCasal.setText(reservaSelecionada.getQuartoC()+"");
+        quartosFamilia.setText(reservaSelecionada.getQuartoF()+"");
     }
 
 
@@ -189,21 +205,6 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    private void  mostrarReserva(int idReserva){
-
-        reservaSelecionada = SingletonGestaoHotel.getInstance(getApplicationContext()).getReservaBD(idReserva);
-        System.out.println("--> ReservaSelecionada: " + reservaSelecionada);
-        //setTitle("Reserva");
-        dataEntrada.setText(reservaSelecionada.getDtEntrada());
-        dataSaida.setText(reservaSelecionada.getDtSaida());
-        numeroPessoas.setText(reservaSelecionada.getNumPessoas()+"");
-        quartosSolteiro.setText(reservaSelecionada.getQuartoSol()+"");
-        quartosDuplo.setText(reservaSelecionada.getQuartoD()+"");
-        quartosCasal.setText(reservaSelecionada.getQuartoC()+"");
-        quartosFamilia.setText(reservaSelecionada.getQuartoF()+"");
-    }
-
 
     private void dialogRemover() {
 
