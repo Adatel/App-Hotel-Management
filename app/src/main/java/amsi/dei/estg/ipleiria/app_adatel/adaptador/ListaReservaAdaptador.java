@@ -84,7 +84,7 @@ public class ListaReservaAdaptador extends BaseAdapter {
             dtSaida.setText(reserva.getDtSaida());
             numQuarto.setText("" + reserva.getNumQuartos());
             numPessoas.setText("" + reserva.getNumPessoas());
-            numQuarto.setText("" + reserva.getNumQuartos());
+            //System.out.println("--> JsonParser: " + reserva.getNumQuartos());
         }
     }
 }

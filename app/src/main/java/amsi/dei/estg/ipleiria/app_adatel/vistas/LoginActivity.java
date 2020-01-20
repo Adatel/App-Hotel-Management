@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://192.168.0.11:8080/site/signup"));
         startActivity(browserIntent);
     }
 

@@ -39,7 +39,7 @@ public class ClassificacaoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       //  View rootView = inflater.inflate(R.layout.fragment_classificacao, container, false);
         // Inflate the layout for this fragment
-       // ratingBar1 = rootView.findViewById(R.id.ratingBar); // initiate a rating bar textView2
+       // ratingBar1 = rootView.findViewById(R.id.ratingBar); // initiate a rating bar textView2$
 
         View rootView = inflater.inflate(R.layout.fragment_classificacao, container, false);
 
@@ -79,5 +79,5 @@ public class ClassificacaoFragment extends Fragment {
         return auxiliar;
 
     }
-
 }
+
