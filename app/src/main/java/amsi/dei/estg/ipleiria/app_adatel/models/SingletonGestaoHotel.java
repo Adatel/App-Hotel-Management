@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import amsi.dei.estg.ipleiria.app_adatel.listeners.ClassificacoesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
@@ -31,6 +32,7 @@ import amsi.dei.estg.ipleiria.app_adatel.listeners.TipoQuartosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.LinhaProdutosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.TipoProdutosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
+import amsi.dei.estg.ipleiria.app_adatel.utils.ClassificacaoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.LinhaprodutoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ProdutoJsonParser;
@@ -39,7 +41,7 @@ import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.TipoprodutoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.TipoquartoJsonParser;
 
-public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener, ProdutosListener, QuartosListener, TipoProdutosListener, LinhaProdutosListener, TipoQuartosListener {
+public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener, ProdutosListener, QuartosListener, TipoProdutosListener, LinhaProdutosListener, TipoQuartosListener, ClassificacoesListener {
 
     private static RequestQueue volleyQueue = null;
 
@@ -54,6 +56,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private String mUrlAPITIPOQUARTO = "http://192.168.1.67:8081/api/tipoquartos";
     private String mUrlAPIRESERVAQUARTO = "http://192.168.1.67:8081/api/reservaquartos";
     private String mUrlAPILINHAPRODUTO = "http://192.168.1.67:8081/api/linhaprodutos";
+    private String mUrlAPICLASSIFICACAO = "http://192.168.1.67:8081/api/classificacoes";
 
 
 
@@ -68,6 +71,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private ArrayList<TipoProduto> tipoProdutos;
     private ArrayList<Linhaproduto> linhaprodutos;
     private ArrayList<Reservaquarto> reservaquartos;
+    private ArrayList<Classificacao> classificacaos;
 
 
 
@@ -82,6 +86,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private TipoQuartosListener tipoQuartosListener;
     private TipoProdutosListener tipoProdutosListener;
     private LinhaProdutosListener linhaProdutosListener;
+    private ClassificacoesListener classificacoesListener;
 
 
     //Verificacao
@@ -109,6 +114,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         tipoProdutos = new ArrayList<>();
         linhaprodutos = new ArrayList<>();
         reservaquartos = new ArrayList<>();
+        classificacaos = new ArrayList<>();
 
         hotelBDHelper = new HotelBDHelper(context);
     }
@@ -529,6 +535,49 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
 
+    // <----------------------------------- CLASSIFICAÇÕES ----------------------------------->
+
+    public ArrayList<Classificacao> getClassificacoesBD() {
+        return classificacaos;
+    }
+
+    public Classificacao getClassificacaoBD(long idClassificacao) {
+        for (Classificacao c : classificacaos) {
+            if (c.getId() == idClassificacao) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarClassificacaoBD(Classificacao classificacao) {
+        classificacaos.add(classificacao);
+    }
+
+    public void adicionarClassificacoesBD(ArrayList<Classificacao> classificacaos) {
+        hotelBDHelper.removerALLClassificacaoDB();
+    }
+
+    public void removerClassificacaoBD(int idClassificacao) {
+        Classificacao auxClassificacao = getClassificacaoBD(idClassificacao);
+        classificacaos.remove(auxClassificacao);
+    }
+
+    public void guardarClassificacaoBD(Classificacao classificacao) {
+        if (!classificacaos.contains(classificacao)) {
+            return;
+        }
+        Classificacao auxClassificacao = getClassificacaoBD(classificacao.getId());
+        auxClassificacao.setQuarto(auxClassificacao.getQuarto());
+        auxClassificacao.setComida(auxClassificacao.getComida());
+        auxClassificacao.setStaff(auxClassificacao.getStaff());
+        auxClassificacao.setServicos(auxClassificacao.getServicos());
+        auxClassificacao.setGeral(auxClassificacao.getGeral());
+        auxClassificacao.setId_cliente(auxClassificacao.getId_cliente());
+    }
+
+
+
     // <----------------------------- Métodos para atualizarem a API ----------------------------->
 
     // <----------------------------------- USERS ----------------------------------->
@@ -801,7 +850,30 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 public void onErrorResponse(VolleyError error) {
                     //System.out.println("--> ERRO: getAllReservasAPI: " + error.getMessage());
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+
+                    String loginString = user + ":" + pass;
+
+                    byte[] loginStringBytes = null;
+
+                    try {
+                        loginStringBytes = loginString.getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                    //  Authorization: Basic $auth
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Authorization", "Basic " + loginStringb64);
+                    return headers;
+                }
+
+            };
+
 
             volleyQueue.add(req);
         }
@@ -936,29 +1008,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 public void onErrorResponse(VolleyError error) {
                     System.out.println("--> ERRO: getAllProdutosAPI: " + error.getMessage());
                 }
-            }){
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+            });
 
-                    String loginString = user + ":" + pass;
 
-                    byte[] loginStringBytes = null;
-
-                    try {
-                        loginStringBytes = loginString.getBytes("UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
-
-                    String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
-
-                    //  Authorization: Basic $auth
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Authorization", "Basic " + loginStringb64);
-                    return headers;
-                }
-
-            };
             volleyQueue.add(req);
         }
 
@@ -1233,6 +1285,141 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         this.linhaProdutosListener = linhaProdutosListener;
     }
 
+    // <--------------------------------------- CLASSIFICAÇÕES --------------------------------------->
+
+    public void getAllClassificacoesAPI(final Context context, boolean isConnected){
+
+        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        if(!isConnected){
+            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            classificacaos = hotelBDHelper.getAllClassificacoesBD();
+
+            if(classificacoesListener != null){
+                classificacoesListener.onRefreshListaClassificacoes(classificacaos);
+            }
+        } else {
+            JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, mUrlAPICLASSIFICACAO, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+
+                    classificacaos = ClassificacaoJsonParser.parserJsonClassificacoes(response, context);
+                    //System.out.println("--> RESPOSTA: " + reservas);
+                    adicionarClassificacoesBD(classificacaos);
+
+                    if(classificacoesListener != null){
+                        classificacoesListener.onRefreshListaClassificacoes(classificacaos);
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.println("--> ERRO: getAllClassificacoesAPI: " + error.getMessage());
+                }
+            });
+            volleyQueue.add(req);
+        }
+    }
+    // Adicionar 1 Classificação à API
+    public void adicionarClassificacaoAPI(final Classificacao classificacao, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.POST, mUrlAPICLASSIFICACAO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA ADD POST: " + response);
+
+                if(classificacoesListener != null){
+                    classificacoesListener.onUpdateListaClassificacoesBD(ClassificacaoJsonParser.parserJsonClassificacoes(response, context), 1);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("--> ERRO: adicionarClassificacoesAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("quarto", classificacao.getQuarto() + "");
+                params.put("comida", classificacao.getComida() + "");              // Os Nomes
+                params.put("staff", classificacao.getStaff() + "");                // têm de
+                params.put("servicos", classificacao.getServicos() + "");          // corresponder
+                params.put("geral", classificacao.getGeral() + "");                // aos da
+                params.put("id_cliente", classificacao.getId_cliente() + "");
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    // Remove a Classificacao da API
+    public void removerClassificacaoAPI(final Classificacao classificacao){
+
+        final StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPICLASSIFICACAO + '/' + classificacao.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> RESPOSTA REMOVER: " + response);
+
+                if(classificacoesListener != null){
+                    classificacoesListener.onUpdateListaClassificacoesBD(classificacao,3);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: removerClassificacaoAPI: " + error.getMessage());
+            }
+        });
+        volleyQueue.add(req);
+    }
+
+    // Atualiza a Classificação na API
+    public void editarClassificacaoAPI(final Classificacao classificacao, final Context context){
+
+        StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPICLASSIFICACAO + '/' + classificacao.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                System.out.println("--> editarClassificacaoAPI: " + response);
+
+                if(classificacoesListener != null){
+                    classificacoesListener.onUpdateListaClassificacoesBD(ClassificacaoJsonParser.parserJsonClassificacoes(response, context), 2);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                System.out.println("--> ERRO: editarClassificacaoAPI: " + error.getMessage());
+            }
+        }){
+            protected Map<String, String> getParams(){
+
+                Map<String, String> params = new HashMap<>();
+                params.put("quarto", classificacao.getQuarto() + "");
+                params.put("comida", classificacao.getComida() + "");               // Os Nomes
+                params.put("staff", classificacao.getStaff() + "");                 // têm de
+                params.put("servicos", classificacao.getServicos() + "");           // corresponder
+                params.put("geral", classificacao.getGeral() + "");                 // aos da
+                params.put("id_cliente", classificacao.getId_cliente() + "");
+
+                return params;
+            }
+        };
+        volleyQueue.add(req);
+    }
+
+    public void setClassificacoesListener(ClassificacoesListener classificacoesListener){
+
+        this.classificacoesListener = classificacoesListener;
+    }
+
 
     // <------------------------------------------- Métodos OnRefresh e OnUpdate ------------------------------------------->
 
@@ -1360,6 +1547,16 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     @Override
     public void onUpdateListaTipoquartosBD(Tipoquarto tipoqTipoQuartouarto, int operacao) {
+
+    }
+
+    @Override
+    public void onRefreshListaClassificacoes(ArrayList<Classificacao> listaClassificacoes) {
+
+    }
+
+    @Override
+    public void onUpdateListaClassificacoesBD(Classificacao classificacao, int operacao) {
 
     }
 }

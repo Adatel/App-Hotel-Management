@@ -22,6 +22,7 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String TABLE_TIPOPRODUTO = "Tipoproduto";
     private static final String TABLE_PEDIDO = "Pedido";
     private static final String TABLE_LINHAPRODUTO = "Linhaproduto";
+    private static final String TABLE_CLASSIFICACAO = "Classificacao";
 
     ///Campos da Tabela User
     private static final String ID = "id";
@@ -82,11 +83,20 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     private static final String PRECO_UNITARIO = "preco_unitario";
     private static final String ID_TIPOPRODUTOO = "id_tipo";
 
-    ///Campos de Tabela Linha_Produtos
+    ///Campos da Tabela Linha_Produtos
     private static final String ID_LINHAPRODUTO = "id";
     private static final String QUANTIDADE = "quantidade";
     private static final String ID_PRODUTOO = "id_produto";
     private static final String ID_PEDIDOO = "id_pedido";
+
+    ///Campos da Tabela Classificação
+    private static final String ID_CLASSIFICACAO = "id";
+    private static final String QUARTO = "quarto";
+    private static final String COMIDA = "comida";
+    private static final String STAFF = "staff";
+    private static final String SERVICOS = "servicos";
+    private static final String GERAL = "geral";
+    private static final String CLIENTE = "id_cliente";
 
 
 
@@ -174,10 +184,21 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                 + ID_PEDIDOO + " INTEGER NOT NULL);";
         db.execSQL(createLinhaprodutoTable);
 
+        String createClassificacaoTable = "CREATE TABLE " + TABLE_CLASSIFICACAO
+                + "(" + ID_CLASSIFICACAO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + QUARTO + " REAL NOT NULL, "
+                + COMIDA + " REAL NOT NULL, "
+                + STAFF + " REAL NOT NULL, "
+                + SERVICOS + " REAL NOT NULL, "
+                + GERAL + " REAL NOT NULL, "
+                + CLIENTE + " INTEGER NOT NULL);";
+        db.execSQL(createClassificacaoTable);
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLASSIFICACAO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINHAPRODUTO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUTO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIPOPRODUTO);
@@ -692,4 +713,64 @@ public class HotelBDHelper extends SQLiteOpenHelper {
     public void removerALLLinhaprodutosDB(){
         this.database.delete(TABLE_LINHAPRODUTO, null, null);
     }
+
+
+    // <------------------- CLASSIFICAÇÃO ------------------->
+
+    public ArrayList<Classificacao> getAllClassificacoesBD(){
+        ArrayList<Classificacao> tempClassificacao = new ArrayList<>();
+
+        Cursor cursor = this.database.query(TABLE_CLASSIFICACAO, new String[]{
+                ID_CLASSIFICACAO,
+                QUARTO,
+                COMIDA,
+                STAFF,
+                SERVICOS,
+                GERAL,
+                CLIENTE},null,null,null,null,null);
+
+        if(cursor.moveToNext()){
+            do{
+                Classificacao auxClassificacao = new Classificacao(cursor.getInt(0),cursor.getFloat(1), cursor.getFloat(2),
+                        cursor.getFloat(3),cursor.getFloat(4),cursor.getFloat(5), cursor.getInt(6));
+            }while (cursor.moveToNext());
+        }
+        return tempClassificacao;
+    }
+
+    public void adicionarClassificacaoBD(Classificacao classificacao){
+
+        ContentValues values = new ContentValues();
+        values.put(QUARTO, classificacao.getQuarto());
+        values.put(COMIDA, classificacao.getComida());
+        values.put(STAFF, classificacao.getStaff());
+        values.put(SERVICOS, classificacao.getServicos());
+        values.put(GERAL, classificacao.getGeral());
+        values.put(CLIENTE, classificacao.getId_cliente());
+
+        this.database.insert(TABLE_CLASSIFICACAO, null , values);
+    }
+
+    public boolean guardarClassificacaoBD(Classificacao classificacao){
+
+        ContentValues values = new ContentValues();
+        values.put(QUARTO, classificacao.getQuarto());
+        values.put(COMIDA, classificacao.getComida());
+        values.put(STAFF, classificacao.getStaff());
+        values.put(SERVICOS, classificacao.getServicos());
+        values.put(GERAL, classificacao.getGeral());
+        values.put(CLIENTE, classificacao.getId_cliente());
+
+        return this.database.update(TABLE_CLASSIFICACAO, values, "id = ?", new String[]{"" + classificacao.getId()}) > 0;
+    }
+
+    public boolean removerClassificacaoBD(int id_classificacao){
+        return  (this.database.delete(TABLE_CLASSIFICACAO, "id = ?", new String[]{"" + id_classificacao}) == 1);
+    }
+
+    public void removerALLClassificacaoDB(){
+        this.database.delete(TABLE_CLASSIFICACAO, null, null);
+    }
+
+
 }
