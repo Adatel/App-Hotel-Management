@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import amsi.dei.estg.ipleiria.app_adatel.models.Pedido;
 
 public class PedidoJsonParser {
-    // Devolve um Array de Reservas vindo da API
-    public static ArrayList<Pedido> parserJsonLPedidos(JSONArray response, Context context){
+
+    // Devolve um Array de Pedidos vindo da API
+    public static ArrayList<Pedido> parserJsonPedidos(JSONArray response, Context context){
 
         System.out.println("--> Pedido: " + response);
         ArrayList<Pedido> tempListaPedidos = new ArrayList<Pedido>();
@@ -44,7 +45,7 @@ public class PedidoJsonParser {
     }
 
 
-    // Devolve uma Reserva vinda da API
+    // Devolve um Pedido vindo da API
     public static Pedido parserJsonPedidos(String response, Context context){
 
         System.out.println("--> PARSER ADICIONAR: " + response);

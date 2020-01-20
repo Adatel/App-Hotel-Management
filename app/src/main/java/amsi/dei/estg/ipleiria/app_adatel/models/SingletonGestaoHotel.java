@@ -1,7 +1,6 @@
 package amsi.dei.estg.ipleiria.app_adatel.models;
 
 import android.content.Context;
-import android.text.Editable;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -29,7 +28,6 @@ import amsi.dei.estg.ipleiria.app_adatel.listeners.ReservasListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.UsersListener;
 import amsi.dei.estg.ipleiria.app_adatel.utils.PedidoJsonParser;
 import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
-import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
 public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener {
 
@@ -596,7 +594,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 @Override
                 public void onResponse(JSONArray response) {
 
-                    reservas = ReservaJsonParser.parserJsonLReservas(response, context);
+                    reservas = ReservaJsonParser.parserJsonReservas(response, context);
                     //System.out.println("--> RESPOSTA: " + reservas);
                     adicionarReservasBD(reservas);
 
@@ -765,7 +763,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 @Override
                 public void onResponse(JSONArray response) {
 
-                    pedidos = PedidoJsonParser.parserJsonLPedidos(response, context);
+                    pedidos = PedidoJsonParser.parserJsonPedidos(response, context);
                     //adicionarPedidosBD(pedidos);
 
                     if(pedidosListener != null){
