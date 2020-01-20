@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         carregarCabecalho();
 
+        // Vai busacar os detalhes do ultimo utilizador autenticado
+        sharedPreferences = getSharedPreferences("old_user",MODE_PRIVATE);
+
         // Carrega o Fragmento
         fragmentManager = getSupportFragmentManager();
 
@@ -121,10 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()) {
             case R.id.nav_estadoReservas:
-                Bundle bundle = new Bundle();
-                bundle.putString("IDCLIENTE", idCliente);
                 fragment = new ListaReservasFragment();
-                fragment.setArguments(bundle);
                 setTitle(menuItem.getTitle());
                 break;
             case R.id.nav_servicoQuartos:
@@ -164,11 +164,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_terminarSessao:
                 SingletonGestaoHotel.getInstance(context).idClienteNull();
-                sharedPreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
-                editor = sharedPreferences.edit();
-                        editor.remove("LOGIN");
-                        editor.commit();
-                        finish();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                finish();
             default:
                 System.out.println("-->Nav Default");
         }

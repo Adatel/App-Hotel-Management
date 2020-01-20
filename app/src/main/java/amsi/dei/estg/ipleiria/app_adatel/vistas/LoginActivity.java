@@ -27,6 +27,9 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     Context context = this;
 
+    private String user;
+    private String password;
+
 
     TextView registar;
 
@@ -43,13 +46,18 @@ public class LoginActivity extends AppCompatActivity {
         registar = findViewById(R.id.tvLinktoRegistar);
         editTextUser = findViewById(R.id.editTextUser);
         editTextPassword = findViewById(R.id.editTextPassword);
-        String user = editTextUser.getText().toString();
 
+        sharedPreferences = getSharedPreferences("old_user", MODE_PRIVATE);
 
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MainActivity.CHAVE_EMAIL, sharedPreferences.getString("username",null));
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("Preferences", 0);
-        String login = sharedPreferences.getString("LOGIN", null);
-       // System.out.println("--> LoginPreferences " + login);
+        if(sharedPreferences.contains("username") && sharedPreferences.contains("password")){
+            String recebido = SingletonGestaoHotel.getInstance(context).getUsersAPI(context,
+              ReservaJsonParser.isConnectionInternet(context), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
+
+            startActivity(intent);
+        }
     }
 
     public void onClick(View v) {
@@ -59,8 +67,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onClickLogin(View view) {
 
-        String user = String.valueOf(editTextUser.getText());
-        String password = String.valueOf(editTextPassword.getText());
+         user = String.valueOf(editTextUser.getText());
+         password = String.valueOf(editTextPassword.getText());
 
         // Se a password nao for válida
         if (!isPasswordValida(password)) {
@@ -68,17 +76,30 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        /***  Login Function  ***/
+        // recebe o id do utilizador
         String recebido = SingletonGestaoHotel.getInstance(context).getUsersAPI(context,
                 ReservaJsonParser.isConnectionInternet(context), user, password);
 
 
-        System.out.println("--> Recebido: " + recebido);
-
+        System.out.println("--> Recevido: " + recebido);
+        // se o user existir vai devolver o valor do id
+        // se nao existir devolve null
+        // bug: devolve sempre null primeiro, tem que se clicar duas vezes
         if(!(recebido == null)){
+
+            //Guardar o user e password confirmados pela autenticacao
+            SharedPreferences.Editor saveLogin = sharedPreferences.edit();
+            saveLogin.putString("username", user);
+            saveLogin.putString("password", password);
+            saveLogin.commit();
+
+            //iniciar para a main activity
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(MainActivity.CHAVE_EMAIL, user);
             startActivity(intent);
         }
+        /*** **********/
     }
 
 
