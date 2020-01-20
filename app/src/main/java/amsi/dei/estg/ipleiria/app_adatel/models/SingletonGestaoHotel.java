@@ -231,7 +231,43 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
 
+    // <----------------------------------- PEDIDO ----------------------------------->
 
+    public ArrayList<Pedido> getPedidosBD(){
+        return pedidos;
+    }
+
+    public Pedido getPedidoBD(long idPedido){
+        for(Pedido p: pedidos){
+            if(p.getId() == idPedido){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarPedidoBD(Pedido pedido){
+        pedidos.add(pedido);
+    }
+
+    public void adicionarPedidoBD(ArrayList<Pedido> pedidos){
+        hotelBDHelper.removerALLReservasDB();
+    }
+
+    public void removerPedidoBD(int idPedido){
+        Pedido auxPedido = getPedidoBD(idPedido);
+        pedidos.remove(auxPedido);
+    }
+
+    public void guardarPedidoBD(Pedido pedido){
+        if(!pedidos.contains(pedido)){
+            return;
+        }
+        /*Pedido auxPedido = getPedidoBD(pedido.getId());
+        auxPedido.setDtEntrada(pedido.getDtEntrada());
+        auxPedido.setDtSaida(pedido.getDtSaida());
+        auxPedido.setNumPessoas(pedido.getNumPessoas());*/
+    }
 
     // <----------------------------- Métodos para atualizarem a API ----------------------------->
 
