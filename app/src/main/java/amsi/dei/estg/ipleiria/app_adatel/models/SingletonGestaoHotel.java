@@ -33,7 +33,7 @@ import amsi.dei.estg.ipleiria.app_adatel.utils.UserJsonParser;
 
 public class SingletonGestaoHotel implements ReservasListener, UsersListener, ProfilesListener, PedidosListener {
 
-    private  static RequestQueue volleyQueue = null;
+    private static RequestQueue volleyQueue = null;
 
     private String idCliente = null;
     private String mUrlAPIUSERS = " http://192.168.1.67:8081/api/users";
@@ -47,6 +47,14 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private ArrayList<Reserva> reservas;
     private ArrayList<Profile> profiles;
     private ArrayList<Pedido> pedidos;
+    private ArrayList<Produto> produtos;
+    private ArrayList<Quarto> quartos;
+    private ArrayList<Tipoquarto> tipoQuartos;
+    private ArrayList<TipoProduto> tipoProdutos;
+    private ArrayList<Linhaproduto> linhaprodutos;
+    private ArrayList<Reservaquarto> reservaquartos;
+
+
 
     private static SingletonGestaoHotel INSTANCE = null;
     private HotelBDHelper hotelBDHelper = null;
@@ -61,7 +69,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
 
     public static synchronized SingletonGestaoHotel getInstance(Context context) {
-        if(INSTANCE == null){
+        if (INSTANCE == null) {
             INSTANCE = new SingletonGestaoHotel(context);
             volleyQueue = Volley.newRequestQueue(context);
         }
@@ -74,6 +82,12 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         profiles = new ArrayList<>();
         reservas = new ArrayList<>();
         pedidos = new ArrayList<>();
+        produtos = new ArrayList<>();
+        quartos = new ArrayList<>();
+        tipoQuartos = new ArrayList<>();
+        tipoProdutos = new ArrayList<>();
+        linhaprodutos = new ArrayList<>();
+        reservaquartos = new ArrayList<>();
 
         hotelBDHelper = new HotelBDHelper(context);
     }
@@ -84,9 +98,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     // <----------------------------------- USERS ----------------------------------->
 
-    public User getUserBD(int id){
-        for (User u: users){
-            if(u.getId() == id){
+    public User getUserBD(int id) {
+        for (User u : users) {
+            if (u.getId() == id) {
                 return u;
             }
         }
@@ -94,31 +108,31 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
     ///Adicionei
-    public ArrayList<User> getUsersBD(){
+    public ArrayList<User> getUsersBD() {
         return users = hotelBDHelper.getAllUsersBD();
     }
 
-    public void adicionarUserBD(User user){
+    public void adicionarUserBD(User user) {
         hotelBDHelper.adicionarUserBD(user);
     }
 
-    public void adicionarUsersBD(ArrayList<User> users){
+    public void adicionarUsersBD(ArrayList<User> users) {
         hotelBDHelper.removerAllUsers();
     }
 
-    public void removerUserBD(int id){
+    public void removerUserBD(int id) {
         User auxUser = getUserBD(id);
 
-        if(auxUser != null){
-            if(hotelBDHelper.removerUserBD(auxUser.getId())){
+        if (auxUser != null) {
+            if (hotelBDHelper.removerUserBD(auxUser.getId())) {
                 users.remove(auxUser);
                 System.out.println("--> User removido");
             }
         }
     }
 
-    public void guardarUserBD(User user){
-        if(!users.contains(user)){
+    public void guardarUserBD(User user) {
+        if (!users.contains(user)) {
             return;
         }
 
@@ -127,53 +141,53 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         auxUser.setEmail(user.getEmail());
         auxUser.setPassword(user.getPassword());
 
-        if(hotelBDHelper.guardarUserBD(auxUser)){
+        if (hotelBDHelper.guardarUserBD(auxUser)) {
             System.out.println("--> USer Guardado na BD");
         }
     }
 
-    public void idClienteNull(){
+    public void idClienteNull() {
         idCliente = null;
     }
 
     // <----------------------------------- PROFILE ----------------------------------->
 
-    public Profile getProfileBD(int id_user){
-        for (Profile p: profiles){
-            if(p.getId_user() == id_user){
+    public Profile getProfileBD(int id_user) {
+        for (Profile p : profiles) {
+            if (p.getId_user() == id_user) {
                 return p;
             }
         }
         return null;
     }
 
-    public ArrayList<Profile> getProfilesBD(){
+    public ArrayList<Profile> getProfilesBD() {
         profiles = hotelBDHelper.getAllProfilesBD();
         return profiles;
     }
 
-    public void adicionarProfileBD(Profile profile){
+    public void adicionarProfileBD(Profile profile) {
         hotelBDHelper.adicionarProfileBD(profile);
     }
 
-    public void adicionarProfilesBD(ArrayList<Profile> profiles){
+    public void adicionarProfilesBD(ArrayList<Profile> profiles) {
         hotelBDHelper.removerALLProfilesDB();
     }
 
 
-    public void removerProfileBD(int id_user){
+    public void removerProfileBD(int id_user) {
         Profile auxProfile = getProfileBD(id_user);
 
-        if(auxProfile != null){
-            if(hotelBDHelper.removerProfileBD(auxProfile.getId_user())){
+        if (auxProfile != null) {
+            if (hotelBDHelper.removerProfileBD(auxProfile.getId_user())) {
                 profiles.remove(auxProfile);
                 System.out.println("--> Profile removido");
             }
         }
     }
 
-    public void guardarProfileBD(Profile profile){
-        if(!profiles.contains(profile)){
+    public void guardarProfileBD(Profile profile) {
+        if (!profiles.contains(profile)) {
             return;
         }
 
@@ -185,7 +199,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
         auxProfile.setIs_cliente(profile.getIs_cliente());
         auxProfile.setIs_funcionario(profile.getIs_funcionario());
 
-        if(hotelBDHelper.guardarProfileBD(auxProfile)){
+        if (hotelBDHelper.guardarProfileBD(auxProfile)) {
             System.out.println("--> Profile Guardado");
         }
     }
@@ -193,34 +207,34 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     // <----------------------------------- RESERVAS ----------------------------------->
 
-    public ArrayList<Reserva> getReservasBD(){
+    public ArrayList<Reserva> getReservasBD() {
         return reservas;
     }
 
-    public Reserva getReservaBD(long idReserva){
-        for(Reserva r: reservas){
-            if(r.getId() == idReserva){
+    public Reserva getReservaBD(long idReserva) {
+        for (Reserva r : reservas) {
+            if (r.getId() == idReserva) {
                 return r;
             }
         }
         return null;
     }
 
-    public void adicionarReservaBD(Reserva reserva){
+    public void adicionarReservaBD(Reserva reserva) {
         reservas.add(reserva);
     }
 
-    public void adicionarReservasBD(ArrayList<Reserva> reservas){
+    public void adicionarReservasBD(ArrayList<Reserva> reservas) {
         hotelBDHelper.removerALLReservasDB();
     }
 
-    public void removerReservaBD(int idReserva){
+    public void removerReservaBD(int idReserva) {
         Reserva auxReserva = getReservaBD(idReserva);
         reservas.remove(auxReserva);
     }
 
-    public void guardarReservaBD(Reserva reserva){
-        if(!reservas.contains(reserva)){
+    public void guardarReservaBD(Reserva reserva) {
+        if (!reservas.contains(reserva)) {
             return;
         }
         Reserva auxReserva = getReservaBD(reserva.getId());
@@ -233,41 +247,266 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     // <----------------------------------- PEDIDO ----------------------------------->
 
-    public ArrayList<Pedido> getPedidosBD(){
+    public ArrayList<Pedido> getPedidosBD() {
         return pedidos;
     }
 
-    public Pedido getPedidoBD(long idPedido){
-        for(Pedido p: pedidos){
-            if(p.getId() == idPedido){
+    public Pedido getPedidoBD(long idPedido) {
+        for (Pedido p : pedidos) {
+            if (p.getId() == idPedido) {
                 return p;
             }
         }
         return null;
     }
 
-    public void adicionarPedidoBD(Pedido pedido){
+    public void adicionarPedidoBD(Pedido pedido) {
         pedidos.add(pedido);
     }
 
-    public void adicionarPedidoBD(ArrayList<Pedido> pedidos){
-        hotelBDHelper.removerALLReservasDB();
+    public void adicionarPedidoBD(ArrayList<Pedido> pedidos) {
+        hotelBDHelper.removerALLRPedidosDB();
     }
 
-    public void removerPedidoBD(int idPedido){
+    public void removerPedidoBD(int idPedido) {
         Pedido auxPedido = getPedidoBD(idPedido);
         pedidos.remove(auxPedido);
     }
 
-    public void guardarPedidoBD(Pedido pedido){
-        if(!pedidos.contains(pedido)){
+    public void guardarPedidoBD(Pedido pedido) {
+        if (!pedidos.contains(pedido)) {
             return;
         }
-        /*Pedido auxPedido = getPedidoBD(pedido.getId());
-        auxPedido.setDtEntrada(pedido.getDtEntrada());
-        auxPedido.setDtSaida(pedido.getDtSaida());
-        auxPedido.setNumPessoas(pedido.getNumPessoas());*/
+        Pedido auxPedido = getPedidoBD(pedido.getId());
+        auxPedido.setCusto(pedido.getCusto());
+        auxPedido.setId_reservaquarto(pedido.getId_reservaquarto());
+        /*auxPedido.getDt_hora(pedido.setDt_hora());*/
     }
+
+    // <----------------------------------- PRODUTO ----------------------------------->
+
+    public ArrayList<Produto> getProdutosBD() {
+        return produtos;
+    }
+
+    public Produto getProdutoBD(long idProduto) {
+        for (Produto pr : produtos) {
+            if (pr.getId() == idProduto) {
+                return pr;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarProdutoBD(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public void adicionarProdutoBD(ArrayList<Produto> produtos) {
+        hotelBDHelper.removerALLProdutosDB();
+    }
+
+    public void removerProdutoBD(int idProduto) {
+        Produto auxProduto = getProdutoBD(idProduto);
+        produtos.remove(auxProduto);
+    }
+
+    public void guardarProdutoBD(Produto produto) {
+        if (!produtos.contains(produto)) {
+            return;
+        }
+        Produto auxProduto = getProdutoBD(produto.getId());
+        auxProduto.setDesignacao(produto.getDesignacao());
+        auxProduto.setId_tipoproduto(produto.getId_tipoproduto());
+        /*auxProduto.setPreco_unitario(produto.setPreco_unitario());*/
+    }
+
+    // <----------------------------------- QUARTO ----------------------------------->
+
+    public ArrayList<Quarto> getQuartosBD() {
+        return quartos;
+    }
+
+    public Quarto getQuartoBD(long idQuarto) {
+        for (Quarto q : quartos) {
+            if (q.getNum_quarto() == idQuarto) {
+                return q;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarQuartoBD(Quarto quarto) {
+        quartos.add(quarto);
+    }
+
+    public void adicionarQuartoBD(ArrayList<Quarto> quartos) {
+        hotelBDHelper.removerALLQuartosDB();
+    }
+
+    public void removerQuartoBD(int idQuarto) {
+        Quarto auxQuarto = getQuartoBD(idQuarto);
+        quartos.remove(auxQuarto);
+    }
+
+    public void guardarQuartoBD(Quarto quarto) {
+        if (!quartos.contains(quarto)) {
+            return;
+        }
+        Quarto auxQuarto = getQuartoBD(quarto.getNum_quarto());
+        auxQuarto.setEstado(quarto.getEstado());
+        auxQuarto.setId_tipo(quarto.getId_tipo());
+    }
+
+    // <----------------------------------- TIPO QUARTO ----------------------------------->
+
+    public ArrayList<Tipoquarto> getTipoQuartosBD() {
+        return tipoQuartos;
+    }
+
+    public Tipoquarto getTipoQuartoBD(long idTipoQuarto) {
+        for (Tipoquarto tq : tipoQuartos) {
+            if (tq.getId() == idTipoQuarto) {
+                return tq;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarTipoQuartoBD(Tipoquarto tipoquarto) {
+        tipoQuartos.add(tipoquarto);
+    }
+
+    public void adicionarTipoQuartoBD(ArrayList<Tipoquarto> tipoQuartos) {
+        hotelBDHelper.removerALLTipoquartosDB();
+    }
+
+    public void removerTipoQuartoBD(int idTipoQuarto) {
+        Tipoquarto auxTipoQuarto = getTipoQuartoBD(idTipoQuarto);
+        tipoQuartos.remove(auxTipoQuarto);
+    }
+
+    public void guardarTipoQuartoBD(Tipoquarto tipoquarto) {
+        if (!tipoQuartos.contains(tipoquarto)) {
+            return;
+        }
+        Tipoquarto auxTipoQuarto = getTipoQuartoBD(tipoquarto.getId());
+        auxTipoQuarto.setDesignacao(tipoquarto.getDesignacao());
+        auxTipoQuarto.setPreco_noite(tipoquarto.getPreco_noite());
+    }
+
+    // <----------------------------------- TIPO PRODUTO ----------------------------------->
+
+    public ArrayList<TipoProduto> getTipoProdutosBD() {
+        return tipoProdutos;
+    }
+
+    public TipoProduto getTipoProdutoBD(long idTipoProduto) {
+        for (TipoProduto tp : tipoProdutos) {
+            if (tp.getId() == idTipoProduto) {
+                return tp;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarTipoProdutoBD(TipoProduto tipoProduto) {
+        tipoProdutos.add(tipoProduto);
+    }
+
+    public void adicionarTipoProdutoBD(ArrayList<TipoProduto> tipoProdutos) {
+        hotelBDHelper.removerALLTipoprodutoDB();
+    }
+
+    public void removerTipoProdutoBD(int idTipoProduto) {
+        TipoProduto auxTipoProduto = getTipoProdutoBD(idTipoProduto);
+        tipoProdutos.remove(auxTipoProduto);
+    }
+
+    public void guardarTipoQuartoBD(TipoProduto tipoProduto) {
+        if (!tipoProdutos.contains(tipoProduto)) {
+            return;
+        }
+        TipoProduto auxTipoProduto = getTipoProdutoBD(tipoProduto.getId());
+        auxTipoProduto.setDescricao(tipoProduto.getDescricao());
+    }
+
+    // <----------------------------------- LINHA PRODUTO ----------------------------------->
+
+    public ArrayList<Linhaproduto> getLinhaprodutosBD() {
+        return linhaprodutos;
+    }
+
+    public Linhaproduto getLinhaprodutoBD(long idLinhaProduto) {
+        for (Linhaproduto lp : linhaprodutos) {
+            if (lp.getId() == idLinhaProduto) {
+                return lp;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarLinhaprodutoBD(Linhaproduto linhaproduto) {
+        linhaprodutos.add(linhaproduto);
+    }
+
+    public void adicionarLinhaprodutoBD(ArrayList<Linhaproduto> linhaprodutos) {
+        hotelBDHelper.removerALLLinhaprodutosDB();
+    }
+
+    public void removerLinhaprodutoBD(int idLinhaProduto) {
+        Linhaproduto auxLinhaProduto = getLinhaprodutoBD(idLinhaProduto);
+        linhaprodutos.remove(auxLinhaProduto);
+    }
+
+    public void guardarLinhaprodutoBD(Linhaproduto linhaproduto) {
+        if (!linhaprodutos.contains(linhaproduto)) {
+            return;
+        }
+        Linhaproduto auxLinhaProduto = getLinhaprodutoBD(linhaproduto.getId());
+        auxLinhaProduto.setId_pedido(linhaproduto.getId_pedido());
+        auxLinhaProduto.setId_produto(linhaproduto.getId_produto());
+        auxLinhaProduto.setQuantidade(linhaproduto.getQuantidade());
+    }
+
+
+    // <----------------------------------- RESERVA QUARTO ----------------------------------->
+
+    public ArrayList<Reservaquarto> getReservaquartosBD() {
+        return reservaquartos;
+    }
+
+    public Reservaquarto getReservaquartoBD(long idReservaQuarto) {
+        for (Reservaquarto rq : reservaquartos) {
+            if (rq.getId() == idReservaQuarto) {
+                return rq;
+            }
+        }
+        return null;
+    }
+
+    public void adicionarReservaquartoBD(Reservaquarto reservaquarto) {
+        reservaquartos.add(reservaquarto);
+    }
+
+    public void adicionarReservaquartoBD(ArrayList<Reservaquarto> reservaquartos) {
+        hotelBDHelper.removerALLReservaquartosDB();
+    }
+
+    public void removerReservaquartoBD(int idReservaQuarto) {
+        Reservaquarto auxReservaquarto = getReservaquartoBD(idReservaQuarto);
+        reservaquartos.remove(auxReservaquarto);
+    }
+
+    public void guardarReservaquartoBD(Reservaquarto reservaquarto) {
+        if (!reservaquartos.contains(reservaquarto)) {
+            return;
+        }
+        Reservaquarto auxReservaquarto = getReservaquartoBD(reservaquarto.getId());
+        auxReservaquarto.setIdQuarto(reservaquarto.getIdQuarto());
+        auxReservaquarto.setIdReserva(reservaquarto.getIdReserva());
+    }
+
 
     // <----------------------------- Métodos para atualizarem a API ----------------------------->
 
