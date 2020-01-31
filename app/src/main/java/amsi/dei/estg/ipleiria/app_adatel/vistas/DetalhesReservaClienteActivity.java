@@ -145,9 +145,10 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         int quartoC = Integer.parseInt(quartosCasal.getText().toString());
 
         int numeroQuartos = quartoS + quartoD + quartoF + quartoC;
-        //System.out.println("--> num Quartos: " + numeroQuartos);
+        System.out.println("--> num Quartos: " + quartoS);
 
         Reserva auxiliar = new Reserva(0, Integer.parseInt(numeroPessoas.getText().toString()), numeroQuartos, quartoS, quartoD, quartoF, quartoC,  dataEntrada.getText().toString(), dataSaida.getText().toString(), 1);
+        System.out.println("--> Classificacao" + auxiliar);
         return auxiliar;
     }
 
