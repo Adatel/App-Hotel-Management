@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import amsi.dei.estg.ipleiria.app_adatel.R;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ClassificacoesListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.PedidosListener;
 import amsi.dei.estg.ipleiria.app_adatel.listeners.ProfilesListener;
@@ -583,10 +584,10 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
     // <----------------------------------- USERS ----------------------------------->
     public String getUsersAPI(final Context context, boolean isConected, final String username, final String password){
-        Toast.makeText(context, "Is Connected", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Is Connected", Toast.LENGTH_SHORT).show();
 
         if(!isConected){
-            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.offline, Toast.LENGTH_SHORT).show();
             users = hotelBDHelper.getAllUsersBD();
 
             if(userListener != null){
@@ -652,9 +653,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     // Vai buscar as reservas todas à API
     public void getAllReservasAPI(final Context context, boolean isConnected){
 
-        Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "ISCONNECTED: " + isConnected, Toast.LENGTH_SHORT).show();
         if(!isConnected){
-            //Toast.makeText(context, "NotConnected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.offline, Toast.LENGTH_SHORT).show();
             reservas = hotelBDHelper.getAllReservasBD();
 
             if(reservasListener != null){
