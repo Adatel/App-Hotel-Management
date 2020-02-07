@@ -344,11 +344,12 @@ public class HotelBDHelper extends SQLiteOpenHelper {
                 DATA_SAIDA,
                 ID_CLIENTE},null,null,null,null,null);
 
-        if(cursor.moveToNext()){
+        if(cursor.moveToFirst()){
             do{
                 Reserva auxReserva = new Reserva(cursor.getInt(0),cursor.getInt(1), cursor.getInt(2),
                         cursor.getInt(3),cursor.getInt(4),cursor.getInt(5), cursor.getInt(6),
                         cursor.getString(7), cursor.getString(8), cursor.getInt(9));
+                tempReserva.add(auxReserva);
             }while (cursor.moveToNext());
         }
         return tempReserva;

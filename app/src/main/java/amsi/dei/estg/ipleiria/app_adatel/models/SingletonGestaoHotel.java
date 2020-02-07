@@ -47,17 +47,17 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private static RequestQueue volleyQueue = null;
 
     private String idCliente = null;
-    private String mUrlAPIUSERS = " http://192.168.0.11:8081/api/users";
-    private String mUrlAPIPROFILES = "http://192.168.0.11:8081/api/profiles";
-    private String mUrlAPIPEDIDOS = "http://192.168.0.11:8081/api/pedidos";
-    private String mUrlAPIRESERVAS = "http://192.168.0.11:8081/api/reservas";
-    private String mUrlAPIPRODUTOS = "http://192.168.0.11:8081/api/produtos";
-    private String mUrlAPITIPOPRODUTO = "http://192.168.0.11:8081/api/tipoprodutos";
-    private String mUrlAPIQUARTOS = "http://192.168.0.11:8081/api/quartos";
-    private String mUrlAPITIPOQUARTO = "http://192.168.0.11:8081/api/tipoquartos";
-    private String mUrlAPIRESERVAQUARTO = "http://192.168.0.11:8081/api/reservaquartos";
-    private String mUrlAPILINHAPRODUTO = "http://192.168.0.11:8081/api/linhaprodutos";
-    private String mUrlAPICLASSIFICACAO = "http://192.168.0.11:8081/api/classificacoes";
+    private String mUrlAPIUSERS = " http://192.168.1.67:8081/api/users";
+    private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
+    private String mUrlAPIPEDIDOS = "http://192.168.1.67:8081/api/pedidos";
+    private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
+    private String mUrlAPIPRODUTOS = "http://192.168.1.67:8081/api/produtos";
+    private String mUrlAPITIPOPRODUTO = "http://192.168.1.67:8081/api/tipoprodutos";
+    private String mUrlAPIQUARTOS = "http://192.168.1.67:8081/api/quartos";
+    private String mUrlAPITIPOQUARTO = "http://192.168.1.67:8081/api/tipoquartos";
+    private String mUrlAPIRESERVAQUARTO = "http://192.168.1.67:8081/api/reservaquartos";
+    private String mUrlAPILINHAPRODUTO = "http://192.168.1.67:8081/api/linhaprodutos";
+    private String mUrlAPICLASSIFICACAO = "http://192.168.1.67:8081/api/classificacoes";
 
 
 
@@ -251,7 +251,9 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
     public void adicionarReservasBD(ArrayList<Reserva> reservas) {
-        hotelBDHelper.removerALLReservasDB();
+        for (Reserva reserva: reservas) {
+            hotelBDHelper.adicionarReservaBD(reserva);
+        }
     }
 
     public void removerReservaBD(int idReserva) {
