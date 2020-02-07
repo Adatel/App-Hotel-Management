@@ -710,7 +710,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
 
     // Adicionar 1 só livro à API
-    public void adicionarReservaAPI(final Reserva reserva, final Context context){
+    public void adicionarReservaAPI(final Reserva reserva, final Context context, final String username, final String password){
 
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIRESERVAS, new Response.Listener<String>() {
             @Override
@@ -728,7 +728,30 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
             public void onErrorResponse(VolleyError error) {
                 System.out.println("--> ERRO: adicionarReservasAPI: " + error.getMessage());
             }
-        }){
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                user = username;
+                pass = password;
+
+                String loginString = user + ":" + pass;
+
+                byte[] loginStringBytes = null;
+
+                try {
+                    loginStringBytes = loginString.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                //  Authorization: Basic $auth
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Basic " + loginStringb64);
+                return headers;
+            }
             protected Map<String, String> getParams(){
 
                 Map<String, String> params = new HashMap<>();
@@ -749,7 +772,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     }
 
     // Remove a reserva da API
-    public void removerReservaAPI(final Reserva reserva){
+    public void removerReservaAPI(final Reserva reserva, final String username, final String password){
 
         final StringRequest req = new StringRequest(Request.Method.DELETE, mUrlAPIRESERVAS + '/' + reserva.getId(), new Response.Listener<String>() {
             @Override
@@ -767,12 +790,35 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
 
                 System.out.println("--> ERRO: removerReservaAPI: " + error.getMessage());
             }
-        });
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                user = username;
+                pass = password;
+
+                String loginString = user + ":" + pass;
+
+                byte[] loginStringBytes = null;
+
+                try {
+                    loginStringBytes = loginString.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                //  Authorization: Basic $auth
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Basic " + loginStringb64);
+                return headers;
+            }
+        };
         volleyQueue.add(req);
     }
 
     // Atualiza a reserva na API
-    public void editarReservaAPI(final Reserva reserva, final Context context){
+    public void editarReservaAPI(final Reserva reserva, final Context context, final String username, final String password){
 
         StringRequest req = new StringRequest(Request.Method.PUT, mUrlAPIRESERVAS + '/' + reserva.getId(), new Response.Listener<String>() {
             @Override
@@ -791,6 +837,29 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
                 System.out.println("--> ERRO: editarReservaAPI: " + error.getMessage());
             }
         }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                user = username;
+                pass = password;
+
+                String loginString = user + ":" + pass;
+
+                byte[] loginStringBytes = null;
+
+                try {
+                    loginStringBytes = loginString.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String loginStringb64 = Base64.encodeToString(loginStringBytes, Base64.NO_WRAP);
+
+                //  Authorization: Basic $auth
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Basic " + loginStringb64);
+                return headers;
+            }
+
             protected Map<String, String> getParams(){
 
                 Map<String, String> params = new HashMap<>();

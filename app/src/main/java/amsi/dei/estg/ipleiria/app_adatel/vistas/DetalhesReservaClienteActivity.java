@@ -2,6 +2,7 @@ package amsi.dei.estg.ipleiria.app_adatel.vistas;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,6 +36,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     private EditText  dataEntrada, dataSaida, numeroPessoas, quartosSolteiro, quartosDuplo, quartosCasal, quartosFamilia;
     private Reserva reserva;
     private FloatingActionButton fab;
+    private SharedPreferences sharedPreferences;
 
     //Calendario
     private Calendar calendar;
@@ -61,6 +63,8 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         // Recebe o id da reserva como parâmentro e vai buscar a reserva ao SingletonGestaoHotel pelo id
         idReserva = getIntent().getIntExtra(CHAVE_ID,-1);
 
+
+        sharedPreferences = getSharedPreferences("old_user", MODE_PRIVATE);
 
         //System.out.println("--> " + dataSaida);
 
@@ -126,10 +130,11 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(idReserva == -1){
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaAPI(adicionarReserva(), getApplicationContext());
+
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaAPI(adicionarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
                     finish();
                 } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaAPI(editarReserva(), getApplicationContext());
+                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaAPI(editarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
                     finish();
                 }
             }
@@ -220,7 +225,7 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaAPI(reservaSelecionada);
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaAPI(reservaSelecionada, sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
                         finish();
                     }
                 })
