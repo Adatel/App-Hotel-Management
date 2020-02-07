@@ -27,6 +27,8 @@ import java.util.Calendar;
 import amsi.dei.estg.ipleiria.app_adatel.R;
 import amsi.dei.estg.ipleiria.app_adatel.models.SingletonGestaoHotel;
 import amsi.dei.estg.ipleiria.app_adatel.models.Reserva;
+import amsi.dei.estg.ipleiria.app_adatel.models.User;
+import amsi.dei.estg.ipleiria.app_adatel.utils.ReservaJsonParser;
 
 public class DetalhesReservaClienteActivity extends AppCompatActivity {
 
@@ -129,13 +131,16 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(idReserva == -1){
-
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaAPI(adicionarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
-                    finish();
-                } else {
-                    SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaAPI(editarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
-                    finish();
+                if(ReservaJsonParser.isConnectionInternet(getApplicationContext())){
+                    if(idReserva == -1){
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).adicionarReservaAPI(adicionarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
+                        finish();
+                    } else {
+                        SingletonGestaoHotel.getInstance(getApplicationContext()).editarReservaAPI(editarReserva(), getApplicationContext(), sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
+                        finish();
+                    }
+                }else{
+                    Toast.makeText(DetalhesReservaClienteActivity.this, R.string.offline, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -213,32 +218,36 @@ public class DetalhesReservaClienteActivity extends AppCompatActivity {
     }
 
     private void dialogRemover() {
+        if(ReservaJsonParser.isConnectionInternet(getApplicationContext())){
+            AlertDialog.Builder builder;
 
-        AlertDialog.Builder builder;
+            builder = new AlertDialog.Builder(this);
+            // Contruindo Alert Dialog
+            // Título
+            builder.setTitle("Cancelar Reserva")
+                    // Messagem
+                    .setMessage("Pretende mesmo cancelar a reserva?")
+                    // 2 Botões
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-        builder = new AlertDialog.Builder(this);
-        // Contruindo Alert Dialog
-        // Título
-        builder.setTitle("Cancelar Reserva")
-                // Messagem
-                .setMessage("Pretende mesmo cancelar a reserva?")
-                // 2 Botões
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaAPI(reservaSelecionada, sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
-                        finish();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Não faz nada
-                    }
-                })
-                // Icon
-                .setIcon(android.R.drawable.ic_delete)
-                .show();
+                            SingletonGestaoHotel.getInstance(getApplicationContext()).removerReservaAPI(reservaSelecionada, sharedPreferences.getString("username",null), sharedPreferences.getString("password",null));
+                            finish();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Não faz nada
+                        }
+                    })
+                    // Icon
+                    .setIcon(android.R.drawable.ic_delete)
+                    .show();
+        } else {
+            Toast.makeText(DetalhesReservaClienteActivity.this, R.string.offline, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

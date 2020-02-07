@@ -57,4 +57,5 @@
     <string name="familia">Família</string>
     <string name="enviar">Enviar</string>
     <string name="Login_User">User</string>
+    <string name="offline">Dispositivo Offline</string>
 </resources>
