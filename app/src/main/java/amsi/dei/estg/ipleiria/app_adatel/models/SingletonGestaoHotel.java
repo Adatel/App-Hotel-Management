@@ -47,17 +47,17 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     private static RequestQueue volleyQueue = null;
 
     private String idCliente = null;
-    private String mUrlAPIUSERS = " http://192.168.1.67:8081/api/users";
-    private String mUrlAPIPROFILES = "http://192.168.1.67:8081/api/profiles";
-    private String mUrlAPIPEDIDOS = "https://192.168.1.67:8081/api/pedidos";
-    private String mUrlAPIRESERVAS = "http://192.168.1.67:8081/api/reservas";
-    private String mUrlAPIPRODUTOS = "http://192.168.1.67:8081/api/produtos";
-    private String mUrlAPITIPOPRODUTO = "http://192.168.1.67:8081/api/tipoprodutos";
-    private String mUrlAPIQUARTOS = "http://192.168.1.67:8081/api/quartos";
-    private String mUrlAPITIPOQUARTO = "http://192.168.1.67:8081/api/tipoquartos";
-    private String mUrlAPIRESERVAQUARTO = "http://192.168.1.67:8081/api/reservaquartos";
-    private String mUrlAPILINHAPRODUTO = "http://192.168.1.67:8081/api/linhaprodutos";
-    private String mUrlAPICLASSIFICACAO = "http://192.168.1.67:8081/api/classificacoes";
+    private String mUrlAPIUSERS = " http://192.168.0.11:8081/api/users";
+    private String mUrlAPIPROFILES = "http://192.168.0.11:8081/api/profiles";
+    private String mUrlAPIPEDIDOS = "http://192.168.0.11:8081/api/pedidos";
+    private String mUrlAPIRESERVAS = "http://192.168.0.11:8081/api/reservas";
+    private String mUrlAPIPRODUTOS = "http://192.168.0.11:8081/api/produtos";
+    private String mUrlAPITIPOPRODUTO = "http://192.168.0.11:8081/api/tipoprodutos";
+    private String mUrlAPIQUARTOS = "http://192.168.0.11:8081/api/quartos";
+    private String mUrlAPITIPOQUARTO = "http://192.168.0.11:8081/api/tipoquartos";
+    private String mUrlAPIRESERVAQUARTO = "http://192.168.0.11:8081/api/reservaquartos";
+    private String mUrlAPILINHAPRODUTO = "http://192.168.0.11:8081/api/linhaprodutos";
+    private String mUrlAPICLASSIFICACAO = "http://192.168.0.11:8081/api/classificacoes";
 
 
 
@@ -712,6 +712,7 @@ public class SingletonGestaoHotel implements ReservasListener, UsersListener, Pr
     // Adicionar 1 só livro à API
     public void adicionarReservaAPI(final Reserva reserva, final Context context, final String username, final String password){
 
+        System.out.println("--> RESPOSTA ADD POST 2: " + reserva);
         StringRequest req = new StringRequest(Request.Method.POST, mUrlAPIRESERVAS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
