@@ -34,7 +34,7 @@
                         android:id="@+id/imageView3"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        app:srcCompat="@drawable/logotipo_circle" />
+                        app:srcCompat="@mipmap/ic_main_icon" />
 
                     <Space
                         android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Curso Técnico Superior Profissional de Programação de Sistemas de Informação"
+                            android:text="@string/curso_t_cnico_superior_profissional_de_programa_o_de_sistemas_de_informa_o"
                             android:textColor="@android:color/background_dark"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -70,7 +70,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="2180684 - Afonso Araújo"
+                            android:text="@string/_2180684_afonso_ara_jo"
                             android:textColor="@android:color/background_dark"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -89,7 +89,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="2180643 - Alex Pereira"
+                            android:text="@string/_2180643_alex_pereira"
                             android:textColor="@android:color/background_dark"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -97,21 +97,6 @@
                     <Space
                         android:layout_width="match_parent"
                         android:layout_height="25dp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvAluno3"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="2191054 - Diana Gomes"
-                            android:textColor="@android:color/background_dark"
-                            android:textSize="18sp" />
-                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>

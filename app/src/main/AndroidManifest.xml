@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="amsi.dei.estg.ipleiria.app_adatel">
-
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    package="com.example.kindredlclinic">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+
         android:allowBackup="true"
-        android:icon="@mipmap/ic_adatel_circle"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_adatel_circle"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:theme="@style/Theme.KindredlClinic"
+        android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".vistas.DetalhesServicoQuartosActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".vistas.DetalhesReservaClienteActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".vistas.LoginActivity">
+            android:name=".vistas.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
