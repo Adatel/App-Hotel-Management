@@ -1,4 +1,4 @@
-#Sat Jan 30 20:10:18 GMT 2021
-base.0=D\:\\Android Files\\KIndredClinic\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Mon Feb 01 23:14:29 GMT 2021
+base.0=D\:\\Android Files\\App-Hotel-Management\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

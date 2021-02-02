@@ -1,35 +1,61 @@
 <resources>
-    <string name="app_name">KindredlClinic</string>
-    <string name="area_utente">Area Utente</string>
-    <string name="email">Email</string>
-    <string name="perfil">Perfil</string>
-    <string name="consultas">Consultas</string>
-    <string name="exames">Exames</string>
-    <string name="receitas">Receitas</string>
-    <string name="sobre">Sobre</string>
+    <string name="app_name">Adatel</string>
+
+    <string name="Login_password">Password</string>
+    <string name="Login_e_mail">E-mail</string>
+    <string name="login">Login</string>
+    <string name="email_invalido">Email inválido!</string>
+    <string name="password_invalida">Password Inválida!</string>
+    <string name="login_pergunta">Se não tem conta</string>
+    <string name="login_registar">Registe-se!</string>
+
+    <string name="area_cliente">Área do Cliente</string>
+    <string name="criar_reserva">Criar Reserva</string>
+    <string name="estado_de_reservas">As suas Reservas</string>
+
+    <string name="servicos">Serviço de Quartos</string>
+    <string name="servico_de_quartos">Serviço de Quartos</string>
+    <string name="classificacao">Classificação</string>
+
     <string name="contactos">Contactos</string>
-    <string name="telem_vel">Telemóvel</string>
-    <string name="terminar_sess_o">Terminar Sessão</string>
-    <string name="quem_somos">Quem Somos</string>
-    <string name="onde_estamos">Onde Estamos</string>
+    <string name="email">Email</string>
+    <string name="telemovel">Telemovel</string>
+
+
+    <string name="str_navigation_drawer_open">Abrir</string>
+    <string name="str_navigation_drawer_close">Fechar</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="curso_t_cnico_superior_profissional_de_programa_o_de_sistemas_de_informa_o">Curso Técnico Superior Profissional de Programação de Sistemas de Informação</string>
-    <string name="_2180684_afonso_ara_jo">2180684 - Afonso Araújo</string>
-    <string name="_2180643_alex_pereira">2180643 - Alex Pereira</string>
-    <string name="login_utente">Login Utente</string>
-    <string name="login_password">Password</string>
-    <string name="login_pergunta">Ainda não possui conta?</string>
-    <string name="login_registar">Registar</string>
-    <string name="login">Login</string>
-    <string name="registar_nome">Nome</string>
-    <string name="registar_nif">Nif</string>
-    <string name="registar_nr_telefone">Número Telefone</string>
-    <string name="registar_morada">Morada</string>
-    <string name="registar_utilizador">Nome Utilizador</string>
-    <string name="registar_email">Email</string>
-    <string name="registar_password">Password</string>
-    <string name="password_invalida">Password Inválida</string>
-    <string name="registar">Registar</string>
+    <string name="classificacao_quarto">Qualidade do Quarto:</string>
+    <string name="classificacao_estrela">Qualidade da Comida:</string>
+    <string name="classificacao_staff">Hospitalidade do staff:</string>
+    <string name="classificacao_servicos">Classificação dos Serviços:</string>
+    <string name="classificacao_geral">Classificação em Geral:</string>
     <string name="registar_voltar">Voltar</string>
+    <string name="registar">Registar</string>
+    <string name="registar_introduza_a_password">Introduza a Password:</string>
+    <string name="registar_email">Introduza o seu Email:</string>
+    <string name="registar_utilizador">Introduza o seu Nome de Utilizador:</string>
+    <string name="registar_morada">Introduza a sua Morada:</string>
+    <string name="registar_telefone">Introduza o seu Numero de Telefone:</string>
+    <string name="registar_niff">Introduza o seu Nif:</string>
+    <string name="registar_nome">Introduza o seu Nome:</string>
+    <string name="sobre">Sobre o Hotel</string>
+    <string name="quem_somos">Quem Somos?</string>
+    <string name="onde_estamos">Onde Estamos?</string>
+    <string name="terminar_sess_o">Terminar Sessão</string>
+    <string name="procurar_reserva">Procurar Reserva</string>
+    <string name="cancelar_reserva">Cancelar Reserva</string>
+    <string name="criar_reserva_dtaEntrada">Data de Entrada:</string>
+    <string name="criar_reserva_dtaSaida">Data de Saída:</string>
+    <string name="criar_reserva_nPessoas">Num Pessoas:</string>
+    <string name="quartos">Quartos</string>
+    <string name="solteiro">Solteiro</string>
+    <string name="duplo">Duplo</string>
+    <string name="casal">Casal</string>
+    <string name="familia">Família</string>
+    <string name="enviar">Enviar</string>
+    <string name="Login_User">User</string>
+    <string name="offline">Dispositivo Offline</string>
 </resources>
